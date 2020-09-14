@@ -16,7 +16,9 @@ public class FieldScript : MonoBehaviour
         {
             for (int i = 0; i < rows; i++)
             {
-                Instantiate(prefab, new Vector3(j * spacing, i * spacing, 0), Quaternion.identity, transform);
+                GameObject child = Instantiate(prefab, Vector3.zero, Quaternion.identity, transform) as GameObject;
+                child.transform.localPosition = new Vector3(j * 1, i * 1);
+                child.name = $"Dot_{j}_{i}";
             }
         }
     }
