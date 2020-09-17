@@ -19,6 +19,8 @@ public class FieldScript : MonoBehaviour
                 GameObject child = Instantiate(prefab, Vector3.zero, Quaternion.identity, transform) as GameObject;
                 child.transform.localPosition = new Vector3(j * 1, i * 1);
                 child.name = $"Dot_{j}_{i}";
+                DotScript script = child.GetComponent<DotScript>();
+                script.field = this;
             }
         }
     }
