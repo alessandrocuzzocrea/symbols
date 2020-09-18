@@ -28,6 +28,16 @@ public class FieldScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //Debug.Log($"update: {name}");
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
+
+            if (hit)
+            {
+                Debug.Log(hit.transform.gameObject.name);
+            }
+        }
     }
 }
