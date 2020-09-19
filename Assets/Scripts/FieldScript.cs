@@ -40,4 +40,9 @@ public class FieldScript : MonoBehaviour
             }
         }
     }
+
+    void OnGUI()
+    {
+        GUI.Label(new Rect(10, 10, 100, 90), "Loader Menu");
+    }
 }
