@@ -84,6 +84,29 @@ public class FieldScript : MonoBehaviour
                 }
             }
         }
+
+        //Draw debug stuff
+        for (int j = 0; j < columns; j++)
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                Vector2 start = new Vector2(j * 1, i * 1);
+
+                //Horizontal
+                Vector2 endH = new Vector2(start.x + 2, start.y);
+                Debug.DrawLine(start, endH);
+
+                //Vertical
+                Vector2 endV = new Vector2(start.x, start.y - 2);
+                Debug.DrawLine(start, endV);
+
+                //GameObject child = Instantiate(prefab, Vector3.zero, Quaternion.identity, transform) as GameObject;
+                //child.transform.localPosition = new Vector3(j * 1, i * 1);
+                //child.name = $"Dot_{j}_{i}";
+                //DotScript script = child.GetComponent<DotScript>();
+                //script.field = this;
+            }
+        }
     }
 
     void OnGUI()
