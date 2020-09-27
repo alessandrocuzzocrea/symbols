@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,8 +12,12 @@ public class FieldScript : MonoBehaviour
     public DotScript pick1;
     public DotScript pick2;
 
-    public float timeBetweenScanLines = 10.0f;
+    //Scanline
+    public Object scanLinePrefab;
+    public Transform scanlineTransform;
+    public float timeBetweenScanLines = 4.0f;
     public float timeLeftCurrentScanline;
+    public int currentRow;
 
     // Start is called before the first frame update
     void Start()
@@ -30,8 +34,14 @@ public class FieldScript : MonoBehaviour
             }
         }
 
-        //Init timer
+        //Init scanline
         timeLeftCurrentScanline = timeBetweenScanLines;
+        currentRow = rows - 1;
+        GameObject scanLine = Instantiate(scanLinePrefab, transform) as GameObject;
+        scanlineTransform = scanLine.transform;
+        Vector2 localPosition = scanlineTransform.localPosition;
+        localPosition.y = currentRow;
+        scanlineTransform.localPosition = localPosition;
     }
 
     // Update is called once per frame
@@ -42,6 +52,15 @@ public class FieldScript : MonoBehaviour
         if (timeLeftCurrentScanline <= 0)
         {
             timeLeftCurrentScanline = timeBetweenScanLines;
+            currentRow -= 1;
+            if (currentRow < 0)
+            {
+                currentRow = rows - 1;
+            }
+
+            Vector2 localPosition = scanlineTransform.localPosition;
+            localPosition.y = currentRow;
+            scanlineTransform.localPosition = localPosition;
         }
 
         //Debug.Log($"update: {name}");
