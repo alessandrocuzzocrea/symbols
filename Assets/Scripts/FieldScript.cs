@@ -9,6 +9,12 @@ public class FieldScript : MonoBehaviour
     public int columns;
     public float spacing;
 
+    public DotScript pick1;
+    public DotScript pick2;
+
+    public float timeBetweenScanLines = 10.0f;
+    public float timeLeftCurrentScanline;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,11 +29,21 @@ public class FieldScript : MonoBehaviour
                 script.field = this;
             }
         }
+
+        //Init timer
+        timeLeftCurrentScanline = timeBetweenScanLines;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Update timer
+        timeLeftCurrentScanline -= Time.smoothDeltaTime;
+        if (timeLeftCurrentScanline <= 0)
+        {
+            timeLeftCurrentScanline = timeBetweenScanLines;
+        }
+
         //Debug.Log($"update: {name}");
         if (Input.GetMouseButtonDown(0))
         {
@@ -37,12 +53,44 @@ public class FieldScript : MonoBehaviour
             if (hit)
             {
                 Debug.Log(hit.transform.gameObject.name);
+
+                if (pick1 == hit.transform.gameObject.GetComponent<DotScript>() || pick2 == hit.transform.gameObject.GetComponent<DotScript>())
+                {
+                    Debug.Log("Already picked");
+                    return;
+                }
+
+                if ( pick1 == null )
+                {
+                    pick1 = hit.transform.gameObject.GetComponent<DotScript>();
+                    return;
+                }
+
+                if ( pick2 == null )
+                {
+                    pick2 = hit.transform.gameObject.GetComponent<DotScript>();
+                    //return;
+                }
+
+                if (pick1 && pick2) { 
+                    Color color1 = pick1.GetComponent<SpriteRenderer>().color;
+                    Color color2 = pick2.GetComponent<SpriteRenderer>().color;
+
+                    pick1.GetComponent<SpriteRenderer>().color = color2;
+                    pick2.GetComponent<SpriteRenderer>().color = color1;
+
+                    pick1 = null;
+                    pick2 = null;
+                }
             }
         }
     }
 
     void OnGUI()
     {
-        GUI.Label(new Rect(10, 10, 100, 90), "Loader Menu");
+
+        GUI.Label(new Rect(10, 0, 1000, 90), $"Time: {timeLeftCurrentScanline}");
+        if (pick1) GUI.Label(new Rect(10, 16, 1000, 90), pick1.name);
+        if (pick2) GUI.Label(new Rect(10, 26, 1000, 90), pick2.name);
     }
 }
