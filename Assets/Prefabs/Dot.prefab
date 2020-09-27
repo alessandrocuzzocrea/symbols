@@ -100,6 +100,9 @@ MonoBehaviour:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 0, g: 1, b: 0, a: 1}
   - {r: 0, g: 0, b: 1, a: 1}
+  currentRow: 0
+  currentColumn: 0
+  labelImage: {fileID: 2800000, guid: 2e9647198d62b427987c7e47a609f2d1, type: 3}
 --- !u!58 &4193966752549979989
 CircleCollider2D:
   m_ObjectHideFlags: 0

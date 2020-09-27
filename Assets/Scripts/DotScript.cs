@@ -6,7 +6,9 @@ public class DotScript : MonoBehaviour
 {
     public FieldScript field;
     public Color[] loller = new Color[] { Color.red, Color.green, Color.blue };
-    
+    public int currentRow;
+    public int currentColumn;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +18,13 @@ public class DotScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        name = $"{currentRow}_{currentColumn}";
+    }
 
+    private void OnGUI()
+    {
+        GUI.backgroundColor = Color.yellow;
+        Vector2 loller = Camera.main.WorldToScreenPoint(transform.position);
+        GUI.Label(new Rect(loller.x, Screen.height - loller.y, 100, 100), name);
     }
 }
