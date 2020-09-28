@@ -69,6 +69,14 @@ public class FieldScript : MonoBehaviour
         Vector2 localPosition = scanlineTransform.localPosition;
         localPosition.y = currentRow;
         scanlineTransform.localPosition = localPosition;
+
+        UpdateConnectionsOnStart();
+    }
+
+    IEnumerator UpdateConnectionsOnStart()
+    {
+        yield return 0;
+        UpdateConnections();
     }
 
     // Update is called once per frame
@@ -263,6 +271,38 @@ public class FieldScript : MonoBehaviour
         }
     }
 
+    void UpdateConnections()
+    {
+        // Reset all connections
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            DotScript dot = transform.GetChild(i).GetComponent<DotScript>();
+            if (dot)
+            {
+                dot.connectedTo = null;
+            }
+        }
+
+        // Check for new connections
+        for (int j = 0; j < columns - 1; j++)
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                DotScript child = GameObject.Find($"{i}_{j}").GetComponent<DotScript>();
+
+                if (child.color != DotScript.Type.Empty)
+                {
+                    DotScript neighbour = GameObject.Find($"{i}_{j+1}").GetComponent<DotScript>();
+
+                    if (child.color == neighbour.color)
+                    {
+                        child.connectedTo = neighbour;
+                    }
+                }
+            }
+        }
+    }
+
     void OnGUI()
     {
 
@@ -279,6 +319,7 @@ public class FieldScript : MonoBehaviour
             if (GUI.Button(new Rect(position.x, Screen.height - position.y - 40, 20, 20), "U"))
             {
                 MoveDots(row, "U");
+                UpdateConnections();
             }
         }
 
@@ -290,6 +331,7 @@ public class FieldScript : MonoBehaviour
             if (GUI.Button(new Rect(position.x, Screen.height - position.y + 20, 20, 20), "D"))
             {
                 MoveDots(row, "D");
+                UpdateConnections();
             }
         }
 
@@ -301,6 +343,7 @@ public class FieldScript : MonoBehaviour
             if (GUI.Button(new Rect(position.x - 40, Screen.height - position.y, 20, 20), "L"))
             {
                 MoveDots(row, "L");
+                UpdateConnections();
             }
         }
 
@@ -312,6 +355,7 @@ public class FieldScript : MonoBehaviour
             if (GUI.Button(new Rect(position.x + 20, Screen.height - position.y, 20, 20), "R"))
             {
                 MoveDots(row, "R");
+                UpdateConnections();
             }
         }
     }

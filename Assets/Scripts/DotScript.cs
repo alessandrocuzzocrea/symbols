@@ -10,6 +10,7 @@ public class DotScript : MonoBehaviour
     public int currentColumn;
     public enum Type { Empty, Red, Gree, Blue }
     public Type color;
+    public DotScript connectedTo;
 
     // Start is called before the first frame update
     void Start()
@@ -34,5 +35,6 @@ public class DotScript : MonoBehaviour
         GUI.backgroundColor = Color.yellow;
         Vector2 loller = Camera.main.WorldToScreenPoint(transform.position);
         GUI.Label(new Rect(loller.x, Screen.height - loller.y, 100, 100), name);
+        if (connectedTo) GUI.Label(new Rect(loller.x, Screen.height - loller.y - 10, 100, 100), "C:" + connectedTo.name);
     }
 }
