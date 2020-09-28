@@ -155,6 +155,114 @@ public class FieldScript : MonoBehaviour
         }
     }
 
+    void MoveDots(string row, string direction)
+    {
+        switch(direction)
+        {
+            case "U":
+                {
+                    GameObject test5 = GameObject.Find($"5_{row[2]}");
+                    GameObject test4 = GameObject.Find($"4_{row[2]}");
+                    GameObject test3 = GameObject.Find($"3_{row[2]}");
+                    GameObject test2 = GameObject.Find($"2_{row[2]}");
+                    GameObject test1 = GameObject.Find($"1_{row[2]}");
+                    GameObject test0 = GameObject.Find($"0_{row[2]}");
+
+                    DotScript.Type type5 = test5.GetComponent<DotScript>().color;
+                    DotScript.Type type4 = test4.GetComponent<DotScript>().color;
+                    DotScript.Type type3 = test3.GetComponent<DotScript>().color;
+                    DotScript.Type type2 = test2.GetComponent<DotScript>().color;
+                    DotScript.Type type1 = test1.GetComponent<DotScript>().color;
+                    DotScript.Type type0 = test0.GetComponent<DotScript>().color;
+
+                    test5.GetComponent<DotScript>().SetType(type4);
+                    test4.GetComponent<DotScript>().SetType(type3);
+                    test3.GetComponent<DotScript>().SetType(type2);
+                    test2.GetComponent<DotScript>().SetType(type1);
+                    test1.GetComponent<DotScript>().SetType(type0);
+                    test0.GetComponent<DotScript>().SetType(type5);
+                }
+                break;
+
+            case "D":
+                {
+                    GameObject test5 = GameObject.Find($"5_{row[2]}");
+                    GameObject test4 = GameObject.Find($"4_{row[2]}");
+                    GameObject test3 = GameObject.Find($"3_{row[2]}");
+                    GameObject test2 = GameObject.Find($"2_{row[2]}");
+                    GameObject test1 = GameObject.Find($"1_{row[2]}");
+                    GameObject test0 = GameObject.Find($"0_{row[2]}");
+
+                    DotScript.Type type5 = test5.GetComponent<DotScript>().color;
+                    DotScript.Type type4 = test4.GetComponent<DotScript>().color;
+                    DotScript.Type type3 = test3.GetComponent<DotScript>().color;
+                    DotScript.Type type2 = test2.GetComponent<DotScript>().color;
+                    DotScript.Type type1 = test1.GetComponent<DotScript>().color;
+                    DotScript.Type type0 = test0.GetComponent<DotScript>().color;
+
+                    test5.GetComponent<DotScript>().SetType(type0);
+                    test4.GetComponent<DotScript>().SetType(type5);
+                    test3.GetComponent<DotScript>().SetType(type4);
+                    test2.GetComponent<DotScript>().SetType(type3);
+                    test1.GetComponent<DotScript>().SetType(type2);
+                    test0.GetComponent<DotScript>().SetType(type1);
+                }
+                break;
+
+            case "L":
+                {
+                    GameObject test5 = GameObject.Find($"{row[0]}_5");
+                    GameObject test4 = GameObject.Find($"{row[0]}_4");
+                    GameObject test3 = GameObject.Find($"{row[0]}_3");
+                    GameObject test2 = GameObject.Find($"{row[0]}_2");
+                    GameObject test1 = GameObject.Find($"{row[0]}_1");
+                    GameObject test0 = GameObject.Find($"{row[0]}_0");
+
+                    DotScript.Type type5 = test5.GetComponent<DotScript>().color;
+                    DotScript.Type type4 = test4.GetComponent<DotScript>().color;
+                    DotScript.Type type3 = test3.GetComponent<DotScript>().color;
+                    DotScript.Type type2 = test2.GetComponent<DotScript>().color;
+                    DotScript.Type type1 = test1.GetComponent<DotScript>().color;
+                    DotScript.Type type0 = test0.GetComponent<DotScript>().color;
+
+                    test5.GetComponent<DotScript>().SetType(type0);
+                    test4.GetComponent<DotScript>().SetType(type5);
+                    test3.GetComponent<DotScript>().SetType(type4);
+                    test2.GetComponent<DotScript>().SetType(type3);
+                    test1.GetComponent<DotScript>().SetType(type2);
+                    test0.GetComponent<DotScript>().SetType(type1);
+                }
+                break;
+
+            case "R":
+                {
+                    GameObject test5 = GameObject.Find($"{row[0]}_5");
+                    GameObject test4 = GameObject.Find($"{row[0]}_4");
+                    GameObject test3 = GameObject.Find($"{row[0]}_3");
+                    GameObject test2 = GameObject.Find($"{row[0]}_2");
+                    GameObject test1 = GameObject.Find($"{row[0]}_1");
+                    GameObject test0 = GameObject.Find($"{row[0]}_0");
+
+                    DotScript.Type type5 = test5.GetComponent<DotScript>().color;
+                    DotScript.Type type4 = test4.GetComponent<DotScript>().color;
+                    DotScript.Type type3 = test3.GetComponent<DotScript>().color;
+                    DotScript.Type type2 = test2.GetComponent<DotScript>().color;
+                    DotScript.Type type1 = test1.GetComponent<DotScript>().color;
+                    DotScript.Type type0 = test0.GetComponent<DotScript>().color;
+
+                    test5.GetComponent<DotScript>().SetType(type4);
+                    test4.GetComponent<DotScript>().SetType(type3);
+                    test3.GetComponent<DotScript>().SetType(type2);
+                    test2.GetComponent<DotScript>().SetType(type1);
+                    test1.GetComponent<DotScript>().SetType(type0);
+                    test0.GetComponent<DotScript>().SetType(type5);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     void OnGUI()
     {
 
@@ -170,7 +278,7 @@ public class FieldScript : MonoBehaviour
             Vector2 position = Camera.main.WorldToScreenPoint(test.transform.position);
             if (GUI.Button(new Rect(position.x, Screen.height - position.y - 40, 20, 20), "U"))
             {
-                Debug.Log("TEST");
+                MoveDots(row, "U");
             }
         }
 
@@ -181,7 +289,7 @@ public class FieldScript : MonoBehaviour
             Vector2 position = Camera.main.WorldToScreenPoint(test.transform.position);
             if (GUI.Button(new Rect(position.x, Screen.height - position.y + 20, 20, 20), "D"))
             {
-                Debug.Log("TEST");
+                MoveDots(row, "D");
             }
         }
 
@@ -192,7 +300,7 @@ public class FieldScript : MonoBehaviour
             Vector2 position = Camera.main.WorldToScreenPoint(test.transform.position);
             if (GUI.Button(new Rect(position.x - 40, Screen.height - position.y, 20, 20), "L"))
             {
-                Debug.Log("TEST");
+                MoveDots(row, "L");
             }
         }
 
@@ -203,7 +311,7 @@ public class FieldScript : MonoBehaviour
             Vector2 position = Camera.main.WorldToScreenPoint(test.transform.position);
             if (GUI.Button(new Rect(position.x + 20, Screen.height - position.y, 20, 20), "R"))
             {
-                Debug.Log("TEST");
+                MoveDots(row, "R");
             }
         }
     }
