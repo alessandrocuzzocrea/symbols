@@ -20,10 +20,12 @@ public class FieldScript : MonoBehaviour
     public float timeLeftCurrentScanline;
     public int currentRow;
 
+    //Setup
+    //public int initialDotsCount = 6;
+
     // Start is called before the first frame update
     void Start()
     {
-
         positions = new Vector2[rows, columns];
 
         for (int j = 0; j < columns; j++)
@@ -38,7 +40,25 @@ public class FieldScript : MonoBehaviour
                 script.field = this;
                 script.currentRow = i;
                 script.currentColumn = j;
+                script.SetType(DotScript.Type.Empty);
             }
+        }
+
+        int a = transform.childCount;
+        //int dotsRemainingToPlace = initialDotsCount;
+
+        for (int i = 0; i < a; i++)
+        {
+            if (Random.Range(0.0f, 1.0f) >= .8f)
+            {
+                transform.GetChild(i).GetComponent<DotScript>().SetType(DotScript.Type.Red);
+                //dotsRemainingToPlace -= 1;
+            }
+
+            //if (dotsRemainingToPlace <= 0)
+            //{
+            //    break;
+            //}
         }
 
         //Init scanline

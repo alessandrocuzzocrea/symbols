@@ -245,6 +245,7 @@ MonoBehaviour:
   timeBetweenScanLines: 4
   timeLeftCurrentScanline: 0
   currentRow: 0
+  initialDotsCount: 3
 --- !u!4 &1575346529
 Transform:
   m_ObjectHideFlags: 0
