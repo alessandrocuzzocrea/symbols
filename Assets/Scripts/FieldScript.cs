@@ -86,16 +86,8 @@ public class FieldScript : MonoBehaviour
         timeLeftCurrentScanline -= Time.smoothDeltaTime;
         if (timeLeftCurrentScanline <= 0)
         {
-            timeLeftCurrentScanline = timeBetweenScanLines;
-            currentRow -= 1;
-            if (currentRow < 0)
-            {
-                currentRow = rows - 1;
-            }
-
-            Vector2 localPosition = scanlineTransform.localPosition;
-            localPosition.y = currentRow;
-            scanlineTransform.localPosition = localPosition;
+            MoveScanline();
+            ClearDots();
         }
 
         //Debug.Log($"update: {name}");
@@ -159,6 +151,45 @@ public class FieldScript : MonoBehaviour
                 //child.name = $"Dot_{j}_{i}";
                 //DotScript script = child.GetComponent<DotScript>();
                 //script.field = this;
+            }
+        }
+    }
+
+    private void MoveScanline()
+    {
+        timeLeftCurrentScanline = timeBetweenScanLines;
+        currentRow -= 1;
+        if (currentRow < 0)
+        {
+            currentRow = rows - 1;
+        }
+
+        Vector2 localPosition = scanlineTransform.localPosition;
+        localPosition.y = currentRow;
+        scanlineTransform.localPosition = localPosition;
+    }
+
+    private void ClearDots()
+    {
+        int row = currentRow;
+
+        DotScript test5 = GameObject.Find($"{row}_5").GetComponent<DotScript>();
+        DotScript test4 = GameObject.Find($"{row}_4").GetComponent<DotScript>();
+        DotScript test3 = GameObject.Find($"{row}_3").GetComponent<DotScript>();
+        DotScript test2 = GameObject.Find($"{row}_2").GetComponent<DotScript>();
+        DotScript test1 = GameObject.Find($"{row}_1").GetComponent<DotScript>();
+        DotScript test0 = GameObject.Find($"{row}_0").GetComponent<DotScript>();
+
+        DotScript[] dotsToClear = { test5, test4, test3, test2, test1, test0 };
+
+        foreach(DotScript dot in dotsToClear)
+        {
+            if (dot.connectedTo)
+            {
+                dot.SetType(DotScript.Type.Empty);
+                dot.connectedTo.SetType(DotScript.Type.Empty);
+
+                dot.connectedTo = null;
             }
         }
     }
@@ -303,12 +334,22 @@ public class FieldScript : MonoBehaviour
         }
     }
 
+    void DropNewDots()
+    {
+
+    }
+
     void OnGUI()
     {
 
         GUI.Label(new Rect(10, 0, 1000, 90), $"Time: {timeLeftCurrentScanline}");
         if (pick1) GUI.Label(new Rect(10, 16, 1000, 90), pick1.name);
         if (pick2) GUI.Label(new Rect(10, 26, 1000, 90), pick2.name);
+
+        if(GUI.Button(new Rect(0,0,0,0), "LABEL"))
+        {
+            DropNewDots();
+        }
 
         //Debug buttons
         string[] topRow = { "5_0", "5_1", "5_2", "5_3", "5_4", "5_5" };
