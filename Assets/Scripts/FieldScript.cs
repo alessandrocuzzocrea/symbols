@@ -20,6 +20,9 @@ public class FieldScript : MonoBehaviour
     public float timeLeftCurrentScanline;
     public int currentRow;
 
+    //Crosshair
+    public GameObject crosshair;
+
     //Setup
     //public int initialDotsCount = 6;
 
@@ -91,45 +94,62 @@ public class FieldScript : MonoBehaviour
         }
 
         //Debug.Log($"update: {name}");
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-        //    RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
+        if (Input.GetMouseButton(0))
+        {
+            Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
 
-        //    if (hit)
-        //    {
-        //        Debug.Log(hit.transform.gameObject.name);
 
-        //        if (pick1 == hit.transform.gameObject.GetComponent<DotScript>() || pick2 == hit.transform.gameObject.GetComponent<DotScript>())
-        //        {
-        //            Debug.Log("Already picked");
-        //            return;
-        //        }
 
-        //        if ( pick1 == null )
-        //        {
-        //            pick1 = hit.transform.gameObject.GetComponent<DotScript>();
-        //            return;
-        //        }
+            if (hit)
+            {
+                crosshair.SetActive(true);
+                crosshair.transform.position = hit.transform.position;
+            }
+            else
+            {
+                crosshair.SetActive(false);
+            }
 
-        //        if ( pick2 == null )
-        //        {
-        //            pick2 = hit.transform.gameObject.GetComponent<DotScript>();
-        //            //return;
-        //        }
+            //if (hit)
+            //{
+            //Debug.Log(hit.transform.gameObject.name);
 
-        //        if (pick1 && pick2) { 
-        //            Color color1 = pick1.GetComponent<SpriteRenderer>().color;
-        //            Color color2 = pick2.GetComponent<SpriteRenderer>().color;
+            //if (pick1 == hit.transform.gameObject.GetComponent<DotScript>() || pick2 == hit.transform.gameObject.GetComponent<DotScript>())
+            //{
+            //    Debug.Log("Already picked");
+            //    return;
+            //}
 
-        //            pick1.GetComponent<SpriteRenderer>().color = color2;
-        //            pick2.GetComponent<SpriteRenderer>().color = color1;
+            //if (pick1 == null)
+            //{
+            //    pick1 = hit.transform.gameObject.GetComponent<DotScript>();
+            //    return;
+            //}
 
-        //            pick1 = null;
-        //            pick2 = null;
-        //        }
-        //    }
-        //}
+            //if (pick2 == null)
+            //{
+            //    pick2 = hit.transform.gameObject.GetComponent<DotScript>();
+            //    //return;
+            //}
+
+            //if (pick1 && pick2)
+            //{
+            //    Color color1 = pick1.GetComponent<SpriteRenderer>().color;
+            //    Color color2 = pick2.GetComponent<SpriteRenderer>().color;
+
+            //    pick1.GetComponent<SpriteRenderer>().color = color2;
+            //    pick2.GetComponent<SpriteRenderer>().color = color1;
+
+            //    pick1 = null;
+            //    pick2 = null;
+            //}
+            //}
+        }
+        else
+        {
+            crosshair.SetActive(false);
+        }
 
         //Draw debug stuff
         for (int j = 0; j < columns; j++)
