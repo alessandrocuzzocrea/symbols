@@ -63,14 +63,14 @@ public class FieldScript : MonoBehaviour
 
         //Init scanline
         timeLeftCurrentScanline = timeBetweenScanLines;
-        currentRow = rows - 1;
+        currentRow = 0;
         GameObject scanLine = Instantiate(scanLinePrefab, transform) as GameObject;
         scanlineTransform = scanLine.transform;
         Vector2 localPosition = scanlineTransform.localPosition;
         localPosition.y = currentRow;
         scanlineTransform.localPosition = localPosition;
 
-        UpdateConnectionsOnStart();
+        StartCoroutine("UpdateConnectionsOnStart");
     }
 
     IEnumerator UpdateConnectionsOnStart()
@@ -167,6 +167,8 @@ public class FieldScript : MonoBehaviour
         Vector2 localPosition = scanlineTransform.localPosition;
         localPosition.y = currentRow;
         scanlineTransform.localPosition = localPosition;
+
+        DropNewDots();
     }
 
     private void ClearDots()
@@ -304,6 +306,7 @@ public class FieldScript : MonoBehaviour
 
     void UpdateConnections()
     {
+        Debug.Log("UpdateConnection");
         // Reset all connections
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -336,7 +339,19 @@ public class FieldScript : MonoBehaviour
 
     void DropNewDots()
     {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (Random.Range(0.0f, 1.0f) >= .8f)
+            {
+                DotScript dot = transform.GetChild(i).GetComponent<DotScript>();
 
+                if (dot && dot.color == DotScript.Type.Empty)
+                {
+                    dot.SetType(DotScript.Type.Red);
+                }
+            }
+        }
+        UpdateConnections();
     }
 
     void OnGUI()
@@ -346,7 +361,7 @@ public class FieldScript : MonoBehaviour
         if (pick1) GUI.Label(new Rect(10, 16, 1000, 90), pick1.name);
         if (pick2) GUI.Label(new Rect(10, 26, 1000, 90), pick2.name);
 
-        if(GUI.Button(new Rect(0,0,0,0), "LABEL"))
+        if(GUI.Button(new Rect(10,36,100,20), "Spawn Dots"))
         {
             DropNewDots();
         }
