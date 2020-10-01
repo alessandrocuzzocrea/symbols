@@ -22,9 +22,13 @@ public class FieldScript : MonoBehaviour
 
     //Crosshair
     public GameObject crosshair;
+    bool isDragging;
+    //Vector2 mousePosAtDragStart;
+    GameObject draggedDot;
 
     //Setup
     //public int initialDotsCount = 6;
+
 
     // Start is called before the first frame update
     void Start()
@@ -91,25 +95,26 @@ public class FieldScript : MonoBehaviour
         {
             MoveScanline();
             ClearDots();
+            CheckIfDraggedDotIsStillThere();
         }
 
         //Debug.Log($"update: {name}");
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
-
-
 
             if (hit)
             {
                 crosshair.SetActive(true);
                 crosshair.transform.position = hit.transform.position;
+                draggedDot = hit.transform.gameObject;
+                isDragging = true;
             }
-            else
-            {
-                crosshair.SetActive(false);
-            }
+            //else
+            //{
+            //    crosshair.SetActive(false);
+            //}
 
             //if (hit)
             //{
@@ -146,9 +151,10 @@ public class FieldScript : MonoBehaviour
             //}
             //}
         }
-        else
+        if (Input.GetMouseButtonUp(0))
         {
             crosshair.SetActive(false);
+            isDragging = false;
         }
 
         //Draw debug stuff
@@ -212,6 +218,19 @@ public class FieldScript : MonoBehaviour
                 dot.connectedTo.SetType(DotScript.Type.Empty);
 
                 dot.connectedTo = null;
+            }
+        }
+    }
+
+    private void CheckIfDraggedDotIsStillThere()
+    {
+        if ( draggedDot )
+        {
+            if ( draggedDot.activeInHierarchy )
+            {
+                draggedDot = null;
+                isDragging = false;
+                crosshair.SetActive(false);
             }
         }
     }
@@ -380,8 +399,9 @@ public class FieldScript : MonoBehaviour
         GUI.Label(new Rect(10, 0, 1000, 90), $"Time: {timeLeftCurrentScanline}");
         if (pick1) GUI.Label(new Rect(10, 16, 1000, 90), pick1.name);
         if (pick2) GUI.Label(new Rect(10, 26, 1000, 90), pick2.name);
+        if (isDragging) GUI.Label(new Rect(10, 36, 1000, 90), $"DRAGGING: {draggedDot.name}");
 
-        if(GUI.Button(new Rect(10,36,100,20), "Spawn Dots"))
+        if (GUI.Button(new Rect(10, 56, 100, 20), "Spawn Dots"))
         {
             DropNewDots();
         }
