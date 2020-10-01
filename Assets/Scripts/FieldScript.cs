@@ -26,6 +26,7 @@ public class FieldScript : MonoBehaviour
     Vector2 mousePosAtDragStart;
     GameObject draggedDot;
 
+    int maxDrop = 3;
     //Setup
     //public int initialDotsCount = 6;
 
@@ -58,7 +59,7 @@ public class FieldScript : MonoBehaviour
         {
             if (Random.Range(0.0f, 1.0f) >= .8f)
             {
-                transform.GetChild(i).GetComponent<DotScript>().SetType(DotScript.Type.Red);
+                transform.GetChild(i).GetComponent<DotScript>().SetType(DotScript.GetRandomColor());
                 //dotsRemainingToPlace -= 1;
             }
 
@@ -415,15 +416,22 @@ public class FieldScript : MonoBehaviour
 
     void DropNewDots()
     {
+        int leftToDropCount = maxDrop;
         for (int i = 0; i < transform.childCount; i++)
         {
+            if (leftToDropCount <= 0)
+            {
+                break;
+            }
+
             if (Random.Range(0.0f, 1.0f) >= .8f)
             {
                 DotScript dot = transform.GetChild(i).GetComponent<DotScript>();
 
                 if (dot && dot.color == DotScript.Type.Empty)
                 {
-                    dot.SetType(DotScript.Type.Red);
+                    dot.SetType(DotScript.GetRandomColor());
+                    leftToDropCount -= 1;
                 }
             }
         }

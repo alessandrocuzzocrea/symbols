@@ -37,4 +37,9 @@ public class DotScript : MonoBehaviour
         GUI.Label(new Rect(loller.x, Screen.height - loller.y, 100, 100), name);
         if (connectedTo) GUI.Label(new Rect(loller.x, Screen.height - loller.y - 10, 100, 100), "C:" + connectedTo.name);
     }
+
+    public static DotScript.Type GetRandomColor()
+    {
+        return (DotScript.Type) Random.Range(0, 4);
+    }
 }
