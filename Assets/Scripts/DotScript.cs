@@ -11,6 +11,7 @@ public class DotScript : MonoBehaviour
     public enum Type { Empty, Red, Gree, Blue }
     public Type color;
     public DotScript connectedTo;
+    public GameObject highlight;
 
     // Start is called before the first frame update
     void Start()

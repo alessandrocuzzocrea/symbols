@@ -191,7 +191,7 @@ public class FieldScript : MonoBehaviour
 
                 Debug.Log($"{direction} {dotProduct}");
                 MoveDots(draggedDot.name, direction);
-
+                UpdateConnections();
             }
         }
 
@@ -254,6 +254,9 @@ public class FieldScript : MonoBehaviour
             {
                 dot.SetType(DotScript.Type.Empty);
                 dot.connectedTo.SetType(DotScript.Type.Empty);
+
+                dot.highlight.gameObject.SetActive(false);
+                dot.connectedTo.highlight.gameObject.SetActive(false);
 
                 dot.connectedTo = null;
             }
@@ -391,6 +394,8 @@ public class FieldScript : MonoBehaviour
             if (dot)
             {
                 dot.connectedTo = null;
+                dot.highlight.gameObject.SetActive(false);
+                if (dot.connectedTo) dot.connectedTo.highlight.gameObject.SetActive(false);
             }
         }
 
@@ -408,6 +413,9 @@ public class FieldScript : MonoBehaviour
                     if (child.color == neighbour.color)
                     {
                         child.connectedTo = neighbour;
+
+                        child.highlight.gameObject.SetActive(true);
+                        child.connectedTo.highlight.gameObject.SetActive(true);
                     }
                 }
             }
