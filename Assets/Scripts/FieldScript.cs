@@ -23,7 +23,7 @@ public class FieldScript : MonoBehaviour
     //Crosshair
     public GameObject crosshair;
     bool isDragging;
-    //Vector2 mousePosAtDragStart;
+    Vector2 mousePosAtDragStart;
     GameObject draggedDot;
 
     //Setup
@@ -110,6 +110,7 @@ public class FieldScript : MonoBehaviour
                 crosshair.transform.position = hit.transform.position;
                 draggedDot = hit.transform.gameObject;
                 isDragging = true;
+                mousePosAtDragStart = Input.mousePosition;
             }
             //else
             //{
@@ -153,8 +154,44 @@ public class FieldScript : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0))
         {
-            crosshair.SetActive(false);
-            isDragging = false;
+            if (draggedDot)
+            {
+                crosshair.SetActive(false);
+                isDragging = false;
+
+                Vector2 mousePosAtDragEnd = Input.mousePosition;
+                Vector2 direc = mousePosAtDragEnd - mousePosAtDragStart;
+
+                float dotProduct = Vector2.Dot(direc.normalized, draggedDot.transform.right.normalized);
+
+                string direction = "";
+
+                if (dotProduct > .8)
+                {
+                    direction = "R";
+                }
+
+                if (dotProduct < -.8)
+                {
+                    direction = "L";
+                }
+
+                if ( -.3 < dotProduct && dotProduct < .3 )
+                {
+                    if (direc.normalized.y > .7)
+                    {
+                        direction = "U";
+
+                    } else if(direc.normalized.y < -.7)
+                    {
+                        direction = "D";
+                    }
+                }
+
+                Debug.Log($"{direction} {dotProduct}");
+                MoveDots(draggedDot.name, direction);
+
+            }
         }
 
         //Draw debug stuff
@@ -345,7 +382,7 @@ public class FieldScript : MonoBehaviour
 
     void UpdateConnections()
     {
-        Debug.Log("UpdateConnection");
+        //Debug.Log("UpdateConnection");
         // Reset all connections
         for (int i = 0; i < transform.childCount; i++)
         {
