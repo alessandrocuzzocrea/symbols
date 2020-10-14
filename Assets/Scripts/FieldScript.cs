@@ -31,6 +31,9 @@ public class FieldScript : MonoBehaviour
     //public int initialDotsCount = 6;
 
 
+    // Prototype 2
+    public Lane currentPick;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,7 +62,10 @@ public class FieldScript : MonoBehaviour
         {
             if (Random.Range(0.0f, 1.0f) >= .8f)
             {
-                transform.GetChild(i).GetComponent<DotScript>().SetType(DotScript.GetRandomColor());
+                if (transform.GetChild(i).GetComponent<DotScript>())
+                {
+                    transform.GetChild(i).GetComponent<DotScript>().SetType(DotScript.GetRandomColor());
+                }
                 //dotsRemainingToPlace -= 1;
             }
 
@@ -107,92 +113,66 @@ public class FieldScript : MonoBehaviour
 
             if (hit)
             {
-                crosshair.SetActive(true);
-                crosshair.transform.position = hit.transform.position;
-                draggedDot = hit.transform.gameObject;
-                isDragging = true;
-                mousePosAtDragStart = Input.mousePosition;
+                Debug.Log($"GetMouseButtonDown {hit.collider.name}");
+                currentPick = hit.collider.GetComponent<Lane>();
             }
-            //else
-            //{
-            //    crosshair.SetActive(false);
-            //}
-
-            //if (hit)
-            //{
-            //Debug.Log(hit.transform.gameObject.name);
-
-            //if (pick1 == hit.transform.gameObject.GetComponent<DotScript>() || pick2 == hit.transform.gameObject.GetComponent<DotScript>())
-            //{
-            //    Debug.Log("Already picked");
-            //    return;
-            //}
-
-            //if (pick1 == null)
-            //{
-            //    pick1 = hit.transform.gameObject.GetComponent<DotScript>();
-            //    return;
-            //}
-
-            //if (pick2 == null)
-            //{
-            //    pick2 = hit.transform.gameObject.GetComponent<DotScript>();
-            //    //return;
-            //}
-
-            //if (pick1 && pick2)
-            //{
-            //    Color color1 = pick1.GetComponent<SpriteRenderer>().color;
-            //    Color color2 = pick2.GetComponent<SpriteRenderer>().color;
-
-            //    pick1.GetComponent<SpriteRenderer>().color = color2;
-            //    pick2.GetComponent<SpriteRenderer>().color = color1;
-
-            //    pick1 = null;
-            //    pick2 = null;
-            //}
-            //}
+            
         }
         if (Input.GetMouseButtonUp(0))
         {
-            if (draggedDot)
+            Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
+
+            if (hit)
             {
-                crosshair.SetActive(false);
-                isDragging = false;
+                Debug.Log($"GetMouseButtonUp {hit.collider.name}");
 
-                Vector2 mousePosAtDragEnd = Input.mousePosition;
-                Vector2 direc = mousePosAtDragEnd - mousePosAtDragStart;
+                Lane dropLane = hit.collider.GetComponent<Lane>();
+                MoveLane(currentPick, dropLane);
 
-                float dotProduct = Vector2.Dot(direc.normalized, draggedDot.transform.right.normalized);
-
-                string direction = "";
-
-                if (dotProduct > .8)
-                {
-                    direction = "R";
-                }
-
-                if (dotProduct < -.8)
-                {
-                    direction = "L";
-                }
-
-                if ( -.3 < dotProduct && dotProduct < .3 )
-                {
-                    if (direc.normalized.y > .7)
-                    {
-                        direction = "U";
-
-                    } else if(direc.normalized.y < -.7)
-                    {
-                        direction = "D";
-                    }
-                }
-
-                Debug.Log($"{direction} {dotProduct}");
-                MoveDots(draggedDot.name, direction);
-                UpdateConnections();
+            } else
+            {
+                Debug.Log($"GetMouseButtonUp nullolol");
             }
+
+            //if (draggedDot)
+            //{
+            //    crosshair.SetActive(false);
+            //    isDragging = false;
+
+            //    Vector2 mousePosAtDragEnd = Input.mousePosition;
+            //    Vector2 direc = mousePosAtDragEnd - mousePosAtDragStart;
+
+            //    float dotProduct = Vector2.Dot(direc.normalized, draggedDot.transform.right.normalized);
+
+            //    string direction = "";
+
+            //    if (dotProduct > .8)
+            //    {
+            //        direction = "R";
+            //    }
+
+            //    if (dotProduct < -.8)
+            //    {
+            //        direction = "L";
+            //    }
+
+            //    if ( -.3 < dotProduct && dotProduct < .3 )
+            //    {
+            //        if (direc.normalized.y > .7)
+            //        {
+            //            direction = "U";
+
+            //        } else if(direc.normalized.y < -.7)
+            //        {
+            //            direction = "D";
+            //        }
+            //    }
+
+            //    Debug.Log($"{direction} {dotProduct}");
+            //    MoveDots(draggedDot.name, direction);
+            //    UpdateConnections();
+            //}
         }
 
         //Draw debug stuff
@@ -217,6 +197,51 @@ public class FieldScript : MonoBehaviour
                 //script.field = this;
             }
         }
+    }
+
+    public void MoveLane(Lane pick, Lane drop)
+    {
+        GameObject test5 = GameObject.Find($"5_{pick.id}");
+        GameObject test4 = GameObject.Find($"4_{pick.id}");
+        GameObject test3 = GameObject.Find($"3_{pick.id}");
+        GameObject test2 = GameObject.Find($"2_{pick.id}");
+        GameObject test1 = GameObject.Find($"1_{pick.id}");
+        GameObject test0 = GameObject.Find($"0_{pick.id}");
+
+        GameObject test5_target = GameObject.Find($"5_{drop.id}");
+        GameObject test4_target = GameObject.Find($"4_{drop.id}");
+        GameObject test3_target = GameObject.Find($"3_{drop.id}");
+        GameObject test2_target = GameObject.Find($"2_{drop.id}");
+        GameObject test1_target = GameObject.Find($"1_{drop.id}");
+        GameObject test0_target = GameObject.Find($"0_{drop.id}");
+
+        DotScript.Type type5 = test5.GetComponent<DotScript>().color;
+        DotScript.Type type4 = test4.GetComponent<DotScript>().color;
+        DotScript.Type type3 = test3.GetComponent<DotScript>().color;
+        DotScript.Type type2 = test2.GetComponent<DotScript>().color;
+        DotScript.Type type1 = test1.GetComponent<DotScript>().color;
+        DotScript.Type type0 = test0.GetComponent<DotScript>().color;
+
+        DotScript.Type type5_target = test5_target.GetComponent<DotScript>().color;
+        DotScript.Type type4_target = test4_target.GetComponent<DotScript>().color;
+        DotScript.Type type3_target = test3_target.GetComponent<DotScript>().color;
+        DotScript.Type type2_target = test2_target.GetComponent<DotScript>().color;
+        DotScript.Type type1_target = test1_target.GetComponent<DotScript>().color;
+        DotScript.Type type0_target = test0_target.GetComponent<DotScript>().color;
+
+        test5.GetComponent<DotScript>().SetType(type5_target);
+        test4.GetComponent<DotScript>().SetType(type4_target);
+        test3.GetComponent<DotScript>().SetType(type3_target);
+        test2.GetComponent<DotScript>().SetType(type2_target);
+        test1.GetComponent<DotScript>().SetType(type1_target);
+        test0.GetComponent<DotScript>().SetType(type0_target);
+
+        test5_target.GetComponent<DotScript>().SetType(type5);
+        test4_target.GetComponent<DotScript>().SetType(type4);
+        test3_target.GetComponent<DotScript>().SetType(type3);
+        test2_target.GetComponent<DotScript>().SetType(type2);
+        test1_target.GetComponent<DotScript>().SetType(type1);
+        test0_target.GetComponent<DotScript>().SetType(type0);
     }
 
     private void MoveScanline()
