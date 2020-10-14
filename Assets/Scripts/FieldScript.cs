@@ -460,52 +460,52 @@ public class FieldScript : MonoBehaviour
         }
 
         //Debug buttons
-        string[] topRow = { "5_0", "5_1", "5_2", "5_3", "5_4", "5_5" };
-        foreach(string row in topRow)
-        {
-            GameObject test = GameObject.Find(row);
-            Vector2 position = Camera.main.WorldToScreenPoint(test.transform.position);
-            if (GUI.Button(new Rect(position.x, Screen.height - position.y - 40, 20, 20), "U"))
-            {
-                MoveDots(row, "U");
-                UpdateConnections();
-            }
-        }
+        //string[] topRow = { "5_0", "5_1", "5_2", "5_3", "5_4", "5_5" };
+        //foreach(string row in topRow)
+        //{
+        //    GameObject test = GameObject.Find(row);
+        //    Vector2 position = Camera.main.WorldToScreenPoint(test.transform.position);
+        //    if (GUI.Button(new Rect(position.x, Screen.height - position.y - 40, 20, 20), "U"))
+        //    {
+        //        MoveDots(row, "U");
+        //        UpdateConnections();
+        //    }
+        //}
 
-        string[] bottomRow = { "0_0", "0_1", "0_2", "0_3", "0_4", "0_5" };
-        foreach (string row in bottomRow)
-        {
-            GameObject test = GameObject.Find(row);
-            Vector2 position = Camera.main.WorldToScreenPoint(test.transform.position);
-            if (GUI.Button(new Rect(position.x, Screen.height - position.y + 20, 20, 20), "D"))
-            {
-                MoveDots(row, "D");
-                UpdateConnections();
-            }
-        }
+        //string[] bottomRow = { "0_0", "0_1", "0_2", "0_3", "0_4", "0_5" };
+        //foreach (string row in bottomRow)
+        //{
+        //    GameObject test = GameObject.Find(row);
+        //    Vector2 position = Camera.main.WorldToScreenPoint(test.transform.position);
+        //    if (GUI.Button(new Rect(position.x, Screen.height - position.y + 20, 20, 20), "D"))
+        //    {
+        //        MoveDots(row, "D");
+        //        UpdateConnections();
+        //    }
+        //}
 
-        string[] leftRow = { "0_0", "1_0", "2_0", "3_0", "4_0", "5_0" };
-        foreach (string row in leftRow)
-        {
-            GameObject test = GameObject.Find(row);
-            Vector2 position = Camera.main.WorldToScreenPoint(test.transform.position);
-            if (GUI.Button(new Rect(position.x - 40, Screen.height - position.y, 20, 20), "L"))
-            {
-                MoveDots(row, "L");
-                UpdateConnections();
-            }
-        }
+        //string[] leftRow = { "0_0", "1_0", "2_0", "3_0", "4_0", "5_0" };
+        //foreach (string row in leftRow)
+        //{
+        //    GameObject test = GameObject.Find(row);
+        //    Vector2 position = Camera.main.WorldToScreenPoint(test.transform.position);
+        //    if (GUI.Button(new Rect(position.x - 40, Screen.height - position.y, 20, 20), "L"))
+        //    {
+        //        MoveDots(row, "L");
+        //        UpdateConnections();
+        //    }
+        //}
 
-        string[] rightRow = { "0_5", "1_5", "2_5", "3_5", "4_5", "5_5" };
-        foreach (string row in rightRow)
-        {
-            GameObject test = GameObject.Find(row);
-            Vector2 position = Camera.main.WorldToScreenPoint(test.transform.position);
-            if (GUI.Button(new Rect(position.x + 20, Screen.height - position.y, 20, 20), "R"))
-            {
-                MoveDots(row, "R");
-                UpdateConnections();
-            }
-        }
+        //string[] rightRow = { "0_5", "1_5", "2_5", "3_5", "4_5", "5_5" };
+        //foreach (string row in rightRow)
+        //{
+        //    GameObject test = GameObject.Find(row);
+        //    Vector2 position = Camera.main.WorldToScreenPoint(test.transform.position);
+        //    if (GUI.Button(new Rect(position.x + 20, Screen.height - position.y, 20, 20), "R"))
+        //    {
+        //        MoveDots(row, "R");
+        //        UpdateConnections();
+        //    }
+        //}
     }
 }
