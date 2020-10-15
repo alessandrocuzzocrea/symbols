@@ -33,11 +33,15 @@ public class FieldScript : MonoBehaviour
 
     // Prototype 2
     public Lane currentPick;
+    public Lane[] possibleCurrentPick;
+    public Lane.LaneType currentPickType;
 
     // Start is called before the first frame update
     void Start()
     {
         positions = new Vector2[rows, columns];
+        possibleCurrentPick = new Lane[2];
+
 
         for (int j = 0; j < columns; j++)
         {
@@ -105,76 +109,79 @@ public class FieldScript : MonoBehaviour
             CheckIfDraggedDotIsStillThere();
         }
 
+        Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
+
         //Debug.Log($"update: {name}");
         if (Input.GetMouseButtonDown(0))
         {
-            Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
+            //Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            //RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
 
-            if (hit)
+            //if (hit)
+            //{
+            //    Debug.Log($"GetMouseButtonDown {hit.collider.name}");
+            //    currentPick = hit.collider.GetComponent<Lane>();
+            //}
+
+            for(int i = 0; i < hits.Length; i++)
             {
-                Debug.Log($"GetMouseButtonDown {hit.collider.name}");
-                currentPick = hit.collider.GetComponent<Lane>();
+                possibleCurrentPick[i] = hits[i].collider.GetComponent<Lane>();
             }
-            
+
         }
+
         if (Input.GetMouseButtonUp(0))
         {
-            Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
+            //Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            //RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
 
-            if (hit)
+            Lane dropLane = null;
+
+            for (int i = 0; i < possibleCurrentPick.Length; i++)
             {
-                Debug.Log($"GetMouseButtonUp {hit.collider.name}");
-
-                Lane dropLane = hit.collider.GetComponent<Lane>();
-                MoveLane(currentPick, dropLane);
-                UpdateConnections();
-
-            } else
-            {
-                Debug.Log($"GetMouseButtonUp nullolol");
+                if (possibleCurrentPick[i].laneType == Lane.LaneType.Columns)
+                {
+                    currentPick = possibleCurrentPick[i];
+                }
             }
 
-            //if (draggedDot)
+            for (int i = 0; i < hits.Length; i++)
+            {
+                Lane possibleDrop = hits[i].collider.GetComponent<Lane>();
+                if (possibleDrop.laneType == Lane.LaneType.Columns)
+                {
+                    dropLane = possibleDrop;
+                }
+                else
+                {
+
+                }
+            }
+
+            if (dropLane)
+            {
+                MoveLane(currentPick, dropLane);
+                UpdateConnections();
+            }
+            else
+            {
+
+            }    
+
+            //if (hit)
             //{
-            //    crosshair.SetActive(false);
-            //    isDragging = false;
+                //    Debug.Log($"GetMouseButtonUp {hit.collider.name}");
 
-            //    Vector2 mousePosAtDragEnd = Input.mousePosition;
-            //    Vector2 direc = mousePosAtDragEnd - mousePosAtDragStart;
+                //    Lane dropLane = hit.collider.GetComponent<Lane>();
+                //    MoveLane(currentPick, dropLane);
+                //    UpdateConnections();
 
-            //    float dotProduct = Vector2.Dot(direc.normalized, draggedDot.transform.right.normalized);
-
-            //    string direction = "";
-
-            //    if (dotProduct > .8)
-            //    {
-            //        direction = "R";
-            //    }
-
-            //    if (dotProduct < -.8)
-            //    {
-            //        direction = "L";
-            //    }
-
-            //    if ( -.3 < dotProduct && dotProduct < .3 )
-            //    {
-            //        if (direc.normalized.y > .7)
-            //        {
-            //            direction = "U";
-
-            //        } else if(direc.normalized.y < -.7)
-            //        {
-            //            direction = "D";
-            //        }
-            //    }
-
-            //    Debug.Log($"{direction} {dotProduct}");
-            //    MoveDots(draggedDot.name, direction);
-            //    UpdateConnections();
-            //}
-        }
+                //} else
+                //{
+                //    Debug.Log($"GetMouseButtonUp nullolol");
+                //}
+            }
 
         //Draw debug stuff
         for (int j = 0; j < columns; j++)

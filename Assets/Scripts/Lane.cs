@@ -6,6 +6,14 @@ public class Lane : MonoBehaviour
 {
     public int id;
 
+    public enum LaneType
+    {
+        Columns,
+        Row
+    }
+
+    public LaneType laneType;
+
     // Start is called before the first frame update
     void Start()
     {
