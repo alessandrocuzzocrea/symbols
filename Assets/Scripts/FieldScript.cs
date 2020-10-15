@@ -129,6 +129,7 @@ public class FieldScript : MonoBehaviour
 
                 Lane dropLane = hit.collider.GetComponent<Lane>();
                 MoveLane(currentPick, dropLane);
+                UpdateConnections();
 
             } else
             {
