@@ -12,6 +12,7 @@ public class DotScript : MonoBehaviour
     public Type color;
     public DotScript connectedTo;
     public GameObject highlight;
+    public string newName;
 
     // Start is called before the first frame update
     void Start()
@@ -42,5 +43,40 @@ public class DotScript : MonoBehaviour
     public static DotScript.Type GetRandomColor()
     {
         return (DotScript.Type) Random.Range(0, 4);
+    }
+
+    public void SetNewName(string s)
+    {
+        newName = s;
+    }
+
+    public void SwapName()
+    {
+        SwapName(null);
+    }
+
+    public void SwapName(string neewName)
+    {
+        if (string.IsNullOrEmpty(neewName) == false)
+        {
+            newName = neewName;
+        }
+
+        if (string.IsNullOrEmpty(newName))
+        {
+            return;
+        }
+
+        name = newName;
+        newName = null;
+
+        int newX = System.Convert.ToInt32(name[2].ToString());
+        int newY = System.Convert.ToInt32(name[0].ToString());
+
+        currentRow = newY;
+        currentColumn = newX;
+
+        transform.localPosition = new Vector3(newX, newY, 0);
+
     }
 }

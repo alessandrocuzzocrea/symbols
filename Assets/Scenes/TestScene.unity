@@ -1050,6 +1050,7 @@ MonoBehaviour:
   currentPick: {fileID: 0}
   possibleCurrentPick: []
   currentPickType: 0
+  pauseTimer: 1
 --- !u!4 &1575346529
 Transform:
   m_ObjectHideFlags: 0

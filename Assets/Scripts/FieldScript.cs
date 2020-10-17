@@ -35,6 +35,7 @@ public class FieldScript : MonoBehaviour
     public Lane currentPick;
     public Lane[] possibleCurrentPick;
     public Lane.LaneType currentPickType;
+    public bool pauseTimer;
 
     // Start is called before the first frame update
     void Start()
@@ -101,7 +102,11 @@ public class FieldScript : MonoBehaviour
     void Update()
     {
         //Update timer
-        timeLeftCurrentScanline -= Time.smoothDeltaTime;
+        if (!pauseTimer)
+        {
+            timeLeftCurrentScanline -= Time.smoothDeltaTime;
+        }
+
         if (timeLeftCurrentScanline <= 0)
         {
             MoveScanline();
@@ -209,74 +214,40 @@ public class FieldScript : MonoBehaviour
 
     public void MoveLane(Lane pick, Lane drop)
     {
-        //GameObject test5 = GameObject.Find($"5_{pick.id}");
-        //GameObject test4 = GameObject.Find($"4_{pick.id}");
-        //GameObject test3 = GameObject.Find($"3_{pick.id}");
-        //GameObject test2 = GameObject.Find($"2_{pick.id}");
-        //GameObject test1 = GameObject.Find($"1_{pick.id}");
-        //GameObject test0 = GameObject.Find($"0_{pick.id}");
-
-        //GameObject test5_target = GameObject.Find($"5_{drop.id}");
-        //GameObject test4_target = GameObject.Find($"4_{drop.id}");
-        //GameObject test3_target = GameObject.Find($"3_{drop.id}");
-        //GameObject test2_target = GameObject.Find($"2_{drop.id}");
-        //GameObject test1_target = GameObject.Find($"1_{drop.id}");
-        //GameObject test0_target = GameObject.Find($"0_{drop.id}");
-
-        DotScript.Type type5 = GameObject.Find($"5_{pick.id}").GetComponent<DotScript>().color;
-        DotScript.Type type4 = GameObject.Find($"4_{pick.id}").GetComponent<DotScript>().color;
-        DotScript.Type type3 = GameObject.Find($"3_{pick.id}").GetComponent<DotScript>().color;
-        DotScript.Type type2 = GameObject.Find($"2_{pick.id}").GetComponent<DotScript>().color;
-        DotScript.Type type1 = GameObject.Find($"1_{pick.id}").GetComponent<DotScript>().color;
-        DotScript.Type type0 = GameObject.Find($"0_{pick.id}").GetComponent<DotScript>().color;
-
-        //DotScript.Type type5_target = test5_target.GetComponent<DotScript>().color;
-        //DotScript.Type type4_target = test4_target.GetComponent<DotScript>().color;
-        //DotScript.Type type3_target = test3_target.GetComponent<DotScript>().color;
-        //DotScript.Type type2_target = test2_target.GetComponent<DotScript>().color;
-        //DotScript.Type type1_target = test1_target.GetComponent<DotScript>().color;
-        //DotScript.Type type0_target = test0_target.GetComponent<DotScript>().color;
-
-        //test5.GetComponent<DotScript>().SetType(type5_target);
-        //test4.GetComponent<DotScript>().SetType(type4_target);
-        //test3.GetComponent<DotScript>().SetType(type3_target);
-        //test2.GetComponent<DotScript>().SetType(type2_target);
-        //test1.GetComponent<DotScript>().SetType(type1_target);
-        //test0.GetComponent<DotScript>().SetType(type0_target);
-
-        //test5_target.GetComponent<DotScript>().SetType(type5);
-        //test4_target.GetComponent<DotScript>().SetType(type4);
-        //test3_target.GetComponent<DotScript>().SetType(type3);
-        //test2_target.GetComponent<DotScript>().SetType(type2);
-        //test1_target.GetComponent<DotScript>().SetType(type1);
-        //test0_target.GetComponent<DotScript>().SetType(type0);
+        //DotScript.Type type5 = GameObject.Find($"5_{pick.id}").GetComponent<DotScript>().color;
+        //DotScript.Type type4 = GameObject.Find($"4_{pick.id}").GetComponent<DotScript>().color;
+        //DotScript.Type type3 = GameObject.Find($"3_{pick.id}").GetComponent<DotScript>().color;
+        //DotScript.Type type2 = GameObject.Find($"2_{pick.id}").GetComponent<DotScript>().color;
+        //DotScript.Type type1 = GameObject.Find($"1_{pick.id}").GetComponent<DotScript>().color;
+        //DotScript.Type type0 = GameObject.Find($"0_{pick.id}").GetComponent<DotScript>().color;
 
         if (pick.id < drop.id)
         {
             for (int i = drop.id; pick.id < i; i--)
             {
-                DotScript.Type type5_source = GameObject.Find($"5_{i}").GetComponent<DotScript>().color;
-                DotScript.Type type4_source = GameObject.Find($"4_{i}").GetComponent<DotScript>().color;
-                DotScript.Type type3_source = GameObject.Find($"3_{i}").GetComponent<DotScript>().color;
-                DotScript.Type type2_source = GameObject.Find($"2_{i}").GetComponent<DotScript>().color;
-                DotScript.Type type1_source = GameObject.Find($"1_{i}").GetComponent<DotScript>().color;
-                DotScript.Type type0_source = GameObject.Find($"0_{i}").GetComponent<DotScript>().color;
-
-                GameObject.Find($"5_{i - 1}").GetComponent<DotScript>().SetType(type5_source);
-                GameObject.Find($"4_{i - 1}").GetComponent<DotScript>().SetType(type4_source);
-                GameObject.Find($"3_{i - 1}").GetComponent<DotScript>().SetType(type3_source);
-                GameObject.Find($"2_{i - 1}").GetComponent<DotScript>().SetType(type2_source);
-                GameObject.Find($"1_{i - 1}").GetComponent<DotScript>().SetType(type1_source);
-                GameObject.Find($"0_{i - 1}").GetComponent<DotScript>().SetType(type0_source);
+    
+                GameObject.Find($"5_{i}").GetComponent<DotScript>().SetNewName($"5_{i - 1}");
+                GameObject.Find($"4_{i}").GetComponent<DotScript>().SetNewName($"4_{i - 1}");
+                GameObject.Find($"3_{i}").GetComponent<DotScript>().SetNewName($"3_{i - 1}");
+                GameObject.Find($"2_{i}").GetComponent<DotScript>().SetNewName($"2_{i - 1}");
+                GameObject.Find($"1_{i}").GetComponent<DotScript>().SetNewName($"1_{i - 1}");
+                GameObject.Find($"0_{i}").GetComponent<DotScript>().SetNewName($"0_{i - 1}");
             }
         }
 
-        GameObject.Find($"5_{drop.id}").GetComponent<DotScript>().SetType(type5);
-        GameObject.Find($"4_{drop.id}").GetComponent<DotScript>().SetType(type4);
-        GameObject.Find($"3_{drop.id}").GetComponent<DotScript>().SetType(type3);
-        GameObject.Find($"2_{drop.id}").GetComponent<DotScript>().SetType(type2);
-        GameObject.Find($"1_{drop.id}").GetComponent<DotScript>().SetType(type1);
-        GameObject.Find($"0_{drop.id}").GetComponent<DotScript>().SetType(type0);
+        GameObject.Find($"5_{pick.id}").GetComponent<DotScript>().SetNewName($"5_{drop.id}");
+        GameObject.Find($"4_{pick.id}").GetComponent<DotScript>().SetNewName($"4_{drop.id}");
+        GameObject.Find($"3_{pick.id}").GetComponent<DotScript>().SetNewName($"3_{drop.id}");
+        GameObject.Find($"2_{pick.id}").GetComponent<DotScript>().SetNewName($"2_{drop.id}");
+        GameObject.Find($"1_{pick.id}").GetComponent<DotScript>().SetNewName($"1_{drop.id}");
+        GameObject.Find($"0_{pick.id}").GetComponent<DotScript>().SetNewName($"0_{drop.id}");
+
+        DotScript[] dots = GameObject.FindObjectsOfType<DotScript>();
+        foreach(DotScript dot in dots)
+        {
+            dot.SwapName();
+        }
+        //Debug.Log("");
     }
 
     private void MoveScanline()
@@ -335,114 +306,6 @@ public class FieldScript : MonoBehaviour
             }
         }
     }
-
-    //void MoveDots(string row, string direction)
-    //{
-    //    switch(direction)
-    //    {
-    //        case "U":
-    //            {
-    //                GameObject test5 = GameObject.Find($"5_{row[2]}");
-    //                GameObject test4 = GameObject.Find($"4_{row[2]}");
-    //                GameObject test3 = GameObject.Find($"3_{row[2]}");
-    //                GameObject test2 = GameObject.Find($"2_{row[2]}");
-    //                GameObject test1 = GameObject.Find($"1_{row[2]}");
-    //                GameObject test0 = GameObject.Find($"0_{row[2]}");
-
-    //                DotScript.Type type5 = test5.GetComponent<DotScript>().color;
-    //                DotScript.Type type4 = test4.GetComponent<DotScript>().color;
-    //                DotScript.Type type3 = test3.GetComponent<DotScript>().color;
-    //                DotScript.Type type2 = test2.GetComponent<DotScript>().color;
-    //                DotScript.Type type1 = test1.GetComponent<DotScript>().color;
-    //                DotScript.Type type0 = test0.GetComponent<DotScript>().color;
-
-    //                test5.GetComponent<DotScript>().SetType(type4);
-    //                test4.GetComponent<DotScript>().SetType(type3);
-    //                test3.GetComponent<DotScript>().SetType(type2);
-    //                test2.GetComponent<DotScript>().SetType(type1);
-    //                test1.GetComponent<DotScript>().SetType(type0);
-    //                test0.GetComponent<DotScript>().SetType(type5);
-    //            }
-    //            break;
-
-    //        case "D":
-    //            {
-    //                GameObject test5 = GameObject.Find($"5_{row[2]}");
-    //                GameObject test4 = GameObject.Find($"4_{row[2]}");
-    //                GameObject test3 = GameObject.Find($"3_{row[2]}");
-    //                GameObject test2 = GameObject.Find($"2_{row[2]}");
-    //                GameObject test1 = GameObject.Find($"1_{row[2]}");
-    //                GameObject test0 = GameObject.Find($"0_{row[2]}");
-
-    //                DotScript.Type type5 = test5.GetComponent<DotScript>().color;
-    //                DotScript.Type type4 = test4.GetComponent<DotScript>().color;
-    //                DotScript.Type type3 = test3.GetComponent<DotScript>().color;
-    //                DotScript.Type type2 = test2.GetComponent<DotScript>().color;
-    //                DotScript.Type type1 = test1.GetComponent<DotScript>().color;
-    //                DotScript.Type type0 = test0.GetComponent<DotScript>().color;
-
-    //                test5.GetComponent<DotScript>().SetType(type0);
-    //                test4.GetComponent<DotScript>().SetType(type5);
-    //                test3.GetComponent<DotScript>().SetType(type4);
-    //                test2.GetComponent<DotScript>().SetType(type3);
-    //                test1.GetComponent<DotScript>().SetType(type2);
-    //                test0.GetComponent<DotScript>().SetType(type1);
-    //            }
-    //            break;
-
-    //        case "L":
-    //            {
-    //                GameObject test5 = GameObject.Find($"{row[0]}_5");
-    //                GameObject test4 = GameObject.Find($"{row[0]}_4");
-    //                GameObject test3 = GameObject.Find($"{row[0]}_3");
-    //                GameObject test2 = GameObject.Find($"{row[0]}_2");
-    //                GameObject test1 = GameObject.Find($"{row[0]}_1");
-    //                GameObject test0 = GameObject.Find($"{row[0]}_0");
-
-    //                DotScript.Type type5 = test5.GetComponent<DotScript>().color;
-    //                DotScript.Type type4 = test4.GetComponent<DotScript>().color;
-    //                DotScript.Type type3 = test3.GetComponent<DotScript>().color;
-    //                DotScript.Type type2 = test2.GetComponent<DotScript>().color;
-    //                DotScript.Type type1 = test1.GetComponent<DotScript>().color;
-    //                DotScript.Type type0 = test0.GetComponent<DotScript>().color;
-
-    //                test5.GetComponent<DotScript>().SetType(type0);
-    //                test4.GetComponent<DotScript>().SetType(type5);
-    //                test3.GetComponent<DotScript>().SetType(type4);
-    //                test2.GetComponent<DotScript>().SetType(type3);
-    //                test1.GetComponent<DotScript>().SetType(type2);
-    //                test0.GetComponent<DotScript>().SetType(type1);
-    //            }
-    //            break;
-
-    //        case "R":
-    //            {
-    //                GameObject test5 = GameObject.Find($"{row[0]}_5");
-    //                GameObject test4 = GameObject.Find($"{row[0]}_4");
-    //                GameObject test3 = GameObject.Find($"{row[0]}_3");
-    //                GameObject test2 = GameObject.Find($"{row[0]}_2");
-    //                GameObject test1 = GameObject.Find($"{row[0]}_1");
-    //                GameObject test0 = GameObject.Find($"{row[0]}_0");
-
-    //                DotScript.Type type5 = test5.GetComponent<DotScript>().color;
-    //                DotScript.Type type4 = test4.GetComponent<DotScript>().color;
-    //                DotScript.Type type3 = test3.GetComponent<DotScript>().color;
-    //                DotScript.Type type2 = test2.GetComponent<DotScript>().color;
-    //                DotScript.Type type1 = test1.GetComponent<DotScript>().color;
-    //                DotScript.Type type0 = test0.GetComponent<DotScript>().color;
-
-    //                test5.GetComponent<DotScript>().SetType(type4);
-    //                test4.GetComponent<DotScript>().SetType(type3);
-    //                test3.GetComponent<DotScript>().SetType(type2);
-    //                test2.GetComponent<DotScript>().SetType(type1);
-    //                test1.GetComponent<DotScript>().SetType(type0);
-    //                test0.GetComponent<DotScript>().SetType(type5);
-    //            }
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
 
     void UpdateConnections()
     {
