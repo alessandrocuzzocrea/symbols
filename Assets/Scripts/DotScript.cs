@@ -25,6 +25,7 @@ public class DotScript : MonoBehaviour
     {
         //GetComponent<SpriteRenderer>().color = loller[Random.Range(0, 3)];
         isMoving = false;
+        name = $"{currentRow}_{currentColumn}";
     }
 
     // Update is called once per frame
@@ -45,7 +46,6 @@ public class DotScript : MonoBehaviour
             }
         }
 
-        name = $"{currentRow}_{currentColumn}";
     }
 
     public void SetType(Type c)
@@ -99,6 +99,9 @@ public class DotScript : MonoBehaviour
         newCurrentColumn = newX;
 
         isMoving = true;
+
+        name = $"{newCurrentRow}_{newCurrentColumn}";
+
 
         //transform.localPosition = new Vector3(newX, newY, 0);
     }
