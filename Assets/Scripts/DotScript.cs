@@ -14,15 +14,37 @@ public class DotScript : MonoBehaviour
     public GameObject highlight;
     public string newName;
 
+    public int newCurrentRow;
+    public int newCurrentColumn;
+    public bool isMoving;
+
+    public float speed = 0.05f;
+
     // Start is called before the first frame update
     void Start()
     {
-        //GetComponent<SpriteRenderer>().color = loller[Random.Range(0, 3)];        
+        //GetComponent<SpriteRenderer>().color = loller[Random.Range(0, 3)];
+        isMoving = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isMoving)
+        {
+            float step = speed * Time.deltaTime;
+
+            // move sprite towards the target location
+            transform.localPosition = Vector2.MoveTowards(transform.localPosition, new Vector3(newCurrentColumn, newCurrentRow), .2f);
+
+            if (transform.localPosition == new Vector3(newCurrentColumn, newCurrentRow))
+            {
+                isMoving = false;
+                currentRow    = newCurrentRow;
+                currentColumn = newCurrentColumn;
+            }
+        }
+
         name = $"{currentRow}_{currentColumn}";
     }
 
@@ -73,10 +95,11 @@ public class DotScript : MonoBehaviour
         int newX = System.Convert.ToInt32(name[2].ToString());
         int newY = System.Convert.ToInt32(name[0].ToString());
 
-        currentRow = newY;
-        currentColumn = newX;
+        newCurrentRow = newY;
+        newCurrentColumn = newX;
 
-        transform.localPosition = new Vector3(newX, newY, 0);
+        isMoving = true;
 
+        //transform.localPosition = new Vector3(newX, newY, 0);
     }
 }

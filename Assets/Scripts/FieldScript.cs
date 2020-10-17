@@ -36,6 +36,8 @@ public class FieldScript : MonoBehaviour
     public Lane[] possibleCurrentPick;
     public Lane.LaneType currentPickType;
     public bool pauseTimer;
+    public int possibleDropId;
+    //public string possibleDropString;
 
     // Start is called before the first frame update
     void Start()
@@ -88,7 +90,7 @@ public class FieldScript : MonoBehaviour
         Vector2 localPosition = scanlineTransform.localPosition;
         localPosition.y = currentRow;
         scanlineTransform.localPosition = localPosition;
-
+        possibleDropId = -1;
         StartCoroutine("UpdateConnectionsOnStart");
     }
 
@@ -120,27 +122,13 @@ public class FieldScript : MonoBehaviour
         //Debug.Log($"update: {name}");
         if (Input.GetMouseButtonDown(0))
         {
-            //Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            //RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
-
-            //if (hit)
-            //{
-            //    Debug.Log($"GetMouseButtonDown {hit.collider.name}");
-            //    currentPick = hit.collider.GetComponent<Lane>();
-            //}
-
             for(int i = 0; i < hits.Length; i++)
             {
                 possibleCurrentPick[i] = hits[i].collider.GetComponent<Lane>();
             }
 
-        }
-
-        if (Input.GetMouseButtonUp(0))
+        } else if (Input.GetMouseButtonUp(0))
         {
-            //Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            //RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
-
             Lane dropLane = null;
 
             for (int i = 0; i < possibleCurrentPick.Length; i++)
@@ -160,33 +148,92 @@ public class FieldScript : MonoBehaviour
                 }
                 else
                 {
-
                 }
             }
 
             if (dropLane)
             {
-                MoveLane(currentPick, dropLane);
+                // MoveLane(currentPick, dropLane);
                 UpdateConnections();
             }
             else
             {
 
-            }    
-
-            //if (hit)
-            //{
-                //    Debug.Log($"GetMouseButtonUp {hit.collider.name}");
-
-                //    Lane dropLane = hit.collider.GetComponent<Lane>();
-                //    MoveLane(currentPick, dropLane);
-                //    UpdateConnections();
-
-                //} else
-                //{
-                //    Debug.Log($"GetMouseButtonUp nullolol");
-                //}
             }
+
+            possibleCurrentPick[0] = null;
+            possibleCurrentPick[1] = null;
+            possibleDropId = -1;
+
+        } else if (Input.GetMouseButton(0))
+        {
+            // find current pick
+            for (int i = 0; i < possibleCurrentPick.Length; i++)
+            {
+                if (possibleCurrentPick[i].laneType == Lane.LaneType.Columns)
+                {
+                    currentPick = possibleCurrentPick[i];
+                }
+            }
+
+            // find possible drop
+            for (int i = 0; i < hits.Length; i++)
+            {
+                Lane possibleDrop = hits[i].collider.GetComponent<Lane>();
+                if (possibleDrop.laneType == Lane.LaneType.Columns)
+                {
+                    if (possibleDropId != possibleDrop.id)
+                    {
+                        if (currentPick.id < possibleDrop.id)
+                        {
+                            for (int j = possibleDrop.id; currentPick.id < j; j--)
+                            {
+                                GameObject.Find($"5_{j}").GetComponent<DotScript>().SetNewName($"5_{j - 1}");
+                                GameObject.Find($"4_{j}").GetComponent<DotScript>().SetNewName($"4_{j - 1}");
+                                GameObject.Find($"3_{j}").GetComponent<DotScript>().SetNewName($"3_{j - 1}");
+                                GameObject.Find($"2_{j}").GetComponent<DotScript>().SetNewName($"2_{j - 1}");
+                                GameObject.Find($"1_{j}").GetComponent<DotScript>().SetNewName($"1_{j - 1}");
+                                GameObject.Find($"0_{j}").GetComponent<DotScript>().SetNewName($"0_{j - 1}");
+                            }
+                        }
+
+                        //if (currentPick.id > possibleDrop.id)
+                        //{
+                        //    for (int j = possibleDrop.id; currentPick.id < j; j--)
+                        //    {
+                        //        GameObject.Find($"5_{j}").GetComponent<DotScript>().SetNewName($"5_{j - 1}");
+                        //        GameObject.Find($"4_{j}").GetComponent<DotScript>().SetNewName($"4_{j - 1}");
+                        //        GameObject.Find($"3_{j}").GetComponent<DotScript>().SetNewName($"3_{j - 1}");
+                        //        GameObject.Find($"2_{j}").GetComponent<DotScript>().SetNewName($"2_{j - 1}");
+                        //        GameObject.Find($"1_{j}").GetComponent<DotScript>().SetNewName($"1_{j - 1}");
+                        //        GameObject.Find($"0_{j}").GetComponent<DotScript>().SetNewName($"0_{j - 1}");
+                        //    }
+                        //}
+
+                        GameObject.Find($"5_{currentPick.id}").GetComponent<DotScript>().SetNewName($"5_{possibleDrop.id}");
+                        GameObject.Find($"4_{currentPick.id}").GetComponent<DotScript>().SetNewName($"4_{possibleDrop.id}");
+                        GameObject.Find($"3_{currentPick.id}").GetComponent<DotScript>().SetNewName($"3_{possibleDrop.id}");
+                        GameObject.Find($"2_{currentPick.id}").GetComponent<DotScript>().SetNewName($"2_{possibleDrop.id}");
+                        GameObject.Find($"1_{currentPick.id}").GetComponent<DotScript>().SetNewName($"1_{possibleDrop.id}");
+                        GameObject.Find($"0_{currentPick.id}").GetComponent<DotScript>().SetNewName($"0_{possibleDrop.id}");
+
+                        possibleDropId = possibleDrop.id;
+                        //DotScript[] dots = GetDotsColumn(possibleDropId);
+
+                        DotScript[] dots = GameObject.FindObjectsOfType<DotScript>();
+                        foreach (DotScript dot in dots)
+                        {
+                            dot.SwapName();
+                        }
+                    }
+                    
+                }
+                else
+                {
+
+                }
+            }
+        }
 
         //Draw debug stuff
         for (int j = 0; j < columns; j++)
@@ -212,6 +259,24 @@ public class FieldScript : MonoBehaviour
         }
     }
 
+    private DotScript[] GetDotsColumn(int possibleDropId)
+    {
+
+        List<DotScript> res = new List<DotScript>();
+        if (possibleDropId == 0) return res.ToArray();
+
+        DotScript[] dots = GameObject.FindObjectsOfType<DotScript>();
+        foreach(DotScript dot in dots)
+        {
+            if (dot.name[2].ToString() == possibleDropId.ToString())
+            {
+                res.Add(dot);
+            }
+        }
+
+        return res.ToArray();
+    }
+
     public void MoveLane(Lane pick, Lane drop)
     {
         //DotScript.Type type5 = GameObject.Find($"5_{pick.id}").GetComponent<DotScript>().color;
@@ -225,7 +290,6 @@ public class FieldScript : MonoBehaviour
         {
             for (int i = drop.id; pick.id < i; i--)
             {
-    
                 GameObject.Find($"5_{i}").GetComponent<DotScript>().SetNewName($"5_{i - 1}");
                 GameObject.Find($"4_{i}").GetComponent<DotScript>().SetNewName($"4_{i - 1}");
                 GameObject.Find($"3_{i}").GetComponent<DotScript>().SetNewName($"3_{i - 1}");
@@ -376,6 +440,7 @@ public class FieldScript : MonoBehaviour
         if (pick1) GUI.Label(new Rect(10, 16, 1000, 90), pick1.name);
         if (pick2) GUI.Label(new Rect(10, 26, 1000, 90), pick2.name);
         if (isDragging) GUI.Label(new Rect(10, 36, 1000, 90), $"DRAGGING: {draggedDot.name}");
+        if (possibleDropId != -1) GUI.Label(new Rect(10, 46, 1000, 90), "Possible drop: " + possibleDropId);
 
         if (GUI.Button(new Rect(10, 56, 100, 20), "Spawn Dots"))
         {
