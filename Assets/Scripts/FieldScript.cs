@@ -40,6 +40,12 @@ public class FieldScript : MonoBehaviour
     //public string possibleDropString;
     public Lane currentDrop;
 
+    public bool    bMouseCoordsOnClick;
+    public Vector2 vMouseCoordsOnClick;
+    public bool    bMouseCoordsNow;
+    public Vector2 vMouseCoordsNow;
+    public bool bCurrentPickTypeLocked;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -141,6 +147,11 @@ public class FieldScript : MonoBehaviour
                 }
             }
 
+            bMouseCoordsOnClick = true;
+            vMouseCoordsOnClick = pos;
+
+            bMouseCoordsNow = true;
+            vMouseCoordsNow = pos;
         }
         else if (Input.GetMouseButtonUp(0))
         {
@@ -150,9 +161,35 @@ public class FieldScript : MonoBehaviour
             possibleCurrentPick[1] = null;
             possibleDropId = -1;
 
+            bMouseCoordsNow = bMouseCoordsOnClick = bCurrentPickTypeLocked = false;
+
         }
         else if (Input.GetMouseButton(0))
         {
+            bMouseCoordsNow = true;
+            vMouseCoordsNow = pos;
+
+            float dist = Vector3.Distance(vMouseCoordsNow, vMouseCoordsOnClick);
+            float dotProduct = Vector3.Dot(Vector3.right, (vMouseCoordsNow - vMouseCoordsOnClick).normalized);
+            Debug.Log("distance: " + dist);
+            Debug.Log("dot: " + dotProduct);
+
+            if (!bCurrentPickTypeLocked && dist >= 5.0f)
+            {
+                float absDotProduct = Mathf.Abs(dotProduct);
+                if (absDotProduct >= 0.5)
+                {
+                    currentPickType = Lane.LaneType.Columns;
+                }
+                else
+                {
+                    currentPickType = Lane.LaneType.Row;
+                }
+
+                bCurrentPickTypeLocked = true;
+
+            }
+
             // find possible drop
             for (int i = 0; i < hits.Length; i++)
             {
@@ -540,8 +577,10 @@ public class FieldScript : MonoBehaviour
         if (isDragging) GUI.Label(new Rect(10, 36, 1000, 90), $"DRAGGING: {draggedDot.name}");
         if (currentPick) GUI.Label(new Rect(10, 46, 1000, 90), "Current Pick: " + currentPick.id);
         if (possibleDropId != -1) GUI.Label(new Rect(10, 56, 1000, 90), "Possible drop: " + possibleDropId);
+        if (bMouseCoordsOnClick) GUI.Label(new Rect(10, 66, 1000, 90), "Mouse onClick: " + vMouseCoordsOnClick.ToString());
+        if (bMouseCoordsNow) GUI.Label(new Rect(10, 76, 1000, 90), "Mouse now: " + vMouseCoordsNow.ToString());
 
-        if (GUI.Button(new Rect(10, 86, 100, 20), "Spawn Dots"))
+        if (GUI.Button(new Rect(10, 106, 100, 20), "Spawn Dots"))
         {
             DropNewDots();
         }
