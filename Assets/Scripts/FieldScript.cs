@@ -123,7 +123,9 @@ public class FieldScript : MonoBehaviour
         //Debug.Log($"update: {name}");
         if (Input.GetMouseButtonDown(0))
         {
-            for(int i = 0; i < hits.Length; i++)
+            currentPickType = Lane.LaneType.Columns;
+
+            for (int i = 0; i < hits.Length; i++)
             {
                 possibleCurrentPick[i] = hits[i].collider.GetComponent<Lane>();
             }
@@ -131,7 +133,7 @@ public class FieldScript : MonoBehaviour
             // find current pick
             for (int i = 0; i < possibleCurrentPick.Length; i++)
             {
-                if (possibleCurrentPick[i].laneType == Lane.LaneType.Columns)
+                if (possibleCurrentPick[i].laneType == currentPickType)
                 {
                     currentPick = possibleCurrentPick[i];
                 }
@@ -140,38 +142,6 @@ public class FieldScript : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            //Lane dropLane = null;
-
-            //for (int i = 0; i < possibleCurrentPick.Length; i++)
-            //{
-            //    if (possibleCurrentPick[i].laneType == Lane.LaneType.Columns)
-            //    {
-            //        currentPick = possibleCurrentPick[i];
-            //    }
-            //}
-
-            //for (int i = 0; i < hits.Length; i++)
-            //{
-            //    Lane possibleDrop = hits[i].collider.GetComponent<Lane>();
-            //    if (possibleDrop.laneType == Lane.LaneType.Columns)
-            //    {
-            //        dropLane = possibleDrop;
-            //    }
-            //    else
-            //    {
-            //    }
-            //}
-
-            //if (dropLane)
-            //{
-            //    // MoveLane(currentPick, dropLane);
-            //    UpdateConnections();
-            //}
-            //else
-            //{
-
-            //}
-
             currentPick = null;
             currentDrop = null;
             possibleCurrentPick[0] = null;
@@ -181,26 +151,16 @@ public class FieldScript : MonoBehaviour
         }
         else if (Input.GetMouseButton(0))
         {
-            //// find current pick
-            //for (int i = 0; i < possibleCurrentPick.Length; i++)
-            //{
-            //    if (possibleCurrentPick[i].laneType == Lane.LaneType.Columns)
-            //    {
-            //        currentPick = possibleCurrentPick[i];
-            //    }
-            //}
-
             // find possible drop
             for (int i = 0; i < hits.Length; i++)
             {
                 Lane possibleDrop = hits[i].collider.GetComponent<Lane>();
-                if (possibleDrop.laneType == Lane.LaneType.Columns)
+                if (possibleDrop.laneType == currentPickType)
                 {
                     currentDrop = possibleDrop;
                     //possibleDropId = currentDrop.id;
                 }
             }
-
 
             if (possibleDropId != currentDrop.id)
             //if (true)
@@ -258,7 +218,7 @@ public class FieldScript : MonoBehaviour
             // find current pick
             for (int i = 0; i < possibleCurrentPick.Length; i++)
             {
-                if (possibleCurrentPick[i].laneType == Lane.LaneType.Columns)
+                if (possibleCurrentPick[i].laneType == currentPickType)
                 {
                     currentPick = possibleCurrentPick[i];
                 }
