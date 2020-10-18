@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29211466bc91046ffa28fee2fbaea89a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: 1
   laneType: 1
 --- !u!61 &153613711
 BoxCollider2D:
@@ -453,7 +453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29211466bc91046ffa28fee2fbaea89a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: 3
   laneType: 1
 --- !u!61 &538688611
 BoxCollider2D:
@@ -669,7 +669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29211466bc91046ffa28fee2fbaea89a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: 5
   laneType: 1
 --- !u!61 &776579908
 BoxCollider2D:
@@ -1051,6 +1051,8 @@ MonoBehaviour:
   possibleCurrentPick: []
   currentPickType: 0
   pauseTimer: 1
+  possibleDropId: 0
+  currentDrop: {fileID: 0}
 --- !u!4 &1575346529
 Transform:
   m_ObjectHideFlags: 0
@@ -1110,7 +1112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29211466bc91046ffa28fee2fbaea89a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: 4
   laneType: 1
 --- !u!61 &1616538842
 BoxCollider2D:
@@ -1295,7 +1297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29211466bc91046ffa28fee2fbaea89a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: 2
   laneType: 1
 --- !u!61 &1878327868
 BoxCollider2D:
