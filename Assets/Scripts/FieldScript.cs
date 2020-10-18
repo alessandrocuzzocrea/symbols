@@ -123,7 +123,9 @@ public class FieldScript : MonoBehaviour
         //Debug.Log($"update: {name}");
         if (Input.GetMouseButtonDown(0))
         {
-            currentPickType = Lane.LaneType.Columns;
+            // currentPickType = Lane.LaneType.Columns;
+            currentPickType = Lane.LaneType.Row;
+
 
             for (int i = 0; i < hits.Length; i++)
             {
@@ -171,34 +173,140 @@ public class FieldScript : MonoBehaviour
                 {
                     for (int j = currentDrop.id; currentPick.id < j; j--)
                     {
-                        GameObject.Find($"5_{j}").GetComponent<DotScript>().SetNewName($"5_{j - 1}");
-                        GameObject.Find($"4_{j}").GetComponent<DotScript>().SetNewName($"4_{j - 1}");
-                        GameObject.Find($"3_{j}").GetComponent<DotScript>().SetNewName($"3_{j - 1}");
-                        GameObject.Find($"2_{j}").GetComponent<DotScript>().SetNewName($"2_{j - 1}");
-                        GameObject.Find($"1_{j}").GetComponent<DotScript>().SetNewName($"1_{j - 1}");
-                        GameObject.Find($"0_{j}").GetComponent<DotScript>().SetNewName($"0_{j - 1}");
+                        string a_5 = "";
+                        string a_4 = "";
+                        string a_3 = "";
+                        string a_2 = "";
+                        string a_1 = "";
+                        string a_0 = "";
+
+                        string b_5 = "";
+                        string b_4 = "";
+                        string b_3 = "";
+                        string b_2 = "";
+                        string b_1 = "";
+                        string b_0 = "";
+
+                        if (currentPickType == Lane.LaneType.Columns)
+                        {
+                            a_5 = $"5_{j}";
+                            a_4 = $"4_{j}";
+                            a_3 = $"3_{j}";
+                            a_2 = $"2_{j}";
+                            a_1 = $"1_{j}";
+                            a_0 = $"0_{j}";
+
+                            b_5 = $"5_{j - 1}";
+                            b_4 = $"4_{j - 1}";
+                            b_3 = $"3_{j - 1}";
+                            b_2 = $"2_{j - 1}";
+                            b_1 = $"1_{j - 1}";
+                            b_0 = $"0_{j - 1}";
+                        }
+                        else
+                        {
+                            a_5 = $"{j}_5";
+                            a_4 = $"{j}_4";
+                            a_3 = $"{j}_3";
+                            a_2 = $"{j}_2";
+                            a_1 = $"{j}_1";
+                            a_0 = $"{j}_0";
+
+                            b_5 = $"{j - 1}_5";
+                            b_4 = $"{j - 1}_4";
+                            b_3 = $"{j - 1}_3";
+                            b_2 = $"{j - 1}_2";
+                            b_1 = $"{j - 1}_1";
+                            b_0 = $"{j - 1}_0";
+                        }
+
+                        GameObject.Find(a_5).GetComponent<DotScript>().SetNewName(b_5);
+                        GameObject.Find(a_4).GetComponent<DotScript>().SetNewName(b_4);
+                        GameObject.Find(a_3).GetComponent<DotScript>().SetNewName(b_3);
+                        GameObject.Find(a_2).GetComponent<DotScript>().SetNewName(b_2);
+                        GameObject.Find(a_1).GetComponent<DotScript>().SetNewName(b_1);
+                        GameObject.Find(a_0).GetComponent<DotScript>().SetNewName(b_0);
                     }
                 }
                 else if (currentPick.id > currentDrop.id)
                 {
                     for (int j = currentDrop.id; j < currentPick.id; j++)
                     {
-                        GameObject.Find($"5_{j}").GetComponent<DotScript>().SetNewName($"5_{j + 1}");
-                        GameObject.Find($"4_{j}").GetComponent<DotScript>().SetNewName($"4_{j + 1}");
-                        GameObject.Find($"3_{j}").GetComponent<DotScript>().SetNewName($"3_{j + 1}");
-                        GameObject.Find($"2_{j}").GetComponent<DotScript>().SetNewName($"2_{j + 1}");
-                        GameObject.Find($"1_{j}").GetComponent<DotScript>().SetNewName($"1_{j + 1}");
-                        GameObject.Find($"0_{j}").GetComponent<DotScript>().SetNewName($"0_{j + 1}");
+
+                        string a_5 = "";
+                        string a_4 = "";
+                        string a_3 = "";
+                        string a_2 = "";
+                        string a_1 = "";
+                        string a_0 = "";
+
+                        string b_5 = "";
+                        string b_4 = "";
+                        string b_3 = "";
+                        string b_2 = "";
+                        string b_1 = "";
+                        string b_0 = "";
+
+                        if (currentPickType == Lane.LaneType.Columns)
+                        {
+                            a_5 = $"5_{j}";
+                            a_4 = $"4_{j}";
+                            a_3 = $"3_{j}";
+                            a_2 = $"2_{j}";
+                            a_1 = $"1_{j}";
+                            a_0 = $"0_{j}";
+
+                            b_5 = $"5_{j + 1}";
+                            b_4 = $"4_{j + 1}";
+                            b_3 = $"3_{j + 1}";
+                            b_2 = $"2_{j + 1}";
+                            b_1 = $"1_{j + 1}";
+                            b_0 = $"0_{j + 1}";
+                        }
+                        else
+                        {
+                            a_5 = $"{j}_5";
+                            a_4 = $"{j}_4";
+                            a_3 = $"{j}_3";
+                            a_2 = $"{j}_2";
+                            a_1 = $"{j}_1";
+                            a_0 = $"{j}_0";
+
+                            b_5 = $"{j + 1}_5";
+                            b_4 = $"{j + 1}_4";
+                            b_3 = $"{j + 1}_3";
+                            b_2 = $"{j + 1}_2";
+                            b_1 = $"{j + 1}_1";
+                            b_0 = $"{j + 1}_0";
+                        }
+
+                        GameObject.Find(a_5).GetComponent<DotScript>().SetNewName(b_5);
+                        GameObject.Find(a_4).GetComponent<DotScript>().SetNewName(b_4);
+                        GameObject.Find(a_3).GetComponent<DotScript>().SetNewName(b_3);
+                        GameObject.Find(a_2).GetComponent<DotScript>().SetNewName(b_2);
+                        GameObject.Find(a_1).GetComponent<DotScript>().SetNewName(b_1);
+                        GameObject.Find(a_0).GetComponent<DotScript>().SetNewName(b_0);
                     }
                 }
 
-                GameObject.Find($"5_{currentPick.id}").GetComponent<DotScript>().SetNewName($"5_{currentDrop.id}");
-                GameObject.Find($"4_{currentPick.id}").GetComponent<DotScript>().SetNewName($"4_{currentDrop.id}");
-                GameObject.Find($"3_{currentPick.id}").GetComponent<DotScript>().SetNewName($"3_{currentDrop.id}");
-                GameObject.Find($"2_{currentPick.id}").GetComponent<DotScript>().SetNewName($"2_{currentDrop.id}");
-                GameObject.Find($"1_{currentPick.id}").GetComponent<DotScript>().SetNewName($"1_{currentDrop.id}");
-                GameObject.Find($"0_{currentPick.id}").GetComponent<DotScript>().SetNewName($"0_{currentDrop.id}");
-
+                if (currentPickType == Lane.LaneType.Columns)
+                {
+                    GameObject.Find($"5_{currentPick.id}").GetComponent<DotScript>().SetNewName($"5_{currentDrop.id}");
+                    GameObject.Find($"4_{currentPick.id}").GetComponent<DotScript>().SetNewName($"4_{currentDrop.id}");
+                    GameObject.Find($"3_{currentPick.id}").GetComponent<DotScript>().SetNewName($"3_{currentDrop.id}");
+                    GameObject.Find($"2_{currentPick.id}").GetComponent<DotScript>().SetNewName($"2_{currentDrop.id}");
+                    GameObject.Find($"1_{currentPick.id}").GetComponent<DotScript>().SetNewName($"1_{currentDrop.id}");
+                    GameObject.Find($"0_{currentPick.id}").GetComponent<DotScript>().SetNewName($"0_{currentDrop.id}");
+                }
+                else
+                {
+                    GameObject.Find($"{currentPick.id}_5").GetComponent<DotScript>().SetNewName($"{currentDrop.id}_5");
+                    GameObject.Find($"{currentPick.id}_4").GetComponent<DotScript>().SetNewName($"{currentDrop.id}_4");
+                    GameObject.Find($"{currentPick.id}_3").GetComponent<DotScript>().SetNewName($"{currentDrop.id}_3");
+                    GameObject.Find($"{currentPick.id}_2").GetComponent<DotScript>().SetNewName($"{currentDrop.id}_2");
+                    GameObject.Find($"{currentPick.id}_1").GetComponent<DotScript>().SetNewName($"{currentDrop.id}_1");
+                    GameObject.Find($"{currentPick.id}_0").GetComponent<DotScript>().SetNewName($"{currentDrop.id}_0");
+                }
                 //DotScript[] dots = GetDotsColumn(possibleDropId);
 
                 DotScript[] dots = GameObject.FindObjectsOfType<DotScript>();
