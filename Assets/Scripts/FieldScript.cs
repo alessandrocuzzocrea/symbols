@@ -178,7 +178,8 @@ public class FieldScript : MonoBehaviour
             possibleCurrentPick[1] = null;
             possibleDropId = -1;
 
-        } else if (Input.GetMouseButton(0))
+        }
+        else if (Input.GetMouseButton(0))
         {
             //// find current pick
             //for (int i = 0; i < possibleCurrentPick.Length; i++)
@@ -244,6 +245,22 @@ public class FieldScript : MonoBehaviour
                 foreach (DotScript dot in dots)
                 {
                     dot.SwapName();
+                }
+            }
+
+
+            // update current pick
+            for (int i = 0; i < hits.Length; i++)
+            {
+                possibleCurrentPick[i] = hits[i].collider.GetComponent<Lane>();
+            }
+
+            // find current pick
+            for (int i = 0; i < possibleCurrentPick.Length; i++)
+            {
+                if (possibleCurrentPick[i].laneType == Lane.LaneType.Columns)
+                {
+                    currentPick = possibleCurrentPick[i];
                 }
             }
         }
