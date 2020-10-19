@@ -265,6 +265,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   laneType: 0
+--- !u!1 &72762555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 72762556}
+  m_Layer: 0
+  m_Name: Dots
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &72762556
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72762555}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1575346529}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &153613708
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,6 +1065,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 3199242685302582007, guid: df3f627cfc578461aa25eaa84f4aecb0, type: 3}
+  dotsContainer: {fileID: 72762556}
   rows: 6
   columns: 6
   spacing: 2
@@ -1043,16 +1074,22 @@ MonoBehaviour:
   scanLinePrefab: {fileID: 4150181029120132194, guid: 728860d4f807446328d996bee76ba07a,
     type: 3}
   scanlineTransform: {fileID: 0}
-  timeBetweenScanLines: 4
+  timeBetweenScanLines: 2
   timeLeftCurrentScanline: 0
   currentRow: 0
   crosshair: {fileID: 1648435747}
   currentPick: {fileID: 0}
   possibleCurrentPick: []
   currentPickType: 0
-  pauseTimer: 1
+  pauseTimer: 0
   possibleDropId: 0
   currentDrop: {fileID: 0}
+  bMouseCoordsOnClick: 0
+  vMouseCoordsOnClick: {x: 0, y: 0}
+  bMouseCoordsNow: 0
+  vMouseCoordsNow: {x: 0, y: 0}
+  bCurrentPickTypeLocked: 0
+  noConnectionRequired: 3
 --- !u!4 &1575346529
 Transform:
   m_ObjectHideFlags: 0
@@ -1065,6 +1102,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1917160410}
+  - {fileID: 72762556}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
