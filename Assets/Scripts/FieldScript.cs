@@ -47,6 +47,8 @@ public class FieldScript : MonoBehaviour
     public Vector2 vMouseCoordsNow;
     public bool    bCurrentPickTypeLocked;
     public int     noConnectionRequired;
+    public int     score;
+    private bool   bGameOver;
 
     // Start is called before the first frame update
     void Start()
@@ -111,6 +113,11 @@ public class FieldScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (bGameOver)
+        {
+            return;
+        }
+
         //Update timer
         if (!pauseTimer)
         {
@@ -492,14 +499,6 @@ public class FieldScript : MonoBehaviour
     {
         int row = currentRow;
 
-        DotScript test5 = GameObject.Find($"{row}_5").GetComponent<DotScript>();
-        DotScript test4 = GameObject.Find($"{row}_4").GetComponent<DotScript>();
-        DotScript test3 = GameObject.Find($"{row}_3").GetComponent<DotScript>();
-        DotScript test2 = GameObject.Find($"{row}_2").GetComponent<DotScript>();
-        DotScript test1 = GameObject.Find($"{row}_1").GetComponent<DotScript>();
-        DotScript test0 = GameObject.Find($"{row}_0").GetComponent<DotScript>();
-
-        //DotScript[] dotsToClear = { test5, test4, test3, test2, test1, test0 };
         DotScript[] dotsToClear = GameObject.FindObjectsOfType<DotScript>();
 
         foreach (DotScript dot in dotsToClear)
@@ -521,12 +520,10 @@ public class FieldScript : MonoBehaviour
                 foreach(DotScript d in connectedDots)
                 {
                     d.SetType(DotScript.Type.Empty);
-                    //dot.connectedTo.SetType(DotScript.Type.Empty);
-
                     d.highlight.gameObject.SetActive(false);
-                    //dot.connectedTo.highlight.gameObject.SetActive(false);
-
                     d.connectedTo = null;
+
+                    score += 1;
                 }
             }
         }
@@ -585,6 +582,11 @@ public class FieldScript : MonoBehaviour
 
     void DropNewDots()
     {
+        if (CountDots() >= 36)
+        {
+            bGameOver = true;
+        }
+
         int leftToDropCount = maxDrop;
         for (int i = 0; i < dotsContainer.childCount; i++)
         {
@@ -607,6 +609,22 @@ public class FieldScript : MonoBehaviour
         UpdateConnections();
     }
 
+    public int CountDots()
+    {
+        var res = 0;
+        foreach (var number in GameObject.FindObjectsOfType<DotScript>())
+        {
+            if(number.color != DotScript.Type.Empty)  res += 1;
+        }
+
+        return res;
+    }
+
+    public int Score()
+    {
+        return score;
+    }
+
     void OnGUI()
     {
 
@@ -617,10 +635,13 @@ public class FieldScript : MonoBehaviour
         if (currentPick) GUI.Label(new Rect(10, 46, 1000, 90), "Current Pick: " + currentPick.id);
         if (currentPick) GUI.Label(new Rect(10, 56, 1000, 90), "Current Type: " + currentPickType.ToString());
         if (possibleDropId != -1) GUI.Label(new Rect(10, 66, 1000, 90), "Possible drop: " + possibleDropId);
-        if (bMouseCoordsOnClick) GUI.Label(new Rect(10, 76, 1000, 90), "Mouse onClick: " + vMouseCoordsOnClick.ToString());
-        if (bMouseCoordsNow) GUI.Label(new Rect(10, 86, 1000, 90), "Mouse now: " + vMouseCoordsNow.ToString());
+        GUI.Label(new Rect(10, 77, 1000, 90), "Dots: " + CountDots() + "/36");
+        GUI.Label(new Rect(10, 87, 1000, 90), "Score: " + Score());
+        if (bMouseCoordsOnClick) GUI.Label(new Rect(10, 96, 1000, 90), "Mouse onClick: " + vMouseCoordsOnClick.ToString());
+        if (bMouseCoordsNow) GUI.Label(new Rect(10, 106, 1000, 90), "Mouse now: " + vMouseCoordsNow.ToString());
+        if (bGameOver) GUI.Label(new Rect(10, 116, 1000, 90), "GAME OVER");
 
-        if (GUI.Button(new Rect(10, 106, 100, 20), "Spawn Dots"))
+        if (GUI.Button(new Rect(10, 156, 100, 20), "Spawn Dots"))
         {
             DropNewDots();
         }
