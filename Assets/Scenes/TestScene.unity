@@ -1074,10 +1074,11 @@ MonoBehaviour:
   scanLinePrefab: {fileID: 4150181029120132194, guid: 728860d4f807446328d996bee76ba07a,
     type: 3}
   scanlineTransform: {fileID: 0}
-  timeBetweenScanLines: 2
+  timeBetweenScanLines: 1
   timeLeftCurrentScanline: 0
   currentRow: 0
   crosshair: {fileID: 1648435747}
+  maxDrop: 3
   currentPick: {fileID: 0}
   possibleCurrentPick: []
   currentPickType: 0
@@ -1089,7 +1090,7 @@ MonoBehaviour:
   bMouseCoordsNow: 0
   vMouseCoordsNow: {x: 0, y: 0}
   bCurrentPickTypeLocked: 0
-  noConnectionRequired: 3
+  noConnectionRequired: 2
   score: 0
 --- !u!4 &1575346529
 Transform:

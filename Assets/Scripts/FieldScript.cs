@@ -26,7 +26,7 @@ public class FieldScript : MonoBehaviour
     bool isDragging;
     GameObject draggedDot;
 
-    int maxDrop = 3;
+    public int maxDrop;
 
     // Prototype 2
     public Lane currentPick;
@@ -116,7 +116,8 @@ public class FieldScript : MonoBehaviour
         {
             MoveScanline();
             ClearDots();
-            CheckIfDraggedDotIsStillThere();
+            DropNewDots();
+            //CheckIfDraggedDotIsStillThere();
         }
 
         Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
@@ -419,7 +420,7 @@ public class FieldScript : MonoBehaviour
         localPosition.y = currentRow;
         scanlineTransform.localPosition = localPosition;
 
-        DropNewDots();
+        //DropNewDots();
     }
 
     private void ClearDots()
@@ -456,6 +457,7 @@ public class FieldScript : MonoBehaviour
         }
     }
 
+    // I have no recollection of this method
     private void CheckIfDraggedDotIsStillThere()
     {
         if ( draggedDot )
@@ -535,12 +537,19 @@ public class FieldScript : MonoBehaviour
         UpdateConnections();
     }
 
-    public int CountDots()
+    public int CountDots(bool onlyEmpty = false)
     {
         var res = 0;
         foreach (var number in GameObject.FindObjectsOfType<DotScript>())
         {
-            if(number.color != DotScript.Type.Empty)  res += 1;
+            if (onlyEmpty)
+            {
+                if (number.color == DotScript.Type.Empty) res += 1;
+            }
+            else
+            {
+                if(number.color != DotScript.Type.Empty)  res += 1;
+            }
         }
 
         return res;
@@ -560,11 +569,12 @@ public class FieldScript : MonoBehaviour
         if (currentPick) GUI.Label(new Rect(10, 46, 1000, 90), "Current Pick: " + currentPick.id);
         if (currentPick) GUI.Label(new Rect(10, 56, 1000, 90), "Current Type: " + currentPickType.ToString());
         if (possibleDropId != -1) GUI.Label(new Rect(10, 66, 1000, 90), "Possible drop: " + possibleDropId);
-        GUI.Label(new Rect(10, 77, 1000, 90), "Dots: " + CountDots() + "/36");
-        GUI.Label(new Rect(10, 87, 1000, 90), "Score: " + Score());
-        if (bMouseCoordsOnClick) GUI.Label(new Rect(10, 96, 1000, 90), "Mouse onClick: " + vMouseCoordsOnClick.ToString());
-        if (bMouseCoordsNow) GUI.Label(new Rect(10, 106, 1000, 90), "Mouse now: " + vMouseCoordsNow.ToString());
-        if (bGameOver) GUI.Label(new Rect(10, 116, 1000, 90), "GAME OVER");
+        GUI.Label(new Rect(10, 77, 1000, 90), "Dots       : " + CountDots()     + "/36");
+        GUI.Label(new Rect(10, 87, 1000, 90), "Dots(empty): " + CountDots(true) + "/36");
+        GUI.Label(new Rect(10, 97, 1000, 90), "Score: " + Score());
+        if (bMouseCoordsOnClick) GUI.Label(new Rect(10, 106, 1000, 90), "Mouse onClick: " + vMouseCoordsOnClick.ToString());
+        if (bMouseCoordsNow) GUI.Label(new Rect(10, 116, 1000, 90), "Mouse now: " + vMouseCoordsNow.ToString());
+        if (bGameOver) GUI.Label(new Rect(10, 126, 1000, 90), "GAME OVER");
 
         if (GUI.Button(new Rect(10, 156, 100, 20), "Spawn Dots"))
         {
