@@ -24,13 +24,9 @@ public class FieldScript : MonoBehaviour
     //Crosshair
     public GameObject crosshair;
     bool isDragging;
-    Vector2 mousePosAtDragStart;
     GameObject draggedDot;
 
     int maxDrop = 3;
-    //Setup
-    //public int initialDotsCount = 6;
-
 
     // Prototype 2
     public Lane currentPick;
@@ -38,7 +34,6 @@ public class FieldScript : MonoBehaviour
     public Lane.LaneType currentPickType;
     public bool pauseTimer;
     public int possibleDropId;
-    //public string possibleDropString;
     public Lane currentDrop;
 
     public bool    bMouseCoordsOnClick;
@@ -73,7 +68,6 @@ public class FieldScript : MonoBehaviour
         }
 
         int a = dotsContainer.childCount;
-        //int dotsRemainingToPlace = initialDotsCount;
 
         for (int i = 0; i < a; i++)
         {
@@ -83,13 +77,7 @@ public class FieldScript : MonoBehaviour
                 {
                     dotsContainer.GetChild(i).GetComponent<DotScript>().SetType(DotScript.GetRandomColor());
                 }
-                //dotsRemainingToPlace -= 1;
             }
-
-            //if (dotsRemainingToPlace <= 0)
-            //{
-            //    break;
-            //}
         }
 
         //Init scanline
@@ -134,26 +122,12 @@ public class FieldScript : MonoBehaviour
         Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
 
-        //Debug.Log($"update: {name}");
         if (Input.GetMouseButtonDown(0))
         {
-            //currentPickType = Lane.LaneType.Columns;
-            //currentPickType = Lane.LaneType.Row;
-
-
             for (int i = 0; i < hits.Length; i++)
             {
                 possibleCurrentPick[i] = hits[i].collider.GetComponent<Lane>();
             }
-
-            // find current pick
-            //for (int i = 0; i < possibleCurrentPick.Length; i++)
-            //{
-            //    if (possibleCurrentPick[i].laneType == currentPickType)
-            //    {
-            //        currentPick = possibleCurrentPick[i];
-            //    }
-            //}
 
             bMouseCoordsOnClick = true;
             vMouseCoordsOnClick = pos;
@@ -185,8 +159,6 @@ public class FieldScript : MonoBehaviour
 
             float dist = Vector3.Distance(vMouseCoordsNow, vMouseCoordsOnClick);
             float dotProduct = Vector3.Dot(Vector3.right, (vMouseCoordsNow - vMouseCoordsOnClick).normalized);
-            //Debug.Log("distance: " + dist);
-            //Debug.Log("dot: " + dotProduct);
 
             if (!bCurrentPickTypeLocked && dist >= 5.0f)
             {
@@ -225,7 +197,6 @@ public class FieldScript : MonoBehaviour
                 if (possibleDrop.laneType == currentPickType)
                 {
                     currentDrop = possibleDrop;
-                    //possibleDropId = currentDrop.id;
                 }
             }
 
@@ -372,7 +343,6 @@ public class FieldScript : MonoBehaviour
                     GameObject.Find($"{currentPick.id}_1").GetComponent<DotScript>().SetNewName($"{currentDrop.id}_1");
                     GameObject.Find($"{currentPick.id}_0").GetComponent<DotScript>().SetNewName($"{currentDrop.id}_0");
                 }
-                //DotScript[] dots = GetDotsColumn(possibleDropId);
 
                 DotScript[] dots = GameObject.FindObjectsOfType<DotScript>();
                 foreach (DotScript dot in dots)
@@ -414,12 +384,6 @@ public class FieldScript : MonoBehaviour
                 //Vertical
                 Vector2 endV = new Vector2(start.x, start.y - 2);
                 Debug.DrawLine(start, endV);
-
-                //GameObject child = Instantiate(prefab, Vector3.zero, Quaternion.identity, transform) as GameObject;
-                //child.transform.localPosition = new Vector3(j * 1, i * 1);
-                //child.name = $"Dot_{j}_{i}";
-                //DotScript script = child.GetComponent<DotScript>();
-                //script.field = this;
             }
         }
     }
@@ -441,43 +405,6 @@ public class FieldScript : MonoBehaviour
 
         return res.ToArray();
     }
-
-    //public void MoveLane(Lane pick, Lane drop)
-    //{
-    //    //DotScript.Type type5 = GameObject.Find($"5_{pick.id}").GetComponent<DotScript>().color;
-    //    //DotScript.Type type4 = GameObject.Find($"4_{pick.id}").GetComponent<DotScript>().color;
-    //    //DotScript.Type type3 = GameObject.Find($"3_{pick.id}").GetComponent<DotScript>().color;
-    //    //DotScript.Type type2 = GameObject.Find($"2_{pick.id}").GetComponent<DotScript>().color;
-    //    //DotScript.Type type1 = GameObject.Find($"1_{pick.id}").GetComponent<DotScript>().color;
-    //    //DotScript.Type type0 = GameObject.Find($"0_{pick.id}").GetComponent<DotScript>().color;
-
-    //    if (pick.id < drop.id)
-    //    {
-    //        for (int i = drop.id; pick.id < i; i--)
-    //        {
-    //            GameObject.Find($"5_{i}").GetComponent<DotScript>().SetNewName($"5_{i - 1}");
-    //            GameObject.Find($"4_{i}").GetComponent<DotScript>().SetNewName($"4_{i - 1}");
-    //            GameObject.Find($"3_{i}").GetComponent<DotScript>().SetNewName($"3_{i - 1}");
-    //            GameObject.Find($"2_{i}").GetComponent<DotScript>().SetNewName($"2_{i - 1}");
-    //            GameObject.Find($"1_{i}").GetComponent<DotScript>().SetNewName($"1_{i - 1}");
-    //            GameObject.Find($"0_{i}").GetComponent<DotScript>().SetNewName($"0_{i - 1}");
-    //        }
-    //    }
-
-    //    GameObject.Find($"5_{pick.id}").GetComponent<DotScript>().SetNewName($"5_{drop.id}");
-    //    GameObject.Find($"4_{pick.id}").GetComponent<DotScript>().SetNewName($"4_{drop.id}");
-    //    GameObject.Find($"3_{pick.id}").GetComponent<DotScript>().SetNewName($"3_{drop.id}");
-    //    GameObject.Find($"2_{pick.id}").GetComponent<DotScript>().SetNewName($"2_{drop.id}");
-    //    GameObject.Find($"1_{pick.id}").GetComponent<DotScript>().SetNewName($"1_{drop.id}");
-    //    GameObject.Find($"0_{pick.id}").GetComponent<DotScript>().SetNewName($"0_{drop.id}");
-
-    //    DotScript[] dots = GameObject.FindObjectsOfType<DotScript>();
-    //    foreach(DotScript dot in dots)
-    //    {
-    //        dot.SwapName();
-    //    }
-    //    //Debug.Log("");
-    //}
 
     private void MoveScanline()
     {
@@ -544,7 +471,6 @@ public class FieldScript : MonoBehaviour
 
     void UpdateConnections()
     {
-        //Debug.Log("UpdateConnection");
         // Reset all connections
         for (int i = 0; i < dotsContainer.childCount; i++)
         {
@@ -627,7 +553,6 @@ public class FieldScript : MonoBehaviour
 
     void OnGUI()
     {
-
         GUI.Label(new Rect(10, 0, 1000, 90), $"Time: {timeLeftCurrentScanline}");
         if (pick1) GUI.Label(new Rect(10, 16, 1000, 90), pick1.name);
         if (pick2) GUI.Label(new Rect(10, 26, 1000, 90), pick2.name);
@@ -645,54 +570,5 @@ public class FieldScript : MonoBehaviour
         {
             DropNewDots();
         }
-
-        //Debug buttons
-        //string[] topRow = { "5_0", "5_1", "5_2", "5_3", "5_4", "5_5" };
-        //foreach(string row in topRow)
-        //{
-        //    GameObject test = GameObject.Find(row);
-        //    Vector2 position = Camera.main.WorldToScreenPoint(test.transform.position);
-        //    if (GUI.Button(new Rect(position.x, Screen.height - position.y - 40, 20, 20), "U"))
-        //    {
-        //        MoveDots(row, "U");
-        //        UpdateConnections();
-        //    }
-        //}
-
-        //string[] bottomRow = { "0_0", "0_1", "0_2", "0_3", "0_4", "0_5" };
-        //foreach (string row in bottomRow)
-        //{
-        //    GameObject test = GameObject.Find(row);
-        //    Vector2 position = Camera.main.WorldToScreenPoint(test.transform.position);
-        //    if (GUI.Button(new Rect(position.x, Screen.height - position.y + 20, 20, 20), "D"))
-        //    {
-        //        MoveDots(row, "D");
-        //        UpdateConnections();
-        //    }
-        //}
-
-        //string[] leftRow = { "0_0", "1_0", "2_0", "3_0", "4_0", "5_0" };
-        //foreach (string row in leftRow)
-        //{
-        //    GameObject test = GameObject.Find(row);
-        //    Vector2 position = Camera.main.WorldToScreenPoint(test.transform.position);
-        //    if (GUI.Button(new Rect(position.x - 40, Screen.height - position.y, 20, 20), "L"))
-        //    {
-        //        MoveDots(row, "L");
-        //        UpdateConnections();
-        //    }
-        //}
-
-        //string[] rightRow = { "0_5", "1_5", "2_5", "3_5", "4_5", "5_5" };
-        //foreach (string row in rightRow)
-        //{
-        //    GameObject test = GameObject.Find(row);
-        //    Vector2 position = Camera.main.WorldToScreenPoint(test.transform.position);
-        //    if (GUI.Button(new Rect(position.x + 20, Screen.height - position.y, 20, 20), "R"))
-        //    {
-        //        MoveDots(row, "R");
-        //        UpdateConnections();
-        //    }
-        //}
     }
 }
