@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FieldScript : MonoBehaviour
 {
@@ -44,6 +45,10 @@ public class FieldScript : MonoBehaviour
     public int     noConnectionRequired;
     public int     score;
     private bool   bGameOver;
+
+    // UI
+    public Text scoreText;
+    public Image timerImage;
 
     // Start is called before the first frame update
     void Start()
@@ -387,6 +392,14 @@ public class FieldScript : MonoBehaviour
                 Debug.DrawLine(start, endV);
             }
         }
+
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        scoreText.text = score.ToString();
+        timerImage.fillAmount = timeLeftCurrentScanline;
     }
 
     private DotScript[] GetDotsColumn(int possibleDropId)
