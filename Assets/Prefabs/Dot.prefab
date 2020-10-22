@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1911942010049919252}
   - component: {fileID: 6216707816762870107}
   - component: {fileID: 4193966752549979989}
+  - component: {fileID: 1774031450910483307}
   m_Layer: 0
   m_Name: Dot
   m_TagString: Untagged
@@ -102,6 +103,11 @@ MonoBehaviour:
   color: 0
   connectedTo: {fileID: 0}
   highlight: {fileID: 6290912365567599661}
+  newName: 
+  newCurrentRow: 0
+  newCurrentColumn: 0
+  isMoving: 0
+  speed: 0.05
 --- !u!58 &4193966752549979989
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -118,6 +124,25 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.32
+--- !u!95 &1774031450910483307
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3199242685302582007}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0ba6ad59e9399425e90edec17a20fa68, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6290912365567599661
 GameObject:
   m_ObjectHideFlags: 0
