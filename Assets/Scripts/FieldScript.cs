@@ -542,12 +542,46 @@ public class FieldScript : MonoBehaviour
 
                 if (dot && dot.color == DotScript.Type.Empty)
                 {
-                    dot.SetType(DotScript.GetRandomColor());
+                    var possibleColors = new List<DotScript.Type>();
+                    possibleColors.Add(DotScript.Type.Red);
+                    possibleColors.Add(DotScript.Type.Gree);
+                    possibleColors.Add(DotScript.Type.Blue);
+
+                    //Check left
+                    int currC = dot.currentColumn;
+                    int currR = dot.currentRow;
+
+                    DotScript leftDot = GetDotByCoords(currR, currC - 1);
+                    if (leftDot && leftDot.color != DotScript.Type.Empty)
+                    {
+                        possibleColors.Remove(leftDot.color);
+                    }
+
+                    DotScript rightDot = GetDotByCoords(currR, currC + 1);
+                    if (rightDot && rightDot.color != DotScript.Type.Empty)
+                    {
+                        possibleColors.Remove(rightDot.color);
+                    }
+
+                    dot.SetType(DotScript.GetRandomColor(possibleColors));
                     leftToDropCount -= 1;
                 }
             }
         }
         UpdateConnections();
+    }
+
+    private DotScript GetDotByCoords(int r, int c)
+    {
+        var go = GameObject.Find($"{r}_{c}");
+        if (go)
+        {
+            return go.GetComponent<DotScript>();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public int CountDots(bool onlyEmpty = false)

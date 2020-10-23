@@ -8,7 +8,7 @@ public class DotScript : MonoBehaviour
     Color[] loller = new Color[] { Color.black, Color.red, Color.green, Color.blue };
     public int currentRow;
     public int currentColumn;
-    public enum Type { Empty, Red, Gree, Blue }
+    public enum Type { Empty, Red, Gree, Blue } // #TODO: Gree, lmao
     public Type color;
     public DotScript connectedTo;
     public GameObject sprite;
@@ -76,6 +76,11 @@ public class DotScript : MonoBehaviour
     public static DotScript.Type GetRandomColor()
     {
         return (DotScript.Type) Random.Range(0, 4);
+    }
+
+    public static Type GetRandomColor(List<Type> possibleColors)
+    {
+        return possibleColors[Random.Range(0, possibleColors.Count)];
     }
 
     public void SetNewName(string s)
