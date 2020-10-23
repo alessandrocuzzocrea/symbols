@@ -5,7 +5,7 @@ using UnityEngine;
 public class DotScript : MonoBehaviour
 {
     public FieldScript field;
-    Color[] loller = new Color[] { new Color(0, 0, 0, .1f), Color.red, Color.green, Color.blue };
+    Color[] loller = new Color[] { Color.black, Color.red, Color.green, Color.blue };
     public int currentRow;
     public int currentColumn;
     public enum Type { Empty, Red, Gree, Blue }
@@ -20,6 +20,7 @@ public class DotScript : MonoBehaviour
     public bool isMoving;
 
     public float speed = 0.05f;
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -52,7 +53,16 @@ public class DotScript : MonoBehaviour
     public void SetType(Type c)
     {
         color = c;
-        sprite.GetComponent<SpriteRenderer>().color = loller[(int) color];
+
+        if (color == Type.Empty)
+        {
+            animator.SetBool("IsClearing", true);
+        }
+        else
+        {
+            sprite.GetComponent<SpriteRenderer>().color = loller[(int)color];
+            animator.SetBool("IsClearing", false);
+        }
     }
 
     private void OnGUI()
