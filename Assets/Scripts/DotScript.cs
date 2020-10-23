@@ -11,6 +11,7 @@ public class DotScript : MonoBehaviour
     public enum Type { Empty, Red, Gree, Blue }
     public Type color;
     public DotScript connectedTo;
+    public GameObject sprite;
     public GameObject highlight;
     public string newName;
 
@@ -51,7 +52,7 @@ public class DotScript : MonoBehaviour
     public void SetType(Type c)
     {
         color = c;
-        GetComponent<SpriteRenderer>().color = loller[(int) color];
+        sprite.GetComponent<SpriteRenderer>().color = loller[(int) color];
     }
 
     private void OnGUI()
