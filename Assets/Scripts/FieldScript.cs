@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class FieldScript : MonoBehaviour
@@ -627,5 +628,15 @@ public class FieldScript : MonoBehaviour
         {
             DropNewDots();
         }
+
+        if (GUI.Button(new Rect(10, 176, 100, 20), "Reset Game"))
+        {
+            ResetGame();
+        }
+    }
+
+    private void ResetGame()
+    {
+        SceneManager.LoadScene(0);
     }
 }
