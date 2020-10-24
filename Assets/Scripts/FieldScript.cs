@@ -643,22 +643,57 @@ public class FieldScript : MonoBehaviour
     // Touch
     private Vector2 GetTouchPosition()
     {
-        return new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        if (Input.touchSupported)
+        {
+            if (Input.touchCount > 0)
+            {
+                return Input.GetTouch(0).position;
+            }
+        }
+
+        return Input.mousePosition;
     }
 
 
     private bool GetMouseButtonDown()
     {
+        if (Input.touchSupported)
+        {
+            if (Input.touchCount > 0)
+            {
+                Touch t = Input.GetTouch(0);
+                return t.phase == TouchPhase.Began;
+            }
+        }
+
         return Input.GetMouseButtonDown(0);
     }
 
     private bool GetMouseButtonUp()
     {
+        if (Input.touchSupported)
+        {
+            if (Input.touchCount > 0)
+            {
+                Touch t = Input.GetTouch(0);
+                return t.phase == TouchPhase.Ended && t.phase == TouchPhase.Canceled;
+            }
+        }
+
         return Input.GetMouseButtonUp(0);
     }
 
     private bool GetMouseButton()
     {
+        if (Input.touchSupported)
+        {
+            if (Input.touchCount > 0)
+            {
+                Touch t = Input.GetTouch(0);
+                return t.phase == TouchPhase.Moved && t.phase == TouchPhase.Stationary;
+            }
+        }
+
         return Input.GetMouseButton(0);
     }
 }
