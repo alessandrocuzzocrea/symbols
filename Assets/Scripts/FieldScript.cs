@@ -126,10 +126,10 @@ public class FieldScript : MonoBehaviour
             //CheckIfDraggedDotIsStillThere();
         }
 
-        Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        Vector2 pos = GetTouchPosition();
         RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
 
-        if (Input.GetMouseButtonDown(0))
+        if (GetMouseButtonDown())
         {
             for (int i = 0; i < hits.Length; i++)
             {
@@ -147,7 +147,7 @@ public class FieldScript : MonoBehaviour
             pauseTimer = true;
             timeLeftCurrentScanline = timeBetweenScanLines;
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (GetMouseButtonUp())
         {
             currentPick = null;
             currentDrop = null;
@@ -159,7 +159,7 @@ public class FieldScript : MonoBehaviour
             pauseTimer = false;
 
         }
-        else if (Input.GetMouseButton(0))
+        else if (GetMouseButton())
         {
             bMouseCoordsNow = true;
             vMouseCoordsNow = pos;
@@ -638,5 +638,27 @@ public class FieldScript : MonoBehaviour
     private void ResetGame()
     {
         SceneManager.LoadScene(0);
+    }
+
+    // Touch
+    private Vector2 GetTouchPosition()
+    {
+        return new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+    }
+
+
+    private bool GetMouseButtonDown()
+    {
+        return Input.GetMouseButtonDown(0);
+    }
+
+    private bool GetMouseButtonUp()
+    {
+        return Input.GetMouseButtonUp(0);
+    }
+
+    private bool GetMouseButton()
+    {
+        return Input.GetMouseButton(0);
     }
 }
