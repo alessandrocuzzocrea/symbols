@@ -676,7 +676,7 @@ public class FieldScript : MonoBehaviour
             if (Input.touchCount > 0)
             {
                 Touch t = Input.GetTouch(0);
-                return t.phase == TouchPhase.Ended && t.phase == TouchPhase.Canceled;
+                return t.phase == TouchPhase.Ended || t.phase == TouchPhase.Canceled;
             }
         }
 
@@ -690,7 +690,7 @@ public class FieldScript : MonoBehaviour
             if (Input.touchCount > 0)
             {
                 Touch t = Input.GetTouch(0);
-                return t.phase == TouchPhase.Moved && t.phase == TouchPhase.Stationary;
+                return t.phase == TouchPhase.Moved || t.phase == TouchPhase.Stationary;
             }
         }
 
