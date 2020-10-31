@@ -1,4 +1,6 @@
 ﻿using System;
+using UnityEngine;
+
 public class TouchEvents
 {
     public delegate void Start();
