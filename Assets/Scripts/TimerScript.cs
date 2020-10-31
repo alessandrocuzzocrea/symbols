@@ -14,12 +14,17 @@ public class TimerScript : MonoBehaviour
     {
         EventManager.OnTouchStart += Pause;
         EventManager.OnTouchEnd   += Resume;
+
+        EventManager.OnGameOver += Pause;
     }
 
     private void OnDisable()
     {
         EventManager.OnTouchStart -= Pause;
         EventManager.OnTouchEnd   -= Resume;
+
+        EventManager.OnGameOver -= Pause;
+
     }
 
     void Start()
@@ -45,6 +50,7 @@ public class TimerScript : MonoBehaviour
 
     private void Pause()
     {
+        Reset();
         pauseTimer = true;
     }
 

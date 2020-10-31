@@ -60,12 +60,21 @@ public class FieldScript : MonoBehaviour
         EventManager.OnTouchMove  += OnTouchMove;
         EventManager.OnTouchEnd   += OnTouchEnd;
 
+        EventManager.OnGameOver += OnGameOver;
+
     }
 
     private void OnDisable()
     {
         EventManager.OnTimerEnd -= ClearDots;
         EventManager.OnTimerEnd -= DropNewDots;
+
+        EventManager.OnTouchStart -= OnTouchStart;
+        EventManager.OnTouchMove  -= OnTouchMove;
+        EventManager.OnTouchEnd   -= OnTouchEnd;
+
+        EventManager.OnGameOver -= OnGameOver;
+
     }
 
     void Start()
@@ -122,6 +131,11 @@ public class FieldScript : MonoBehaviour
 
     void OnTouchStart()
     {
+        if (bGameOver)
+        {
+            return;
+        }
+
         Vector2 pos = InputScript.GetTouchPosition();
         RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
 
@@ -145,6 +159,11 @@ public class FieldScript : MonoBehaviour
 
     void OnTouchMove()
     {
+        if (bGameOver)
+        {
+            return;
+        }
+
         Vector2 pos = InputScript.GetTouchPosition();
         RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
 
@@ -366,6 +385,11 @@ public class FieldScript : MonoBehaviour
 
     void OnTouchEnd()
     {
+        if (bGameOver)
+        {
+            return;
+        }
+
         currentPick = null;
         currentDrop = null;
         possibleCurrentPick[0] = null;
@@ -406,7 +430,7 @@ public class FieldScript : MonoBehaviour
 
     private void UpdateUI()
     {
-        scoreText.text = score.ToString();
+        scoreText.text = score.ToString(); //TODO: this should be handled by the gameplay manager
         //timerImage.fillAmount = timeLeftCurrentScanline; TODO: Moved to TimerScript
     }
 
@@ -503,7 +527,7 @@ public class FieldScript : MonoBehaviour
     {
         if (CountDots() >= 36)
         {
-            bGameOver = true;
+            EventManager.OnGameOver();
         }
 
         int leftToDropCount = maxDrop;
@@ -580,7 +604,7 @@ public class FieldScript : MonoBehaviour
         return res;
     }
 
-    public int Score()
+    public int Score() //TODO: this should be handled by the gameplay manager
     {
         return score;
     }
@@ -614,6 +638,11 @@ public class FieldScript : MonoBehaviour
 
     private void ResetGame()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(0); //TODO: this should be handled by the gameplay manager
+    }
+
+    private void OnGameOver()
+    {
+        bGameOver = true; //TODO: this should be handled by the gameplay manager
     }
 }
