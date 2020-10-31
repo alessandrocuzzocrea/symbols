@@ -51,6 +51,21 @@ public class FieldScript : MonoBehaviour
     public Text scoreText;
     public Image timerImage;
 
+    private void OnEnable()
+    {
+        EventManager.OnTestDelegate += Omar;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnTestDelegate -= Omar;
+    }
+
+    private void Omar()
+    {
+        Debug.Log("Omar");
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -632,6 +647,11 @@ public class FieldScript : MonoBehaviour
         if (GUI.Button(new Rect(10, 176, 100, 20), "Reset Game"))
         {
             ResetGame();
+        }
+
+        if (GUI.Button(new Rect(10, 196, 100, 20), "Test Delegate"))
+        {
+            EventManager.OnTestDelegate?.Invoke();
         }
     }
 
