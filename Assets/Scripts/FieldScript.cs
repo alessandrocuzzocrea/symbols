@@ -19,8 +19,8 @@ public class FieldScript : MonoBehaviour
     //Scanline
     public Object scanLinePrefab;
     public Transform scanlineTransform;
-    public float timeBetweenScanLines = 4.0f;
-    public float timeLeftCurrentScanline;
+    //public float timeBetweenScanLines = 4.0f;
+    //public float timeLeftCurrentScanline;
     public int currentRow;
 
     //Crosshair
@@ -34,7 +34,7 @@ public class FieldScript : MonoBehaviour
     public Lane currentPick;
     public Lane[] possibleCurrentPick;
     public Lane.LaneType currentPickType;
-    public bool pauseTimer;
+    //public bool pauseTimer;
     public int possibleDropId;
     public Lane currentDrop;
 
@@ -49,7 +49,7 @@ public class FieldScript : MonoBehaviour
 
     // UI
     public Text scoreText;
-    public Image timerImage;
+    //public Image timerImage;
 
     private void OnEnable()
     {
@@ -102,7 +102,7 @@ public class FieldScript : MonoBehaviour
         }
 
         //Init scanline
-        timeLeftCurrentScanline = timeBetweenScanLines;
+        //timeLeftCurrentScanline = timeBetweenScanLines; TODO: Moved to TimerScript
         currentRow = 0;
         GameObject scanLine = Instantiate(scanLinePrefab, dotsContainer) as GameObject;
         scanlineTransform = scanLine.transform;
@@ -128,18 +128,17 @@ public class FieldScript : MonoBehaviour
         }
 
         //Update timer
-        if (!pauseTimer)
-        {
-            timeLeftCurrentScanline -= Time.smoothDeltaTime;
-        }
+        //if (!pauseTimer)
+        //{
+        //    timeLeftCurrentScanline -= Time.smoothDeltaTime;
+        //}
 
-        if (timeLeftCurrentScanline <= 0)
-        {
-            MoveScanline();
-            ClearDots();
-            DropNewDots();
-            //CheckIfDraggedDotIsStillThere();
-        }
+        //if (timeLeftCurrentScanline <= 0)
+        //{
+        //    MoveScanline();
+        //    ClearDots();
+        //    DropNewDots();
+        //}
 
         Vector2 pos = GetTouchPosition();
         RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
@@ -159,8 +158,9 @@ public class FieldScript : MonoBehaviour
 
             currentPick = null;
 
-            pauseTimer = true;
-            timeLeftCurrentScanline = timeBetweenScanLines;
+            //pauseTimer = true;
+            //timeLeftCurrentScanline = timeBetweenScanLines;
+            EventManager.OnTouchStart();
         }
         else if (GetMouseButtonUp())
         {
@@ -171,8 +171,8 @@ public class FieldScript : MonoBehaviour
             possibleDropId = -1;
 
             bMouseCoordsNow = bMouseCoordsOnClick = bCurrentPickTypeLocked = false;
-            pauseTimer = false;
-
+            //pauseTimer = false;
+            EventManager.OnTouchEnd();
         }
         else if (GetMouseButton())
         {
@@ -415,7 +415,7 @@ public class FieldScript : MonoBehaviour
     private void UpdateUI()
     {
         scoreText.text = score.ToString();
-        timerImage.fillAmount = timeLeftCurrentScanline;
+        //timerImage.fillAmount = timeLeftCurrentScanline; TODO: Moved to TimerScript
     }
 
     private DotScript[] GetDotsColumn(int possibleDropId)
@@ -438,7 +438,7 @@ public class FieldScript : MonoBehaviour
 
     private void MoveScanline()
     {
-        timeLeftCurrentScanline = timeBetweenScanLines;
+        //timeLeftCurrentScanline = timeBetweenScanLines; TODO: Moved to TimerScript
         currentRow -= 1;
         if (currentRow < 0)
         {
@@ -482,20 +482,6 @@ public class FieldScript : MonoBehaviour
 
                     score += 1;
                 }
-            }
-        }
-    }
-
-    // I have no recollection of this method
-    private void CheckIfDraggedDotIsStillThere()
-    {
-        if ( draggedDot )
-        {
-            if ( draggedDot.activeInHierarchy )
-            {
-                draggedDot = null;
-                isDragging = false;
-                crosshair.SetActive(false);
             }
         }
     }
@@ -625,7 +611,7 @@ public class FieldScript : MonoBehaviour
 
     void OnGUI()
     {
-        GUI.Label(new Rect(10, 0, 1000, 90), $"Time: {timeLeftCurrentScanline}");
+        //GUI.Label(new Rect(10, 0, 1000, 90), $"Time: {timeLeftCurrentScanline}"); TODO: Moved to TimerScript
         if (pick1) GUI.Label(new Rect(10, 16, 1000, 90), pick1.name);
         if (pick2) GUI.Label(new Rect(10, 26, 1000, 90), pick2.name);
         if (isDragging) GUI.Label(new Rect(10, 36, 1000, 90), $"DRAGGING: {draggedDot.name}");
