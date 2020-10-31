@@ -11,7 +11,6 @@ public class FieldScript : MonoBehaviour
     public int rows;
     public int columns;
     public float spacing;
-    public Vector2[,] positions;
 
     public DotScript pick1;
     public DotScript pick2;
@@ -43,6 +42,9 @@ public class FieldScript : MonoBehaviour
     // UI
     public Text scoreText;
     //public Image timerImage;
+
+    //Refactor
+    DotScript[] dotsArray;
 
     private void OnEnable()
     {
@@ -80,68 +82,30 @@ public class FieldScript : MonoBehaviour
             return;
         }
 
-        //Draw debug stuff
-        //for (int j = 0; j < columns; j++)
-        //{
-        //    for (int i = 0; i < rows; i++)
-        //    {
-        //        Vector2 start = new Vector2(j * 1, i * 1);
-
-        //        //Horizontal
-        //        Vector2 endH = new Vector2(start.x + 2, start.y);
-        //        Debug.DrawLine(start, endH);
-
-        //        //Vertical
-        //        Vector2 endV = new Vector2(start.x, start.y - 2);
-        //        Debug.DrawLine(start, endV);
-        //    }
-        //}
-
         UpdateUI();
     }
 
     private void Setup()
     {
-        positions = new Vector2[rows, columns];
+        dotsArray = new DotScript[rows * columns];
         possibleCurrentPick = new Lane[2];
 
-        for (int j = 0; j < columns; j++)
+        for (int i = 0; i < rows * columns; i++)
         {
-            for (int i = 0; i < rows; i++)
-            {
-                GameObject child = Instantiate(prefab, Vector3.zero, Quaternion.identity, dotsContainer) as GameObject;
-                Vector2 position = new Vector2(j * 1, i * 1);
-                child.transform.localPosition = position;
-                positions[i, j] = position;
-                DotScript script = child.GetComponent<DotScript>();
-                script.field = this;
-                script.currentRow = i;
-                script.currentColumn = j;
-                script.SetType(DotScript.Type.Empty);
-            }
-        }
-
-        int a = dotsContainer.childCount;
-
-        for (int i = 0; i < a; i++)
-        {
-            if (Random.Range(0.0f, 1.0f) >= .8f)
-            {
-                if (dotsContainer.GetChild(i).GetComponent<DotScript>())
-                {
-                    dotsContainer.GetChild(i).GetComponent<DotScript>().SetType(DotScript.GetRandomColor());
-                }
-            }
+            var x = i % rows;
+            var y = i / columns;
+            GameObject child = Instantiate(prefab, Vector3.zero, Quaternion.identity, dotsContainer) as GameObject;
+            Vector2 position = new Vector2(x, y);
+            child.transform.localPosition = position;
+            DotScript script = child.GetComponent<DotScript>();
+            script.field = this;
+            script.currentRow = y;
+            script.currentColumn = x;
+            script.SetType(DotScript.Type.Empty);
+            dotsArray[i] = script;
         }
 
         possibleDropId = -1;
-        StartCoroutine("UpdateConnectionsOnStart");
-    }
-
-    IEnumerator UpdateConnectionsOnStart()
-    {
-        yield return 0;
-        UpdateConnections();
     }
 
     void OnTouchStart()
@@ -166,10 +130,6 @@ public class FieldScript : MonoBehaviour
         vMouseCoordsNow = pos;
 
         currentPick = null;
-
-        //pauseTimer = true;
-        //timeLeftCurrentScanline = timeBetweenScanLines;
-        //EventManager.OnTouchStart();
     }
 
     void OnTouchMove()
@@ -412,8 +372,6 @@ public class FieldScript : MonoBehaviour
         possibleDropId = -1;
 
         bMouseCoordsNow = bMouseCoordsOnClick = bCurrentPickTypeLocked = false;
-        //pauseTimer = false;
-        //EventManager.OnTouchEnd();
     }
 
     private void UpdateUI()
