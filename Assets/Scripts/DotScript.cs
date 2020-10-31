@@ -6,8 +6,13 @@ public class DotScript : MonoBehaviour
 {
     public FieldScript field;
     Color[] loller = new Color[] { Color.black, Color.red, Color.green, Color.blue };
-    public int currentRow;
-    public int currentColumn;
+
+    public int currentX;
+    public int currentY;
+
+    public int oldX;
+    public int oldY;
+
     public enum Type { Empty, Red, Gree, Blue } // #TODO: Gree, lmao
     public Type color;
     public DotScript connectedTo;
@@ -27,7 +32,7 @@ public class DotScript : MonoBehaviour
     {
         //GetComponent<SpriteRenderer>().color = loller[Random.Range(0, 3)];
         isMoving = false;
-        name = $"{currentRow}_{currentColumn}";
+        name = $"{currentX}_{currentY}";
     }
 
     // Update is called once per frame
@@ -38,13 +43,13 @@ public class DotScript : MonoBehaviour
             float step = speed * Time.deltaTime;
 
             // move sprite towards the target location
-            transform.localPosition = Vector2.MoveTowards(transform.localPosition, new Vector3(newCurrentColumn, newCurrentRow), .2f);
+            transform.localPosition = Vector2.MoveTowards(transform.localPosition, new Vector3(currentX, currentY), .2f);
 
-            if (transform.localPosition == new Vector3(newCurrentColumn, newCurrentRow))
+            if (transform.localPosition == new Vector3(currentX, currentY))
             {
                 isMoving = false;
-                currentRow    = newCurrentRow;
-                currentColumn = newCurrentColumn;
+                //currentX    = newCurrentRow;
+                //currentY    = newCurrentColumn;
             }
         }
 
@@ -108,11 +113,14 @@ public class DotScript : MonoBehaviour
         name = newName;
         newName = null;
 
-        int newX = System.Convert.ToInt32(name[2].ToString());
-        int newY = System.Convert.ToInt32(name[0].ToString());
+        int newX = System.Convert.ToInt32(name[0].ToString());
+        int newY = System.Convert.ToInt32(name[2].ToString());
 
-        newCurrentRow = newY;
-        newCurrentColumn = newX;
+        oldX = currentX;
+        oldY = currentY;
+
+        currentX = newX;
+        currentY = newY;
 
         isMoving = true;
 
