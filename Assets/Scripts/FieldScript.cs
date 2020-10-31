@@ -170,7 +170,6 @@ public class FieldScript : MonoBehaviour
             }
 
             bCurrentPickTypeLocked = true;
-
         }
 
         if (!currentPick)
@@ -279,7 +278,6 @@ public class FieldScript : MonoBehaviour
 
     private DotScript[] GetDotsColumn(int possibleDropId)
     {
-
         List<DotScript> res = new List<DotScript>();
         if (possibleDropId == 0) return res.ToArray();
 
@@ -446,16 +444,16 @@ public class FieldScript : MonoBehaviour
                     possibleColors.Add(DotScript.Type.Blue);
 
                     //Check left
-                    int currC = dot.currentY;
-                    int currR = dot.currentX;
+                    int currX = dot.currentX;
+                    int currY = dot.currentY;
 
-                    DotScript leftDot = GetDotByCoords(currR, currC - 1);
+                    DotScript leftDot = GetDotAtXY(currX - 1, currY);
                     if (leftDot && leftDot.color != DotScript.Type.Empty)
                     {
                         possibleColors.Remove(leftDot.color);
                     }
 
-                    DotScript rightDot = GetDotByCoords(currR, currC + 1);
+                    DotScript rightDot = GetDotAtXY(currX + 1, currY);
                     if (rightDot && rightDot.color != DotScript.Type.Empty)
                     {
                         possibleColors.Remove(rightDot.color);
@@ -467,19 +465,6 @@ public class FieldScript : MonoBehaviour
             }
         }
         UpdateConnections();
-    }
-
-    private DotScript GetDotByCoords(int r, int c)
-    {
-        var go = GameObject.Find($"{r}_{c}");
-        if (go)
-        {
-            return go.GetComponent<DotScript>();
-        }
-        else
-        {
-            return null;
-        }
     }
 
     private DotScript GetDotAtXY(int x, int y)
