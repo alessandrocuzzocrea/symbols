@@ -5,30 +5,64 @@ using UnityEngine;
 public class DotScript : MonoBehaviour
 {
     public FieldScript field;
-    Color[] loller = new Color[] { new Color(0, 0, 0, .1f), Color.red, Color.green, Color.blue };
+    Color[] loller = new Color[] { Color.black, Color.red, Color.green, Color.blue };
     public int currentRow;
     public int currentColumn;
-    public enum Type { Empty, Red, Gree, Blue }
+    public enum Type { Empty, Red, Gree, Blue } // #TODO: Gree, lmao
     public Type color;
     public DotScript connectedTo;
+    public GameObject sprite;
     public GameObject highlight;
+    public string newName;
+
+    public int newCurrentRow;
+    public int newCurrentColumn;
+    public bool isMoving;
+
+    public float speed = 0.05f;
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
-        //GetComponent<SpriteRenderer>().color = loller[Random.Range(0, 3)];        
+        //GetComponent<SpriteRenderer>().color = loller[Random.Range(0, 3)];
+        isMoving = false;
+        name = $"{currentRow}_{currentColumn}";
     }
 
     // Update is called once per frame
     void Update()
     {
-        name = $"{currentRow}_{currentColumn}";
+        if (isMoving)
+        {
+            float step = speed * Time.deltaTime;
+
+            // move sprite towards the target location
+            transform.localPosition = Vector2.MoveTowards(transform.localPosition, new Vector3(newCurrentColumn, newCurrentRow), .2f);
+
+            if (transform.localPosition == new Vector3(newCurrentColumn, newCurrentRow))
+            {
+                isMoving = false;
+                currentRow    = newCurrentRow;
+                currentColumn = newCurrentColumn;
+            }
+        }
+
     }
 
     public void SetType(Type c)
     {
         color = c;
-        GetComponent<SpriteRenderer>().color = loller[(int) color];
+
+        if (color == Type.Empty)
+        {
+            animator.SetBool("IsClearing", true);
+        }
+        else
+        {
+            sprite.GetComponent<SpriteRenderer>().color = loller[(int)color];
+            animator.SetBool("IsClearing", false);
+        }
     }
 
     private void OnGUI()
@@ -42,5 +76,49 @@ public class DotScript : MonoBehaviour
     public static DotScript.Type GetRandomColor()
     {
         return (DotScript.Type) Random.Range(0, 4);
+    }
+
+    public static Type GetRandomColor(List<Type> possibleColors)
+    {
+        return possibleColors[Random.Range(0, possibleColors.Count)];
+    }
+
+    public void SetNewName(string s)
+    {
+        newName = s;
+    }
+
+    public void SwapName()
+    {
+        SwapName(null);
+    }
+
+    public void SwapName(string neewName)
+    {
+        if (string.IsNullOrEmpty(neewName) == false)
+        {
+            newName = neewName;
+        }
+
+        if (string.IsNullOrEmpty(newName))
+        {
+            return;
+        }
+
+        name = newName;
+        newName = null;
+
+        int newX = System.Convert.ToInt32(name[2].ToString());
+        int newY = System.Convert.ToInt32(name[0].ToString());
+
+        newCurrentRow = newY;
+        newCurrentColumn = newX;
+
+        isMoving = true;
+
+        name = $"{newCurrentRow}_{newCurrentColumn}";
+
+
+        //transform.localPosition = new Vector3(newX, newY, 0);
     }
 }
