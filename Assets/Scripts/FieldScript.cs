@@ -16,13 +16,6 @@ public class FieldScript : MonoBehaviour
     public DotScript pick1;
     public DotScript pick2;
 
-    //Scanline
-    public Object scanLinePrefab;
-    public Transform scanlineTransform;
-    //public float timeBetweenScanLines = 4.0f;
-    //public float timeLeftCurrentScanline;
-    public int currentRow;
-
     //Crosshair
     public GameObject crosshair;
     bool isDragging;
@@ -61,7 +54,6 @@ public class FieldScript : MonoBehaviour
         EventManager.OnTouchEnd   += OnTouchEnd;
 
         EventManager.OnGameOver += OnGameOver;
-
     }
 
     private void OnDisable()
@@ -74,10 +66,41 @@ public class FieldScript : MonoBehaviour
         EventManager.OnTouchEnd   -= OnTouchEnd;
 
         EventManager.OnGameOver -= OnGameOver;
-
     }
 
     void Start()
+    {
+        Setup();
+    }
+
+    void Update()
+    {
+        if (bGameOver)
+        {
+            return;
+        }
+
+        //Draw debug stuff
+        //for (int j = 0; j < columns; j++)
+        //{
+        //    for (int i = 0; i < rows; i++)
+        //    {
+        //        Vector2 start = new Vector2(j * 1, i * 1);
+
+        //        //Horizontal
+        //        Vector2 endH = new Vector2(start.x + 2, start.y);
+        //        Debug.DrawLine(start, endH);
+
+        //        //Vertical
+        //        Vector2 endV = new Vector2(start.x, start.y - 2);
+        //        Debug.DrawLine(start, endV);
+        //    }
+        //}
+
+        UpdateUI();
+    }
+
+    private void Setup()
     {
         positions = new Vector2[rows, columns];
         possibleCurrentPick = new Lane[2];
@@ -111,14 +134,6 @@ public class FieldScript : MonoBehaviour
             }
         }
 
-        //Init scanline
-        //timeLeftCurrentScanline = timeBetweenScanLines; TODO: Moved to TimerScript
-        currentRow = 0;
-        GameObject scanLine = Instantiate(scanLinePrefab, dotsContainer) as GameObject;
-        scanlineTransform = scanLine.transform;
-        Vector2 localPosition = scanlineTransform.localPosition;
-        localPosition.y = currentRow;
-        scanlineTransform.localPosition = localPosition;
         possibleDropId = -1;
         StartCoroutine("UpdateConnectionsOnStart");
     }
@@ -401,33 +416,6 @@ public class FieldScript : MonoBehaviour
         //EventManager.OnTouchEnd();
     }
 
-    void Update()
-    {
-        if (bGameOver)
-        {
-            return;
-        }
-
-        //Draw debug stuff
-        for (int j = 0; j < columns; j++)
-        {
-            for (int i = 0; i < rows; i++)
-            {
-                Vector2 start = new Vector2(j * 1, i * 1);
-
-                //Horizontal
-                Vector2 endH = new Vector2(start.x + 2, start.y);
-                Debug.DrawLine(start, endH);
-
-                //Vertical
-                Vector2 endV = new Vector2(start.x, start.y - 2);
-                Debug.DrawLine(start, endV);
-            }
-        }
-
-        UpdateUI();
-    }
-
     private void UpdateUI()
     {
         scoreText.text = score.ToString(); //TODO: this should be handled by the gameplay manager
@@ -454,8 +442,6 @@ public class FieldScript : MonoBehaviour
 
     private void ClearDots()
     {
-        int row = currentRow;
-
         DotScript[] dotsToClear = GameObject.FindObjectsOfType<DotScript>();
 
         foreach (DotScript dot in dotsToClear)
@@ -586,7 +572,7 @@ public class FieldScript : MonoBehaviour
         }
     }
 
-    public int CountDots(bool onlyEmpty = false)
+    private int CountDots(bool onlyEmpty = false)
     {
         var res = 0;
         foreach (var number in GameObject.FindObjectsOfType<DotScript>())
@@ -604,7 +590,7 @@ public class FieldScript : MonoBehaviour
         return res;
     }
 
-    public int Score() //TODO: this should be handled by the gameplay manager
+    private int Score() //TODO: this should be handled by the gameplay manager
     {
         return score;
     }
