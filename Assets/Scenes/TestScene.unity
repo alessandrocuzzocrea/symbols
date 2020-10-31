@@ -1271,10 +1271,6 @@ MonoBehaviour:
   spacing: 2
   pick1: {fileID: 0}
   pick2: {fileID: 0}
-  scanLinePrefab: {fileID: 4150181029120132194, guid: 728860d4f807446328d996bee76ba07a,
-    type: 3}
-  scanlineTransform: {fileID: 0}
-  currentRow: 0
   crosshair: {fileID: 0}
   maxDrop: 3
   currentPick: {fileID: 0}
