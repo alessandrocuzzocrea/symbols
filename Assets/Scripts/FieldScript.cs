@@ -53,20 +53,16 @@ public class FieldScript : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.OnTestDelegate += Omar;
+        EventManager.OnTimerEnd += ClearDots;
+        EventManager.OnTimerEnd += DropNewDots;
     }
 
     private void OnDisable()
     {
-        EventManager.OnTestDelegate -= Omar;
+        EventManager.OnTimerEnd -= ClearDots;
+        EventManager.OnTimerEnd -= DropNewDots;
     }
 
-    private void Omar()
-    {
-        Debug.Log("Omar");
-    }
-
-    // Start is called before the first frame update
     void Start()
     {
         positions = new Vector2[rows, columns];
@@ -119,26 +115,12 @@ public class FieldScript : MonoBehaviour
         UpdateConnections();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (bGameOver)
         {
             return;
         }
-
-        //Update timer
-        //if (!pauseTimer)
-        //{
-        //    timeLeftCurrentScanline -= Time.smoothDeltaTime;
-        //}
-
-        //if (timeLeftCurrentScanline <= 0)
-        //{
-        //    MoveScanline();
-        //    ClearDots();
-        //    DropNewDots();
-        //}
 
         Vector2 pos = GetTouchPosition();
         RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
@@ -436,22 +418,6 @@ public class FieldScript : MonoBehaviour
         return res.ToArray();
     }
 
-    private void MoveScanline()
-    {
-        //timeLeftCurrentScanline = timeBetweenScanLines; TODO: Moved to TimerScript
-        currentRow -= 1;
-        if (currentRow < 0)
-        {
-            currentRow = rows - 1;
-        }
-
-        Vector2 localPosition = scanlineTransform.localPosition;
-        localPosition.y = currentRow;
-        scanlineTransform.localPosition = localPosition;
-
-        //DropNewDots();
-    }
-
     private void ClearDots()
     {
         int row = currentRow;
@@ -633,11 +599,6 @@ public class FieldScript : MonoBehaviour
         if (GUI.Button(new Rect(10, 176, 100, 20), "Reset Game"))
         {
             ResetGame();
-        }
-
-        if (GUI.Button(new Rect(10, 196, 100, 20), "Test Delegate"))
-        {
-            EventManager.OnTestDelegate?.Invoke();
         }
     }
 

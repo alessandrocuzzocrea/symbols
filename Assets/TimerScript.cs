@@ -22,13 +22,11 @@ public class TimerScript : MonoBehaviour
         EventManager.OnTouchEnd   -= Resume;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         Reset();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!pauseTimer)
@@ -38,9 +36,6 @@ public class TimerScript : MonoBehaviour
 
         if (timeLeftCurrentScanline <= 0)
         {
-            //MoveScanline();
-            //ClearDots();
-            //DropNewDots();
             EventManager.OnTimerEnd?.Invoke();
             Reset();
         }
