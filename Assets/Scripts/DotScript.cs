@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class DotScript : MonoBehaviour
 {
-    private static readonly Color[] loller = new Color[] { Color.black, Color.red, Color.green, Color.blue };
+    public enum Type { Empty, Circle, Square, Diamond, Star } // #TODO: Gree, lmao
+    private static readonly Color[] loller = new Color[] { Color.black, Color.red, Color.green, Color.blue, Color.yellow };
+    public Sprite[] spriteLoller;
+    //public 
 
     public int currentX;
     public int currentY;
@@ -12,7 +15,6 @@ public class DotScript : MonoBehaviour
     public int oldX;
     public int oldY;
 
-    public enum Type { Empty, Red, Gree, Blue } // #TODO: Gree, lmao
     public Type color;
     public DotScript leftConnectedTo;
     public DotScript upConnectedTo;
@@ -65,7 +67,9 @@ public class DotScript : MonoBehaviour
         }
         else
         {
-            sprite.GetComponent<SpriteRenderer>().color = loller[(int)color];
+            sprite.GetComponent<SpriteRenderer>().color  = loller[(int)color];
+            sprite.GetComponent<SpriteRenderer>().sprite = spriteLoller[(int)color];
+
             animator.SetBool("IsClearing", false);
         }
     }
@@ -95,9 +99,10 @@ public class DotScript : MonoBehaviour
     {
         if (possibleColors.Count == 0)
         {
-            possibleColors.Add(Type.Red);
-            possibleColors.Add(Type.Gree);
-            possibleColors.Add(Type.Blue);
+            possibleColors.Add(Type.Circle);
+            possibleColors.Add(Type.Square);
+            possibleColors.Add(Type.Diamond);
+            possibleColors.Add(Type.Star);
         } 
 
        return possibleColors[Random.Range(0, possibleColors.Count)];

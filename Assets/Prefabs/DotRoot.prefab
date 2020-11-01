@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5b1695d409ee64e21ae8c764ec5089a3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2e9647198d62b427987c7e47a609f2d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
@@ -209,11 +209,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25d1b19d3ae714e05b04380c0a837ae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  field: {fileID: 0}
-  currentRow: 0
-  currentColumn: 0
+  spriteLoller:
+  - {fileID: 21300000, guid: 6c69e8480bd2d4815bc70c2ac51732a7, type: 3}
+  - {fileID: 21300000, guid: 30d2355f0676e47b1a3a05edc338eb38, type: 3}
+  - {fileID: 21300000, guid: 2e9647198d62b427987c7e47a609f2d1, type: 3}
+  - {fileID: 21300000, guid: bd7ef650a89c04c92b68461f4bcdbe96, type: 3}
+  - {fileID: 21300000, guid: f6971b86fca504a21af1e4ac9125895b, type: 3}
+  currentX: 0
+  currentY: 0
+  oldX: 0
+  oldY: 0
   color: 0
-  connectedTo: {fileID: 0}
+  leftConnectedTo: {fileID: 0}
+  upConnectedTo: {fileID: 0}
   sprite: {fileID: 113922085880806279}
   highlight: {fileID: 5524048296112919575}
   newName: 

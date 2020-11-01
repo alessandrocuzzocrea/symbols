@@ -396,10 +396,13 @@ public class FieldScript : MonoBehaviour
 
                 if (dot && dot.color == DotScript.Type.Empty)
                 {
-                    var possibleColors = new List<DotScript.Type>();
-                    possibleColors.Add(DotScript.Type.Red);
-                    possibleColors.Add(DotScript.Type.Gree);
-                    possibleColors.Add(DotScript.Type.Blue);
+                    var possibleColors = new List<DotScript.Type>
+                    {
+                        DotScript.Type.Circle,
+                        DotScript.Type.Square,
+                        DotScript.Type.Diamond,
+                        DotScript.Type.Star
+                    };
 
                     int currX = dot.currentX;
                     int currY = dot.currentY;
