@@ -20,12 +20,15 @@ public class FieldScript : MonoBehaviour
     [SerializeField]
     private int maxDrop;
 
-    // Prototype 2
-    private Lane currentPick;
-    private Lane[] possibleCurrentPick;
+    [SerializeField]
+    private int noConnectionRequired;
+
+    private DotScript[]   dotsArray;
+    private Lane          currentPick;
+    private Lane[]        possibleCurrentPick;
     private Lane.LaneType currentPickType;
 
-    private int possibleDropId;
+    private int  possibleDropId;
     private Lane currentDrop;
 
     private bool    bMouseCoordsOnClick;
@@ -33,18 +36,6 @@ public class FieldScript : MonoBehaviour
     private bool    bMouseCoordsNow;
     private Vector2 vMouseCoordsNow;
     private bool    bCurrentPickTypeLocked;
-
-    [SerializeField]
-    private int     noConnectionRequired;
-
-    //private bool   bGameOver;
-
-    // UI
-    
-    //public Image timerImage;
-
-    //Refactor
-    private DotScript[] dotsArray;
 
     //Dependencies
     private GameplayScript gameplayScript;
@@ -57,8 +48,6 @@ public class FieldScript : MonoBehaviour
         EventManager.OnTouchStart += OnTouchStart;
         EventManager.OnTouchMove  += OnTouchMove;
         EventManager.OnTouchEnd   += OnTouchEnd;
-
-        //EventManager.OnGameOver += OnGameOver;
     }
 
     private void OnDisable()
@@ -69,22 +58,12 @@ public class FieldScript : MonoBehaviour
         EventManager.OnTouchStart -= OnTouchStart;
         EventManager.OnTouchMove  -= OnTouchMove;
         EventManager.OnTouchEnd   -= OnTouchEnd;
-
-        //EventManager.OnGameOver -= OnGameOver;
     }
 
     void Start()
     {
         GetDependencies();
         Setup();
-    }
-
-    void Update()
-    {
-        if (gameplayScript.IsGameOver)
-        {
-            return;
-        }
     }
 
     private void GetDependencies()
@@ -381,46 +360,9 @@ public class FieldScript : MonoBehaviour
         }
     }
 
-    void UpdateConnectionsOld()
-    {
-        // Reset all connections
-        for (int i = 0; i < dotsContainer.childCount; i++)
-        {
-            DotScript dot = dotsContainer.GetChild(i).GetComponent<DotScript>();
-            if (dot)
-            {
-                dot.connectedTo = null;
-                dot.highlight.gameObject.SetActive(false);
-                if (dot.connectedTo) dot.connectedTo.highlight.gameObject.SetActive(false);
-            }
-        }
-
-        // Check for new connections
-        for (int j = 0; j < columns - 1; j++)
-        {
-            for (int i = 0; i < rows; i++)
-            {
-                DotScript child = GameObject.Find($"{i}_{j}").GetComponent<DotScript>();
-
-                if (child.color != DotScript.Type.Empty)
-                {
-                    DotScript neighbour = GameObject.Find($"{i}_{j+1}").GetComponent<DotScript>();
-
-                    if (child.color == neighbour.color)
-                    {
-                        child.connectedTo = neighbour;
-
-                        child.highlight.gameObject.SetActive(true);
-                        child.connectedTo.highlight.gameObject.SetActive(true);
-                    }
-                }
-            }
-        }
-    }
-
     void DropNewDots()
     {
-        if (CountDots() >= 36)
+        if (CountDots() >= columns * rows)
         {
             EventManager.OnGameOver();
         }
@@ -484,15 +426,15 @@ public class FieldScript : MonoBehaviour
     private int CountDots(bool onlyEmpty = false)
     {
         var res = 0;
-        foreach (var number in GameObject.FindObjectsOfType<DotScript>())
+        foreach (var dot in dotsArray)
         {
             if (onlyEmpty)
             {
-                if (number.color == DotScript.Type.Empty) res += 1;
+                if (dot.color == DotScript.Type.Empty) res += 1;
             }
             else
             {
-                if(number.color != DotScript.Type.Empty)  res += 1;
+                if(dot.color != DotScript.Type.Empty)  res += 1;
             }
         }
 
@@ -504,25 +446,14 @@ public class FieldScript : MonoBehaviour
         if (currentPick) GUI.Label(new Rect(10, 46, 1000, 90), "Current Pick: " + currentPick.id);
         if (currentPick) GUI.Label(new Rect(10, 56, 1000, 90), "Current Type: " + currentPickType.ToString());
         if (possibleDropId != -1) GUI.Label(new Rect(10, 66, 1000, 90), "Possible drop: " + possibleDropId);
-        GUI.Label(new Rect(10, 77, 1000, 90), "Dots       : " + CountDots()     + "/36");
-        GUI.Label(new Rect(10, 87, 1000, 90), "Dots(empty): " + CountDots(true) + "/36");
+        GUI.Label(new Rect(10, 77, 1000, 90), "Dots       : " + CountDots()     + "/" + columns * rows);
+        GUI.Label(new Rect(10, 87, 1000, 90), "Dots(empty): " + CountDots(true) + "/" + columns * rows);
         if (bMouseCoordsOnClick) GUI.Label(new Rect(10, 106, 1000, 90), "Mouse onClick: " + vMouseCoordsOnClick.ToString());
         if (bMouseCoordsNow) GUI.Label(new Rect(10, 116, 1000, 90), "Mouse now: " + vMouseCoordsNow.ToString());
-        if (gameplayScript.IsGameOver) GUI.Label(new Rect(10, 126, 1000, 90), "GAME OVER");
 
         if (GUI.Button(new Rect(10, 156, 100, 20), "Spawn Dots"))
         {
             DropNewDots();
         }
-
-        if (GUI.Button(new Rect(10, 176, 100, 20), "Reset Game"))
-        {
-            ResetGame();
-        }
-    }
-
-    private void ResetGame()
-    {
-        SceneManager.LoadScene(0); //TODO: this should be handled by the gameplay manager
     }
 }
