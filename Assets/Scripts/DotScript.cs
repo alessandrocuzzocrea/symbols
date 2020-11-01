@@ -74,14 +74,6 @@ public class DotScript : MonoBehaviour
         }
     }
 
-    private void OnGUI()
-    {
-        GUI.backgroundColor = Color.yellow;
-        Vector2 loller = Camera.main.WorldToScreenPoint(transform.position);
-        GUI.Label(new Rect(loller.x, Screen.height - loller.y, 100, 100), name);
-        if (leftConnectedTo) GUI.Label(new Rect(loller.x, Screen.height - loller.y - 10, 100, 100), "C:" + leftConnectedTo.name);
-    }
-
     public static DotScript.Type GetRandomColor()
     {
         return (DotScript.Type) Random.Range(0, 4);
@@ -149,4 +141,12 @@ public class DotScript : MonoBehaviour
 
         //transform.localPosition = new Vector3(newX, newY, 0);
     }
+
+    //private void OnGUI()
+    //{
+    //    GUI.backgroundColor = Color.yellow;
+    //    Vector2 loller = Camera.main.WorldToScreenPoint(transform.position);
+    //    GUI.Label(new Rect(loller.x, Screen.height - loller.y, 100, 100), name);
+    //    if (leftConnectedTo) GUI.Label(new Rect(loller.x, Screen.height - loller.y - 10, 100, 100), "C:" + leftConnectedTo.name);
+    //}
 }

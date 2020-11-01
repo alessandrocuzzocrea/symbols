@@ -62,6 +62,8 @@ public class FieldScript : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 60; // test
+
         GetDependencies();
         SetupDots();
     }
