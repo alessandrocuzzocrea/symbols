@@ -37,14 +37,17 @@ public class FieldScript : MonoBehaviour
     [SerializeField]
     private int     noConnectionRequired;
 
-    private bool   bGameOver;
+    //private bool   bGameOver;
 
     // UI
     
     //public Image timerImage;
 
     //Refactor
-    DotScript[] dotsArray;
+    private DotScript[] dotsArray;
+
+    //Dependencies
+    private GameplayScript gameplayScript;
 
     private void OnEnable()
     {
@@ -55,7 +58,7 @@ public class FieldScript : MonoBehaviour
         EventManager.OnTouchMove  += OnTouchMove;
         EventManager.OnTouchEnd   += OnTouchEnd;
 
-        EventManager.OnGameOver += OnGameOver;
+        //EventManager.OnGameOver += OnGameOver;
     }
 
     private void OnDisable()
@@ -67,20 +70,26 @@ public class FieldScript : MonoBehaviour
         EventManager.OnTouchMove  -= OnTouchMove;
         EventManager.OnTouchEnd   -= OnTouchEnd;
 
-        EventManager.OnGameOver -= OnGameOver;
+        //EventManager.OnGameOver -= OnGameOver;
     }
 
     void Start()
     {
+        GetDependencies();
         Setup();
     }
 
     void Update()
     {
-        if (bGameOver)
+        if (gameplayScript.IsGameOver)
         {
             return;
         }
+    }
+
+    private void GetDependencies()
+    {
+        gameplayScript = GameObject.FindObjectOfType<GameplayScript>();
     }
 
     private void Setup()
@@ -108,7 +117,7 @@ public class FieldScript : MonoBehaviour
 
     void OnTouchStart()
     {
-        if (bGameOver)
+        if (gameplayScript.IsGameOver)
         {
             return;
         }
@@ -132,7 +141,7 @@ public class FieldScript : MonoBehaviour
 
     void OnTouchMove()
     {
-        if (bGameOver)
+        if (gameplayScript.IsGameOver)
         {
             return;
         }
@@ -254,7 +263,7 @@ public class FieldScript : MonoBehaviour
 
     void OnTouchEnd()
     {
-        if (bGameOver)
+        if (gameplayScript.IsGameOver)
         {
             return;
         }
@@ -499,7 +508,7 @@ public class FieldScript : MonoBehaviour
         GUI.Label(new Rect(10, 87, 1000, 90), "Dots(empty): " + CountDots(true) + "/36");
         if (bMouseCoordsOnClick) GUI.Label(new Rect(10, 106, 1000, 90), "Mouse onClick: " + vMouseCoordsOnClick.ToString());
         if (bMouseCoordsNow) GUI.Label(new Rect(10, 116, 1000, 90), "Mouse now: " + vMouseCoordsNow.ToString());
-        if (bGameOver) GUI.Label(new Rect(10, 126, 1000, 90), "GAME OVER");
+        if (gameplayScript.IsGameOver) GUI.Label(new Rect(10, 126, 1000, 90), "GAME OVER");
 
         if (GUI.Button(new Rect(10, 156, 100, 20), "Spawn Dots"))
         {
@@ -515,10 +524,5 @@ public class FieldScript : MonoBehaviour
     private void ResetGame()
     {
         SceneManager.LoadScene(0); //TODO: this should be handled by the gameplay manager
-    }
-
-    private void OnGameOver()
-    {
-        bGameOver = true; //TODO: this should be handled by the gameplay manager
     }
 }
