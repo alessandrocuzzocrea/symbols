@@ -14,7 +14,8 @@ public class DotScript : MonoBehaviour
 
     public enum Type { Empty, Red, Gree, Blue } // #TODO: Gree, lmao
     public Type color;
-    public DotScript connectedTo;
+    public DotScript leftConnectedTo;
+    public DotScript upConnectedTo;
     public GameObject sprite;
     public GameObject highlight;
     public string newName;
@@ -74,7 +75,7 @@ public class DotScript : MonoBehaviour
         GUI.backgroundColor = Color.yellow;
         Vector2 loller = Camera.main.WorldToScreenPoint(transform.position);
         GUI.Label(new Rect(loller.x, Screen.height - loller.y, 100, 100), name);
-        if (connectedTo) GUI.Label(new Rect(loller.x, Screen.height - loller.y - 10, 100, 100), "C:" + connectedTo.name);
+        if (leftConnectedTo) GUI.Label(new Rect(loller.x, Screen.height - loller.y - 10, 100, 100), "C:" + leftConnectedTo.name);
     }
 
     public static DotScript.Type GetRandomColor()

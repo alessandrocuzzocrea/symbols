@@ -276,25 +276,56 @@ public class FieldScript : MonoBehaviour
     {
         foreach (DotScript dot in dots)
         {
+            if (dot.leftConnectedTo || dot.upConnectedTo)
+            {
+                dot.SetType(DotScript.Type.Empty);
+                dot.highlight.gameObject.SetActive(false);
+
+
+                DotScript left = dot.leftConnectedTo;
+                if (left)
+                {
+                    left.SetType(DotScript.Type.Empty);
+                    left.highlight.gameObject.SetActive(false);
+                }
+
+                DotScript up = dot.upConnectedTo;
+                if (up)
+                {
+                    up.SetType(DotScript.Type.Empty);
+                    up.highlight.gameObject.SetActive(false);
+                }
+
+                dot.leftConnectedTo = dot.upConnectedTo = null;
+
+                EventManager.OnIncreaseScore();
+            }
+        }
+    }
+
+    private void ClearDotsOld()
+    {
+        foreach (DotScript dot in dots)
+        {
             List<DotScript> connectedDots = new List<DotScript>();
-            if (dot.connectedTo)
+            if (dot.leftConnectedTo)
             {
                 connectedDots.Add(dot);
-                DotScript connectedTo = dot.connectedTo;
+                DotScript connectedTo = dot.leftConnectedTo;
                 while (connectedTo)
                 {
                     connectedDots.Add(connectedTo);
-                    connectedTo = connectedTo.connectedTo;
+                    connectedTo = connectedTo.leftConnectedTo;
                 }
             }
 
             if (connectedDots.Count >= noConnectionRequired)
             {
-                foreach(DotScript d in connectedDots)
+                foreach (DotScript d in connectedDots)
                 {
                     d.SetType(DotScript.Type.Empty);
                     d.highlight.gameObject.SetActive(false);
-                    d.connectedTo = null;
+                    d.leftConnectedTo = null;
 
                     EventManager.OnIncreaseScore();
                 }
@@ -307,28 +338,37 @@ public class FieldScript : MonoBehaviour
         // Reset all connections
         foreach (var dot in dots)
         {
-            dot.connectedTo = null;
+            dot.leftConnectedTo = dot.upConnectedTo = null;
             dot.highlight.gameObject.SetActive(false);
-            if (dot.connectedTo) dot.connectedTo.highlight.gameObject.SetActive(false);
+            if (dot.leftConnectedTo) dot.leftConnectedTo.highlight.gameObject.SetActive(false);
+            if (dot.upConnectedTo) dot.upConnectedTo.highlight.gameObject.SetActive(false);
         }
 
         // Check for new connections
-        for (int j = 0; j < columns - 1; j++)
+        for (int j = 0; j < columns; j++)
         {
             for (int i = 0; i < rows; i++)
             {
                 DotScript dot = GetDotAtXY(j, i);
 
-                if (dot.color != DotScript.Type.Empty)
+                if (dot && dot.color != DotScript.Type.Empty)
                 {
-                    DotScript neighbour = GetDotAtXY(j + 1, i);
-
-                    if (dot.color == neighbour.color)
+                    // Left neighbour
+                    DotScript leftNeighbour = GetDotAtXY(j + 1, i);
+                    if (leftNeighbour && dot.color == leftNeighbour.color)
                     {
-                        dot.connectedTo = neighbour;
-
                         dot.highlight.gameObject.SetActive(true);
-                        dot.connectedTo.highlight.gameObject.SetActive(true);
+                        dot.leftConnectedTo = leftNeighbour;
+                        dot.leftConnectedTo.highlight.gameObject.SetActive(true);
+                    }
+
+                    // Upper neighbour
+                    DotScript upNeighbour = GetDotAtXY(j, i + 1);
+                    if (upNeighbour && dot.color == upNeighbour.color)
+                    {
+                        dot.highlight.gameObject.SetActive(true);
+                        dot.upConnectedTo = upNeighbour;
+                        dot.upConnectedTo.highlight.gameObject.SetActive(true);
                     }
                 }
             }
