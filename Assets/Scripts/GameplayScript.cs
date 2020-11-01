@@ -38,14 +38,20 @@ public class GameplayScript : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-    void OnGUI()
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+    public int DebugScore()
     {
-        GUI.Label(new Rect(10, 97, 1000, 90), "Score: " + score);
-        if (IsGameOver) GUI.Label(new Rect(10, 126, 1000, 90), "GAME OVER");
-
-        if (GUI.Button(new Rect(10, 176, 100, 20), "Reset Game"))
-        {
-            ResetGame();
-        }
+        return score;
     }
+
+    public bool DebugIsGameOver()
+    {
+        return IsGameOver;
+    }
+
+    public void DebugResetGame()
+    {
+        ResetGame();
+    }
+#endif
 }

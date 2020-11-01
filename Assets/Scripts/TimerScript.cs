@@ -64,8 +64,10 @@ public class TimerScript : MonoBehaviour
         timeLeftCurrentScanline = timeBetweenScanLines;
     }
 
-    void OnGUI()
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+    public float DebugTimeLeftCurrentScanline()
     {
-        GUI.Label(new Rect(10, 0, 1000, 90), $"Time: {timeLeftCurrentScanline}");
+        return timeLeftCurrentScanline;
     }
+#endif
 }

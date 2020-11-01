@@ -416,19 +416,55 @@ public class FieldScript : MonoBehaviour
         return res;
     }
 
-    void OnGUI()
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+    public Lane DebugCurrentPick()
     {
-        if (currentPick) GUI.Label(new Rect(10, 46, 1000, 90), "Current Pick: " + currentPick.id);
-        if (currentPick) GUI.Label(new Rect(10, 56, 1000, 90), "Current Type: " + currentPickType.ToString());
-        if (possibleDropId != -1) GUI.Label(new Rect(10, 66, 1000, 90), "Possible drop: " + possibleDropId);
-        GUI.Label(new Rect(10, 77, 1000, 90), "Dots       : " + CountDots()     + "/" + columns * rows);
-        GUI.Label(new Rect(10, 87, 1000, 90), "Dots(empty): " + CountDots(true) + "/" + columns * rows);
-        if (bMouseCoordsOnClick) GUI.Label(new Rect(10, 106, 1000, 90), "Mouse onClick: " + vMouseCoordsOnClick.ToString());
-        if (bMouseCoordsNow) GUI.Label(new Rect(10, 116, 1000, 90), "Mouse now: " + vMouseCoordsNow.ToString());
-
-        if (GUI.Button(new Rect(10, 156, 100, 20), "Spawn Dots"))
-        {
-            DropNewDots();
-        }
+        return currentPick;
     }
+
+    public int DebugPossibleDropId()
+    {
+        return possibleDropId;
+    }
+
+    public int DebugCountDots(bool b = false)
+    {
+        return CountDots(b);
+    }
+
+    public int DebugColumns()
+    {
+        return columns;
+    }
+
+    public int DebugRows()
+    {
+        return rows;
+    }
+
+    public bool DebugbMouseCoordsOnClick()
+    {
+        return bMouseCoordsOnClick;
+    }
+
+    public Vector2 DebugvMouseCoordsOnClick()
+    {
+        return vMouseCoordsOnClick;
+    }
+
+    public bool DebugbMouseCoordsNow()
+    {
+        return bMouseCoordsNow;
+    }
+
+    public Vector2 DebugvMouseCoordsNow()
+    {
+        return vMouseCoordsNow;
+    }
+
+    public void DebugDropNewDots()
+    {
+        DropNewDots();
+    }
+#endif
 }
