@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,41 +5,42 @@ using UnityEngine.UI;
 
 public class FieldScript : MonoBehaviour
 {
-    public Object prefab;
+    [SerializeField]
+    public GameObject DotPrefab;
+
+    [SerializeField]
     public Transform dotsContainer;
-    public int rows;
-    public int columns;
-    public float spacing;
 
-    public DotScript pick1;
-    public DotScript pick2;
+    [SerializeField]
+    private int rows;
 
-    //Crosshair
-    public GameObject crosshair;
-    bool isDragging;
-    GameObject draggedDot;
+    [SerializeField]
+    private int columns;
 
-    public int maxDrop;
+    [SerializeField]
+    private int maxDrop;
 
     // Prototype 2
-    public Lane currentPick;
-    public Lane[] possibleCurrentPick;
-    public Lane.LaneType currentPickType;
-    //public bool pauseTimer;
-    public int possibleDropId;
-    public Lane currentDrop;
+    private Lane currentPick;
+    private Lane[] possibleCurrentPick;
+    private Lane.LaneType currentPickType;
 
-    public bool    bMouseCoordsOnClick;
-    public Vector2 vMouseCoordsOnClick;
-    public bool    bMouseCoordsNow;
-    public Vector2 vMouseCoordsNow;
-    public bool    bCurrentPickTypeLocked;
-    public int     noConnectionRequired;
-    public int     score;
+    private int possibleDropId;
+    private Lane currentDrop;
+
+    private bool    bMouseCoordsOnClick;
+    private Vector2 vMouseCoordsOnClick;
+    private bool    bMouseCoordsNow;
+    private Vector2 vMouseCoordsNow;
+    private bool    bCurrentPickTypeLocked;
+
+    [SerializeField]
+    private int     noConnectionRequired;
+
     private bool   bGameOver;
 
     // UI
-    public Text scoreText;
+    
     //public Image timerImage;
 
     //Refactor
@@ -81,8 +81,6 @@ public class FieldScript : MonoBehaviour
         {
             return;
         }
-
-        UpdateUI();
     }
 
     private void Setup()
@@ -94,7 +92,7 @@ public class FieldScript : MonoBehaviour
         {
             var x = i % rows;
             var y = i / columns;
-            GameObject child = Instantiate(prefab, Vector3.zero, Quaternion.identity, dotsContainer) as GameObject;
+            GameObject child = Instantiate(DotPrefab, Vector3.zero, Quaternion.identity, dotsContainer) as GameObject;
             Vector2 position = new Vector2(x, y);
             child.transform.localPosition = position;
             DotScript script = child.GetComponent<DotScript>();
@@ -270,12 +268,6 @@ public class FieldScript : MonoBehaviour
         bMouseCoordsNow = bMouseCoordsOnClick = bCurrentPickTypeLocked = false;
     }
 
-    private void UpdateUI()
-    {
-        scoreText.text = score.ToString(); //TODO: this should be handled by the gameplay manager
-        //timerImage.fillAmount = timeLeftCurrentScanline; TODO: Moved to TimerScript
-    }
-
     private DotScript[] GetDotsColumn(int possibleDropId)
     {
         List<DotScript> res = new List<DotScript>();
@@ -340,7 +332,7 @@ public class FieldScript : MonoBehaviour
                     d.highlight.gameObject.SetActive(false);
                     d.connectedTo = null;
 
-                    score += 1;
+                    EventManager.OnIncreaseScore();
                 }
             }
         }
@@ -498,23 +490,13 @@ public class FieldScript : MonoBehaviour
         return res;
     }
 
-    private int Score() //TODO: this should be handled by the gameplay manager
-    {
-        return score;
-    }
-
     void OnGUI()
     {
-        //GUI.Label(new Rect(10, 0, 1000, 90), $"Time: {timeLeftCurrentScanline}"); TODO: Moved to TimerScript
-        if (pick1) GUI.Label(new Rect(10, 16, 1000, 90), pick1.name);
-        if (pick2) GUI.Label(new Rect(10, 26, 1000, 90), pick2.name);
-        if (isDragging) GUI.Label(new Rect(10, 36, 1000, 90), $"DRAGGING: {draggedDot.name}");
         if (currentPick) GUI.Label(new Rect(10, 46, 1000, 90), "Current Pick: " + currentPick.id);
         if (currentPick) GUI.Label(new Rect(10, 56, 1000, 90), "Current Type: " + currentPickType.ToString());
         if (possibleDropId != -1) GUI.Label(new Rect(10, 66, 1000, 90), "Possible drop: " + possibleDropId);
         GUI.Label(new Rect(10, 77, 1000, 90), "Dots       : " + CountDots()     + "/36");
         GUI.Label(new Rect(10, 87, 1000, 90), "Dots(empty): " + CountDots(true) + "/36");
-        GUI.Label(new Rect(10, 97, 1000, 90), "Score: " + Score());
         if (bMouseCoordsOnClick) GUI.Label(new Rect(10, 106, 1000, 90), "Mouse onClick: " + vMouseCoordsOnClick.ToString());
         if (bMouseCoordsNow) GUI.Label(new Rect(10, 116, 1000, 90), "Mouse now: " + vMouseCoordsNow.ToString());
         if (bGameOver) GUI.Label(new Rect(10, 126, 1000, 90), "GAME OVER");

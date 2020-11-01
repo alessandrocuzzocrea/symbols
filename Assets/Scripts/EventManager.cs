@@ -11,5 +11,6 @@ public class EventManager : MonoBehaviour
     public static TouchEvents.Move  OnTouchMove;
     public static TouchEvents.End   OnTouchEnd;
 
-    public static GameplayEvents.Gameover OnGameOver;
+    public static GameplayEvents.Gameover      OnGameOver;
+    public static GameplayEvents.IncreaseScore OnIncreaseScore;
 }
