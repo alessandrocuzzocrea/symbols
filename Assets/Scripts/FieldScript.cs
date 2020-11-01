@@ -23,7 +23,7 @@ public class FieldScript : MonoBehaviour
     [SerializeField]
     private int noConnectionRequired;
 
-    private DotScript[]   dotsArray;
+    private DotScript[]   dots;
     private Lane          currentPick;
     private Lane[]        possibleCurrentPick;
     private Lane.LaneType currentPickType;
@@ -73,7 +73,7 @@ public class FieldScript : MonoBehaviour
 
     private void SetupDots()
     {
-        dotsArray = new DotScript[rows * columns];
+        dots = new DotScript[rows * columns];
         possibleCurrentPick = new Lane[2];
 
         for (int i = 0; i < rows * columns; i++)
@@ -84,7 +84,7 @@ public class FieldScript : MonoBehaviour
             GameObject child = Instantiate(DotPrefab, Vector3.zero, Quaternion.identity, dotsContainer) as GameObject;
             DotScript dot = child.GetComponent<DotScript>();
             dot.Init(x, y);
-            dotsArray[i] = dot;
+            dots[i] = dot;
         }
 
         possibleDropId = -1;
@@ -211,7 +211,6 @@ public class FieldScript : MonoBehaviour
                 MoveRow(currentPick.id, currentDrop.id);
             }
 
-            DotScript[] dots = GameObject.FindObjectsOfType<DotScript>();
             foreach (DotScript dot in dots)
             {
                 dot.SwapName();
@@ -252,23 +251,6 @@ public class FieldScript : MonoBehaviour
         bMouseCoordsNow = bMouseCoordsOnClick = bCurrentPickTypeLocked = false;
     }
 
-    private DotScript[] GetDotsColumn(int possibleDropId)
-    {
-        List<DotScript> res = new List<DotScript>();
-        if (possibleDropId == 0) return res.ToArray();
-
-        DotScript[] dots = GameObject.FindObjectsOfType<DotScript>();
-        foreach(DotScript dot in dots)
-        {
-            if (dot.name[2].ToString() == possibleDropId.ToString())
-            {
-                res.Add(dot);
-            }
-        }
-
-        return res.ToArray();
-    }
-
     private void MoveColumn(int j, int v)
     {
         for (int i = 0; i < columns; i++)
@@ -292,9 +274,7 @@ public class FieldScript : MonoBehaviour
 
     private void ClearDots()
     {
-        DotScript[] dotsToClear = GameObject.FindObjectsOfType<DotScript>();
-
-        foreach (DotScript dot in dotsToClear)
+        foreach (DotScript dot in dots)
         {
             List<DotScript> connectedDots = new List<DotScript>();
             if (dot.connectedTo)
@@ -325,11 +305,11 @@ public class FieldScript : MonoBehaviour
     void UpdateConnections()
     {
         // Reset all connections
-        foreach (var dot in dotsArray)
+        foreach (var dot in dots)
         {
-                dot.connectedTo = null;
-                dot.highlight.gameObject.SetActive(false);
-                if (dot.connectedTo) dot.connectedTo.highlight.gameObject.SetActive(false);
+            dot.connectedTo = null;
+            dot.highlight.gameObject.SetActive(false);
+            if (dot.connectedTo) dot.connectedTo.highlight.gameObject.SetActive(false);
         }
 
         // Check for new connections
@@ -341,7 +321,6 @@ public class FieldScript : MonoBehaviour
 
                 if (dot.color != DotScript.Type.Empty)
                 {
-                    //DotScript neighbour = GameObject.Find($"{i}_{j + 1}").GetComponent<DotScript>();
                     DotScript neighbour = GetDotAtXY(j + 1, i);
 
                     if (dot.color == neighbour.color)
@@ -408,7 +387,7 @@ public class FieldScript : MonoBehaviour
 
     private DotScript GetDotAtXY(int x, int y)
     {
-        foreach(var dot in dotsArray)
+        foreach(var dot in dots)
         {
             if (dot.currentX == x && dot.currentY == y)
             {
@@ -422,7 +401,7 @@ public class FieldScript : MonoBehaviour
     private int CountDots(bool onlyEmpty = false)
     {
         var res = 0;
-        foreach (var dot in dotsArray)
+        foreach (var dot in dots)
         {
             if (onlyEmpty)
             {
