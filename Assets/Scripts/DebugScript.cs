@@ -23,6 +23,10 @@ public class DebugScript : MonoBehaviour
 
     void OnGUI()
     {
+        float screenScale = Screen.width / 360.0f;
+        Matrix4x4 scaledMatrix = Matrix4x4.identity * Matrix4x4.Scale(new Vector3(screenScale, screenScale, screenScale));
+        GUI.matrix = scaledMatrix;
+
         GUI.Label(new Rect(10, 0, 1000, 90), $"Time: {timer.DebugTimeLeftCurrentScanline()}");
 
         if (field.DebugCurrentPick()) GUI.Label(new Rect(10, 46, 1000, 90), "Current Pick: " + field.DebugCurrentPick().id);

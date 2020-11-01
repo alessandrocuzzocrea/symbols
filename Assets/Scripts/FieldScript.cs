@@ -303,35 +303,35 @@ public class FieldScript : MonoBehaviour
         }
     }
 
-    private void ClearDotsOld()
-    {
-        foreach (DotScript dot in dots)
-        {
-            List<DotScript> connectedDots = new List<DotScript>();
-            if (dot.leftConnectedTo)
-            {
-                connectedDots.Add(dot);
-                DotScript connectedTo = dot.leftConnectedTo;
-                while (connectedTo)
-                {
-                    connectedDots.Add(connectedTo);
-                    connectedTo = connectedTo.leftConnectedTo;
-                }
-            }
+    //private void ClearDotsOld()
+    //{
+    //    foreach (DotScript dot in dots)
+    //    {
+    //        List<DotScript> connectedDots = new List<DotScript>();
+    //        if (dot.leftConnectedTo)
+    //        {
+    //            connectedDots.Add(dot);
+    //            DotScript connectedTo = dot.leftConnectedTo;
+    //            while (connectedTo)
+    //            {
+    //                connectedDots.Add(connectedTo);
+    //                connectedTo = connectedTo.leftConnectedTo;
+    //            }
+    //        }
 
-            if (connectedDots.Count >= noConnectionRequired)
-            {
-                foreach (DotScript d in connectedDots)
-                {
-                    d.SetType(DotScript.Type.Empty);
-                    d.highlight.gameObject.SetActive(false);
-                    d.leftConnectedTo = null;
+    //        if (connectedDots.Count >= noConnectionRequired)
+    //        {
+    //            foreach (DotScript d in connectedDots)
+    //            {
+    //                d.SetType(DotScript.Type.Empty);
+    //                d.highlight.gameObject.SetActive(false);
+    //                d.leftConnectedTo = null;
 
-                    EventManager.OnIncreaseScore();
-                }
-            }
-        }
-    }
+    //                EventManager.OnIncreaseScore();
+    //            }
+    //        }
+    //    }
+    //}
 
     void UpdateConnections()
     {
@@ -401,20 +401,35 @@ public class FieldScript : MonoBehaviour
                     possibleColors.Add(DotScript.Type.Gree);
                     possibleColors.Add(DotScript.Type.Blue);
 
-                    //Check left
                     int currX = dot.currentX;
                     int currY = dot.currentY;
 
+                    //Check left
                     DotScript leftDot = GetDotAtXY(currX - 1, currY);
                     if (leftDot && leftDot.color != DotScript.Type.Empty)
                     {
                         possibleColors.Remove(leftDot.color);
                     }
 
+                    //Check right
                     DotScript rightDot = GetDotAtXY(currX + 1, currY);
                     if (rightDot && rightDot.color != DotScript.Type.Empty)
                     {
                         possibleColors.Remove(rightDot.color);
+                    }
+
+                    //Check up
+                    DotScript upDot = GetDotAtXY(currX, currY + 1);
+                    if (upDot && upDot.color != DotScript.Type.Empty)
+                    {
+                        possibleColors.Remove(upDot.color);
+                    }
+
+                    //Check down
+                    DotScript downDot = GetDotAtXY(currX, currY - 1);
+                    if (downDot && downDot.color != DotScript.Type.Empty)
+                    {
+                        possibleColors.Remove(downDot.color);
                     }
 
                     dot.SetType(DotScript.GetRandomColor(possibleColors));

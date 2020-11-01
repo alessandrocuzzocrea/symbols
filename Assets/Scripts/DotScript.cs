@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DotScript : MonoBehaviour
 {
-    Color[] loller = new Color[] { Color.black, Color.red, Color.green, Color.blue };
+    private static readonly Color[] loller = new Color[] { Color.black, Color.red, Color.green, Color.blue };
 
     public int currentX;
     public int currentY;
@@ -93,7 +93,14 @@ public class DotScript : MonoBehaviour
 
     public static Type GetRandomColor(List<Type> possibleColors)
     {
-        return possibleColors[Random.Range(0, possibleColors.Count)];
+        if (possibleColors.Count == 0)
+        {
+            possibleColors.Add(Type.Red);
+            possibleColors.Add(Type.Gree);
+            possibleColors.Add(Type.Blue);
+        } 
+
+       return possibleColors[Random.Range(0, possibleColors.Count)];
     }
 
     public void SetNewName(string s)
