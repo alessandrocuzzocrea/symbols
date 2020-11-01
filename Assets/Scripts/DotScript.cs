@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DotScript : MonoBehaviour
 {
-    public FieldScript field;
     Color[] loller = new Color[] { Color.black, Color.red, Color.green, Color.blue };
 
     public int currentX;
@@ -81,6 +80,14 @@ public class DotScript : MonoBehaviour
     public static DotScript.Type GetRandomColor()
     {
         return (DotScript.Type) Random.Range(0, 4);
+    }
+
+    public void Init(int x, int y)
+    {
+        transform.localPosition = new Vector2(x, y);
+        currentX = x;
+        currentY = y;
+        SetType(DotScript.Type.Empty);
     }
 
     public static Type GetRandomColor(List<Type> possibleColors)

@@ -63,7 +63,7 @@ public class FieldScript : MonoBehaviour
     void Start()
     {
         GetDependencies();
-        Setup();
+        SetupDots();
     }
 
     private void GetDependencies()
@@ -71,24 +71,20 @@ public class FieldScript : MonoBehaviour
         gameplayScript = GameObject.FindObjectOfType<GameplayScript>();
     }
 
-    private void Setup()
+    private void SetupDots()
     {
         dotsArray = new DotScript[rows * columns];
         possibleCurrentPick = new Lane[2];
 
         for (int i = 0; i < rows * columns; i++)
         {
-            var x = i % rows;
-            var y = i / columns;
+            int x = i % rows;
+            int y = i / columns;
+
             GameObject child = Instantiate(DotPrefab, Vector3.zero, Quaternion.identity, dotsContainer) as GameObject;
-            Vector2 position = new Vector2(x, y);
-            child.transform.localPosition = position;
-            DotScript script = child.GetComponent<DotScript>();
-            script.field = this;
-            script.currentX = x;
-            script.currentY = y;
-            script.SetType(DotScript.Type.Empty);
-            dotsArray[i] = script;
+            DotScript dot = child.GetComponent<DotScript>();
+            dot.Init(x, y);
+            dotsArray[i] = dot;
         }
 
         possibleDropId = -1;
