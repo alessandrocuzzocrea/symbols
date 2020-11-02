@@ -42,8 +42,8 @@ public class FieldScript : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.OnTimerEnd += ClearDots;
         EventManager.OnTimerEnd += DropNewDots;
+        EventManager.OnTimerEnd += ClearDots;
 
         EventManager.OnTouchStart += OnTouchStart;
         EventManager.OnTouchMove  += OnTouchMove;
@@ -52,8 +52,8 @@ public class FieldScript : MonoBehaviour
 
     private void OnDisable()
     {
-        EventManager.OnTimerEnd -= ClearDots;
         EventManager.OnTimerEnd -= DropNewDots;
+        EventManager.OnTimerEnd -= ClearDots;
 
         EventManager.OnTouchStart -= OnTouchStart;
         EventManager.OnTouchMove  -= OnTouchMove;
