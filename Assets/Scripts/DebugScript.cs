@@ -27,7 +27,7 @@ public class DebugScript : MonoBehaviour
         Matrix4x4 scaledMatrix = Matrix4x4.identity * Matrix4x4.Scale(new Vector3(screenScale, screenScale, screenScale));
         GUI.matrix = scaledMatrix;
 
-        GUI.Label(new Rect(10, 0, 1000, 90), $"Time: {timer.DebugTimeLeftCurrentScanline()}");
+        GUI.Label(new Rect(10, 0, 1000, 90), $"Timer: {timer.DebugTimeLeftCurrentScanline()}");
 
         if (field.DebugCurrentPick()) GUI.Label(new Rect(10, 46, 1000, 90), "Current Pick: " + field.DebugCurrentPick().id);
         if (field.DebugCurrentPick()) GUI.Label(new Rect(10, 56, 1000, 90), "Current Type: " + field.DebugCurrentPick().ToString());

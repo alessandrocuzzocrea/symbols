@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class FieldScript : MonoBehaviour
 {
@@ -39,6 +37,9 @@ public class FieldScript : MonoBehaviour
 
     //Dependencies
     private GameplayScript gameplayScript;
+
+    [SerializeField]
+    private GameObject touchPoint;
 
     private void OnEnable()
     {
@@ -114,6 +115,10 @@ public class FieldScript : MonoBehaviour
         vMouseCoordsNow = pos;
 
         currentPick = null;
+
+        Vector3 lollo = Camera.main.ScreenToWorldPoint(pos);
+        touchPoint.transform.position = new Vector3(lollo.x, lollo.y, 0.0f);
+        touchPoint.SetActive(true);
     }
 
     void OnTouchMove()
@@ -246,6 +251,9 @@ public class FieldScript : MonoBehaviour
                 currentPick = possibleCurrentPick[i];
             }
         }
+
+        Vector3 lollo = Camera.main.ScreenToWorldPoint(pos);
+        touchPoint.transform.position = new Vector3(lollo.x, lollo.y, 0.0f);
     }
 
     void OnTouchEnd()
@@ -267,6 +275,8 @@ public class FieldScript : MonoBehaviour
         {
             dot.ToggleSelectVisibility(0, false);
         }
+
+        touchPoint.SetActive(false);
     }
 
     private void MoveColumn(int j, int v)
