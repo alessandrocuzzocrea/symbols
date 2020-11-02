@@ -25,7 +25,7 @@ public class GameplayScript : MonoBehaviour
     public void IncreaseScore()
     {
         score++;
-        scoreText.text = score.ToString();
+        scoreText.text = $"Score: {score}";
     }
 
     public void OnGameOver()

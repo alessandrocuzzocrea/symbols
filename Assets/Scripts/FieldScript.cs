@@ -153,6 +153,17 @@ public class FieldScript : MonoBehaviour
                 }
             }
 
+            if (currentPickType == Lane.LaneType.Row)
+            {
+                DotScript dot = GetDotAtXY(0, currentPick.id);
+                dot.ToggleSelectVisibility(currentPickType, true);
+            }
+            else
+            {
+                DotScript dot = GetDotAtXY(currentPick.id, 0);
+                dot.ToggleSelectVisibility(currentPickType, true);
+            }
+
             bCurrentPickTypeLocked = true;
         }
 
@@ -251,6 +262,11 @@ public class FieldScript : MonoBehaviour
         possibleDropId = -1;
 
         bMouseCoordsNow = bMouseCoordsOnClick = bCurrentPickTypeLocked = false;
+
+        foreach (DotScript dot in dots)
+        {
+            dot.ToggleSelectVisibility(0, false);
+        }
     }
 
     private void MoveColumn(int j, int v)

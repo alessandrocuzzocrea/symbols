@@ -8,7 +8,7 @@ public class Lane : MonoBehaviour
 
     public enum LaneType
     {
-        Columns,
+        Columns, // TODO: rename to singular form
         Row
     }
 

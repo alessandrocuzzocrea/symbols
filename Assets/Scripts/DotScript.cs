@@ -29,6 +29,12 @@ public class DotScript : MonoBehaviour
     public float speed = 0.05f;
     public Animator animator;
 
+    [SerializeField]
+    private GameObject rowSelect;
+
+    [SerializeField]
+    private GameObject columnSelect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -140,6 +146,27 @@ public class DotScript : MonoBehaviour
 
 
         //transform.localPosition = new Vector3(newX, newY, 0);
+    }
+
+    public void ToggleSelectVisibility(Lane.LaneType lt, bool b)
+    {
+        if (b)
+        {
+            if (Lane.LaneType.Row == lt)
+            {
+                rowSelect.SetActive(b);
+
+            }
+            else
+            {
+                columnSelect.SetActive(b);
+            }
+        }
+        else
+        {
+            rowSelect.SetActive(b);
+            columnSelect.SetActive(b);
+        }
     }
 
     //private void OnGUI()
