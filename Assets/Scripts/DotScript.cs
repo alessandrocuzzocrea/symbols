@@ -1,13 +1,15 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using UnityEngine.Serialization;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class DotScript : MonoBehaviour
 {
     public enum Type { Empty, Circle, Square, Diamond, Star } // #TODO: Gree, lmao
-    private static readonly Color[] loller = new Color[] { Color.black, Color.white, Color.white, Color.white, Color.white };
-    public Sprite[] spriteLoller;
-    //public 
+    private static readonly Color[] colors = new Color[] { Color.black, Color.white, Color.white, Color.white, Color.white };
+
+    [FormerlySerializedAs("spriteLoller")]
+    public Sprite[] sprites;
+    public Sprite[] spritesConnected;
 
     public int currentX;
     public int currentY;
@@ -73,8 +75,9 @@ public class DotScript : MonoBehaviour
         }
         else
         {
-            sprite.GetComponent<SpriteRenderer>().color  = loller[(int)color];
-            sprite.GetComponent<SpriteRenderer>().sprite = spriteLoller[(int)color];
+            sprite.GetComponent<SpriteRenderer>().color     = colors[(int)color];
+            sprite.GetComponent<SpriteRenderer>().sprite    = sprites[(int)color];
+            highlight.GetComponent<SpriteRenderer>().sprite = spritesConnected[(int)color];
 
             animator.SetBool("IsClearing", false);
         }
@@ -168,12 +171,4 @@ public class DotScript : MonoBehaviour
             columnSelect.SetActive(b);
         }
     }
-
-    //private void OnGUI()
-    //{
-    //    GUI.backgroundColor = Color.yellow;
-    //    Vector2 loller = Camera.main.WorldToScreenPoint(transform.position);
-    //    GUI.Label(new Rect(loller.x, Screen.height - loller.y, 100, 100), name);
-    //    if (leftConnectedTo) GUI.Label(new Rect(loller.x, Screen.height - loller.y - 10, 100, 100), "C:" + leftConnectedTo.name);
-    //}
 }
