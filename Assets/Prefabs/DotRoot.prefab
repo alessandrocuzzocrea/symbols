@@ -375,10 +375,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteLoller:
   - {fileID: 21300000, guid: 6c69e8480bd2d4815bc70c2ac51732a7, type: 3}
-  - {fileID: 21300000, guid: 30d2355f0676e47b1a3a05edc338eb38, type: 3}
-  - {fileID: 21300000, guid: 2e9647198d62b427987c7e47a609f2d1, type: 3}
-  - {fileID: 21300000, guid: bd7ef650a89c04c92b68461f4bcdbe96, type: 3}
-  - {fileID: 21300000, guid: f6971b86fca504a21af1e4ac9125895b, type: 3}
+  - {fileID: 21300000, guid: a5f6c762735244f698f814b5b96b43f0, type: 3}
+  - {fileID: 21300000, guid: afa2a0cffb84e41f384f48d814c60375, type: 3}
+  - {fileID: 21300000, guid: 48ab1f010589946e693bf8354fb900fd, type: 3}
+  - {fileID: 21300000, guid: aa215811dc76b4891863d4f3415f1e49, type: 3}
   currentX: 0
   currentY: 0
   oldX: 0

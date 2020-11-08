@@ -5,7 +5,7 @@ using UnityEngine;
 public class DotScript : MonoBehaviour
 {
     public enum Type { Empty, Circle, Square, Diamond, Star } // #TODO: Gree, lmao
-    private static readonly Color[] loller = new Color[] { Color.black, Color.red, Color.green, Color.blue, Color.yellow };
+    private static readonly Color[] loller = new Color[] { Color.black, Color.white, Color.white, Color.white, Color.white };
     public Sprite[] spriteLoller;
     //public 
 
