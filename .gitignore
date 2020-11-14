@@ -66,3 +66,4 @@ crashlytics-build.properties
 
 # MeshTextPro
 [Aa]ssets/TextMesh Pro/
+*.ttf

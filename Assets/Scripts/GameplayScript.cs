@@ -9,9 +9,6 @@ public class GameplayScript : MonoBehaviour
     public bool IsGameOver { get; private set; }
 
     [SerializeField]
-    private Text scoreText;
-
-    [SerializeField]
     private TextMeshProUGUI scoreTextTMP;
 
     private void OnEnable()
@@ -29,7 +26,7 @@ public class GameplayScript : MonoBehaviour
     public void IncreaseScore()
     {
         score++;
-        scoreTextTMP.text = $"Score: {score}";
+        scoreTextTMP.text = score.ToString();
     }
 
     public void OnGameOver()
