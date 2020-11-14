@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameplayScript : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class GameplayScript : MonoBehaviour
 
     [SerializeField]
     private Text scoreText;
+
+    [SerializeField]
+    private TextMeshProUGUI scoreTextTMP;
 
     private void OnEnable()
     {
@@ -25,7 +29,7 @@ public class GameplayScript : MonoBehaviour
     public void IncreaseScore()
     {
         score++;
-        scoreText.text = $"Score: {score}";
+        scoreTextTMP.text = $"Score: {score}";
     }
 
     public void OnGameOver()
