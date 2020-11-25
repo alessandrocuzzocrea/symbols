@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class DotScript : MonoBehaviour
 {
-    public enum Type { Empty, Circle, Square, Diamond, Star } // #TODO: Gree, lmao
+    public enum Type { Empty, Circle, Square, Diamond, Star, Queen } // #TODO: Gree, lmao
     private static readonly Color[] colors = new Color[] { Color.black, Color.white, Color.white, Color.white, Color.white };
 
     [FormerlySerializedAs("spriteLoller")]
@@ -104,6 +104,9 @@ public class DotScript : MonoBehaviour
             possibleColors.Add(Type.Square);
             possibleColors.Add(Type.Diamond);
             possibleColors.Add(Type.Star);
+
+            //TODO: for testing
+            possibleColors.Add(Type.Queen);
         } 
 
        return possibleColors[Random.Range(0, possibleColors.Count)];

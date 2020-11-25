@@ -379,12 +379,14 @@ MonoBehaviour:
   - {fileID: 21300000, guid: afa2a0cffb84e41f384f48d814c60375, type: 3}
   - {fileID: 21300000, guid: 48ab1f010589946e693bf8354fb900fd, type: 3}
   - {fileID: 21300000, guid: aa215811dc76b4891863d4f3415f1e49, type: 3}
+  - {fileID: 21300000, guid: 6f9e5355d95f2460b9c2de4da501f52c, type: 3}
   spritesConnected:
   - {fileID: 21300000, guid: 6c69e8480bd2d4815bc70c2ac51732a7, type: 3}
   - {fileID: 21300000, guid: 15c017489d4fe418fad754a23199a461, type: 3}
   - {fileID: 21300000, guid: c7db24b69d5e746348c0215e9acd706e, type: 3}
   - {fileID: 21300000, guid: 63a217a6b20a34802a4cc789bde0fea2, type: 3}
   - {fileID: 21300000, guid: c8b071a54ea8d48af998f714c1ae8325, type: 3}
+  - {fileID: 21300000, guid: f5ed2d8902bc04b6e90656d9fd3dcf24, type: 3}
   currentX: 0
   currentY: 0
   oldX: 0
@@ -499,6 +501,6 @@ SpriteRenderer:
   m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0

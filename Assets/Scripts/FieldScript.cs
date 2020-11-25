@@ -432,6 +432,9 @@ public class FieldScript : MonoBehaviour
                         DotScript.Type.Star
                     };
 
+                    //TODO: for testing
+                    possibleColors.Add(DotScript.Type.Queen);
+
                     int currX = dot.currentX;
                     int currY = dot.currentY;
 
