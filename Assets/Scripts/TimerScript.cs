@@ -9,6 +9,7 @@ public class TimerScript : MonoBehaviour
     public float timeLeftCurrentScanline;
     public float timeBetweenScanLines = 1.0f;
     public Image timerImage;
+    public int Turn { get; private set; }
 
     private void OnEnable()
     {
@@ -29,6 +30,7 @@ public class TimerScript : MonoBehaviour
 
     void Start()
     {
+        Turn = 1;
         Reset();
     }
 
@@ -42,6 +44,7 @@ public class TimerScript : MonoBehaviour
         if (timeLeftCurrentScanline <= 0)
         {
             EventManager.OnTimerEnd?.Invoke();
+            Turn++;
             Reset();
         }
 

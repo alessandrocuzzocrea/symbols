@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Serialization;
 using System.Collections.Generic;
+using System;
 
 public class DotScript : MonoBehaviour
 {
@@ -85,7 +86,7 @@ public class DotScript : MonoBehaviour
 
     public static DotScript.Type GetRandomColor()
     {
-        return (DotScript.Type) Random.Range(0, 4);
+        return (DotScript.Type) UnityEngine.Random.Range(0, 4);
     }
 
     public void Init(int x, int y)
@@ -104,12 +105,9 @@ public class DotScript : MonoBehaviour
             possibleColors.Add(Type.Square);
             possibleColors.Add(Type.Diamond);
             possibleColors.Add(Type.Star);
+        }
 
-            //TODO: for testing
-            possibleColors.Add(Type.Queen);
-        } 
-
-       return possibleColors[Random.Range(0, possibleColors.Count)];
+       return possibleColors[UnityEngine.Random.Range(0, possibleColors.Count)];
     }
 
     public void SetNewName(string s)

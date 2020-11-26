@@ -37,6 +37,7 @@ public class FieldScript : MonoBehaviour
 
     //Dependencies
     private GameplayScript gameplayScript;
+    private TimerScript    timerScript;
 
     [SerializeField]
     private GameObject touchPoint;
@@ -72,6 +73,7 @@ public class FieldScript : MonoBehaviour
     private void GetDependencies()
     {
         gameplayScript = GameObject.FindObjectOfType<GameplayScript>();
+        timerScript    = GameObject.FindObjectOfType<TimerScript>();
     }
 
     private void SetupDots()
@@ -403,6 +405,41 @@ public class FieldScript : MonoBehaviour
         }
     }
 
+    List<DotScript.Type> DropDotCheckRules(int currX, int currY, List<DotScript.Type> colors)
+    {
+        List<DotScript.Type> possibleColors = new List<DotScript.Type>(colors);
+
+        // left
+        DotScript leftDot = GetDotAtXY(currX - 1, currY);
+        if (leftDot && leftDot.color != DotScript.Type.Empty)
+        {
+            possibleColors.Remove(leftDot.color);
+        }
+
+        // right
+        DotScript rightDot = GetDotAtXY(currX + 1, currY);
+        if (rightDot && rightDot.color != DotScript.Type.Empty)
+        {
+            possibleColors.Remove(rightDot.color);
+        }
+
+        // up
+        DotScript upDot = GetDotAtXY(currX, currY + 1);
+        if (upDot && upDot.color != DotScript.Type.Empty)
+        {
+           possibleColors.Remove(upDot.color);
+        }
+
+        // down
+        DotScript downDot = GetDotAtXY(currX, currY - 1);
+        if (downDot && downDot.color != DotScript.Type.Empty)
+        {
+           possibleColors.Remove(downDot.color);
+        }
+
+        return possibleColors;
+    }
+
     void DropNewDots()
     {
         if (CountDots() >= columns * rows)
@@ -411,67 +448,53 @@ public class FieldScript : MonoBehaviour
         }
 
         int leftToDropCount = maxDrop;
-        for (int i = 0; i < dotsContainer.childCount; i++)
+
+        var candidates = new List<DotScript>();
+        var randomDots = new List<DotScript>(dots);
+        randomDots.Shuffle<DotScript>();
+
+        foreach (DotScript dot in randomDots)
         {
             if (leftToDropCount <= 0)
             {
                 break;
             }
 
-            if (Random.Range(0.0f, 1.0f) >= .8f)
+            if (dot && dot.color == DotScript.Type.Empty)
             {
-                DotScript dot = dotsContainer.GetChild(i).GetComponent<DotScript>();
+                var possibleColors = new List<DotScript.Type>();
 
-                if (dot && dot.color == DotScript.Type.Empty)
+                if (ShouldDropQueen())
                 {
-                    var possibleColors = new List<DotScript.Type>
-                    {
-                        DotScript.Type.Circle,
-                        DotScript.Type.Square,
-                        DotScript.Type.Diamond,
-                        DotScript.Type.Star
-                    };
-
-                    //TODO: for testing
                     possibleColors.Add(DotScript.Type.Queen);
-
-                    int currX = dot.currentX;
-                    int currY = dot.currentY;
-
-                    //Check left
-                    DotScript leftDot = GetDotAtXY(currX - 1, currY);
-                    if (leftDot && leftDot.color != DotScript.Type.Empty)
-                    {
-                        possibleColors.Remove(leftDot.color);
-                    }
-
-                    //Check right
-                    DotScript rightDot = GetDotAtXY(currX + 1, currY);
-                    if (rightDot && rightDot.color != DotScript.Type.Empty)
-                    {
-                        possibleColors.Remove(rightDot.color);
-                    }
-
-                    //Check up
-                    DotScript upDot = GetDotAtXY(currX, currY + 1);
-                    if (upDot && upDot.color != DotScript.Type.Empty)
-                    {
-                        possibleColors.Remove(upDot.color);
-                    }
-
-                    //Check down
-                    DotScript downDot = GetDotAtXY(currX, currY - 1);
-                    if (downDot && downDot.color != DotScript.Type.Empty)
-                    {
-                        possibleColors.Remove(downDot.color);
-                    }
-
-                    dot.SetType(DotScript.GetRandomColor(possibleColors));
-                    leftToDropCount -= 1;
+                    leftToDropCount = 0;
+                    Debug.Log("DROP QUEEN");
                 }
+                else
+                {
+                    possibleColors.AddRange(
+                        new List<DotScript.Type> {
+                            DotScript.Type.Circle,
+                            DotScript.Type.Square,
+                            DotScript.Type.Diamond,
+                            DotScript.Type.Star
+                        }
+                    );
+                }
+
+                var remainingColors = DropDotCheckRules(dot.currentX, dot.currentY, possibleColors);
+
+                DotScript.Type color = DotScript.GetRandomColor(remainingColors);
+                dot.SetType(color);
+                leftToDropCount -= 1;
             }
         }
         UpdateConnections();
+    }
+
+    private bool ShouldDropQueen()
+    {
+        return timerScript.Turn % 10 == 0;
     }
 
     private DotScript GetDotAtXY(int x, int y)
