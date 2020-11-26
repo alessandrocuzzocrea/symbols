@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class DotScript : MonoBehaviour
 {
     public enum Type { Empty, Circle, Square, Diamond, Star, Queen } // #TODO: Gree, lmao
-    private static readonly Color[] colors = new Color[] { Color.black, Color.white, Color.white, Color.white, Color.white };
+    private static readonly Color[] colors = new Color[] { Color.black, Color.white, Color.white, Color.white, Color.white, Color.white };
 
     [FormerlySerializedAs("spriteLoller")]
     public Sprite[] sprites;
