@@ -468,7 +468,6 @@ public class FieldScript : MonoBehaviour
                 {
                     possibleColors.Add(DotScript.Type.Queen);
                     leftToDropCount = 0;
-                    Debug.Log("DROP QUEEN");
                 }
                 else
                 {
