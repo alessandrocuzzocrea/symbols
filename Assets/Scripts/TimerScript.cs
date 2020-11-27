@@ -10,19 +10,26 @@ public class TimerScript : MonoBehaviour
     public float timeBetweenScanLines = 1.0f;
     public Image timerImage;
     public int Turn { get; private set; }
+    public float currentTimeMultiplier;
 
     private void OnEnable()
     {
-        EventManager.OnTouchStart += Pause;
-        EventManager.OnTouchEnd   += Resume;
+        //EventManager.OnTouchStart += Pause;
+        //EventManager.OnTouchEnd   += Resume;
+
+        EventManager.OnTouchStart += SlowDown;
+        EventManager.OnTouchEnd   += SlowUp;
 
         EventManager.OnGameOver += Pause;
     }
 
     private void OnDisable()
     {
-        EventManager.OnTouchStart -= Pause;
-        EventManager.OnTouchEnd   -= Resume;
+        //EventManager.OnTouchStart -= Pause;
+        //EventManager.OnTouchEnd   -= Resume;
+
+        EventManager.OnTouchStart -= SlowDown;
+        EventManager.OnTouchEnd   -= SlowUp;
 
         EventManager.OnGameOver -= Pause;
 
@@ -31,6 +38,7 @@ public class TimerScript : MonoBehaviour
     void Start()
     {
         Turn = 1;
+        currentTimeMultiplier = 1.0f;
         Reset();
     }
 
@@ -38,7 +46,7 @@ public class TimerScript : MonoBehaviour
     {
         if (!pauseTimer)
         {
-            timeLeftCurrentScanline -= Time.smoothDeltaTime;
+            timeLeftCurrentScanline -= Time.smoothDeltaTime * currentTimeMultiplier;
         }
 
         if (timeLeftCurrentScanline <= 0)
@@ -60,6 +68,16 @@ public class TimerScript : MonoBehaviour
     private void Resume()
     {
         pauseTimer = false;
+    }
+
+    private void SlowUp()
+    {
+        currentTimeMultiplier = 1.0f;
+    }
+
+    private void SlowDown()
+    {
+        currentTimeMultiplier = 0.5f;
     }
 
     private void Reset()
