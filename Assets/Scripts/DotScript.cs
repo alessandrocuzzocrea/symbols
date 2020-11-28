@@ -172,4 +172,42 @@ public class DotScript : MonoBehaviour
             columnSelect.SetActive(b);
         }
     }
+
+    public static Color GetColorFromType(Type t)
+    {
+        Color res;
+
+        switch (t)
+        {
+            case Type.Empty:
+                res = Color.black;
+                break;
+
+            case Type.Circle:
+                res = Color.green;
+                break;
+
+            case Type.Square:
+                res = Color.red;
+                break;
+
+            case Type.Diamond:
+                res = Color.blue;
+                break;
+
+            case Type.Star:
+                res = Color.yellow;
+                break;
+
+            case Type.Queen:
+                res = Color.magenta;
+                break;
+
+            default:
+                res = Color.black;
+                break;
+        }
+
+        return res;
+    }
 }

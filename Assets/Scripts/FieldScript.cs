@@ -42,10 +42,6 @@ public class FieldScript : MonoBehaviour
     [SerializeField]
     private GameObject touchPoint;
 
-    //TODO: test
-    [SerializeField]
-    public GameObject ParticlesPrefab;
-
     private void OnEnable()
     {
         EventManager.OnTimerEnd += DropNewDots;
@@ -314,25 +310,82 @@ public class FieldScript : MonoBehaviour
         {
             if (dot.leftConnectedTo || dot.upConnectedTo)
             {
+                {
+                    var dotColor = DotScript.GetColorFromType(dot.color);
+                    var ps = dot.GetComponentInChildren<ParticleSystem>();
+                    var col = ps.colorOverLifetime;
+                    var grad = new Gradient();
+
+                    grad.SetKeys(
+                        new GradientColorKey[] {
+                            new GradientColorKey(dotColor, 0.0f),
+                            new GradientColorKey(Color.white, 1.0f)
+                        },
+                        new GradientAlphaKey[] {
+                            new GradientAlphaKey(0.0f, 0.0f),
+                            new GradientAlphaKey(1.0f, 0.5f),
+                            new GradientAlphaKey(0.0f, 1.0f)
+                        }
+                    );
+                    col.color = new ParticleSystem.MinMaxGradient(grad);
+                    dot.GetComponentInChildren<ParticleSystem>().Play();
+                }
                 dot.SetType(DotScript.Type.Empty);
                 dot.highlight.gameObject.SetActive(false);
-
-                Instantiate(ParticlesPrefab, dot.transform.position, Quaternion.identity);
 
                 DotScript left = dot.leftConnectedTo;
                 if (left)
                 {
+                    {
+                        var dotColor = DotScript.GetColorFromType(left.color);
+                        var ps = left.GetComponentInChildren<ParticleSystem>();
+                        var col = ps.colorOverLifetime;
+                        var grad = new Gradient();
+
+                        grad.SetKeys(
+                            new GradientColorKey[] {
+                                new GradientColorKey(dotColor, 0.0f),
+                                new GradientColorKey(Color.white, 1.0f)
+                            },
+                            new GradientAlphaKey[] {
+                                new GradientAlphaKey(0.0f, 0.0f),
+                                new GradientAlphaKey(1.0f, 0.5f),
+                                new GradientAlphaKey(0.0f, 1.0f)
+                            }
+                        );
+                        col.color = new ParticleSystem.MinMaxGradient(grad);
+                        left.GetComponentInChildren<ParticleSystem>().Play();
+                    }
                     left.SetType(DotScript.Type.Empty);
                     left.highlight.gameObject.SetActive(false);
-                    Instantiate(ParticlesPrefab, left.transform.position, Quaternion.identity);
                 }
 
                 DotScript up = dot.upConnectedTo;
                 if (up)
                 {
+                    {
+                        var dotColor = DotScript.GetColorFromType(up.color);
+                        var ps = up.GetComponentInChildren<ParticleSystem>();
+                        var col = ps.colorOverLifetime;
+                        var grad = new Gradient();
+
+                        grad.SetKeys(
+                            new GradientColorKey[] {
+                                new GradientColorKey(dotColor, 0.0f),
+                                new GradientColorKey(Color.white, 1.0f)
+                            },
+                            new GradientAlphaKey[] {
+                                new GradientAlphaKey(0.0f, 0.0f),
+                                new GradientAlphaKey(1.0f, 0.5f),
+                                new GradientAlphaKey(0.0f, 1.0f)
+                            }
+                        );
+                        col.color = new ParticleSystem.MinMaxGradient(grad);
+                        up.GetComponentInChildren<ParticleSystem>().Play();
+                    }
+
                     up.SetType(DotScript.Type.Empty);
                     up.highlight.gameObject.SetActive(false);
-                    Instantiate(ParticlesPrefab, up.transform.position, Quaternion.identity);
                 }
 
                 dot.leftConnectedTo = dot.upConnectedTo = null;
