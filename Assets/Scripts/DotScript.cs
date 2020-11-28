@@ -101,13 +101,15 @@ public class DotScript : MonoBehaviour
     {
         if (possibleColors.Count == 0)
         {
-            possibleColors.Add(Type.Circle);
-            possibleColors.Add(Type.Square);
-            possibleColors.Add(Type.Diamond);
-            possibleColors.Add(Type.Star);
+            //possibleColors.Add(Type.Circle);
+            //possibleColors.Add(Type.Square);
+            //possibleColors.Add(Type.Diamond);
+            //possibleColors.Add(Type.Star);
+
+            possibleColors.Add(Type.Queen);
         }
 
-       return possibleColors[UnityEngine.Random.Range(0, possibleColors.Count)];
+        return possibleColors[UnityEngine.Random.Range(0, possibleColors.Count)];
     }
 
     public void SetNewName(string s)
