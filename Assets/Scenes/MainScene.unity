@@ -4029,7 +4029,6 @@ MonoBehaviour:
   maxDrop: 3
   noConnectionRequired: 2
   touchPoint: {fileID: 1880407133}
-  ParticlesPrefab: {fileID: 0}
 --- !u!4 &1575346529
 Transform:
   m_ObjectHideFlags: 0
@@ -4080,6 +4079,8 @@ MonoBehaviour:
   timeLeftCurrentScanline: 0
   timeBetweenScanLines: 1
   timerImage: {fileID: 729736229}
+  normalTimeMultiplier: 1
+  slowedDownTimeMultiplier: 0.25
   currentTimeMultiplier: 0
 --- !u!4 &1586792145
 Transform:
