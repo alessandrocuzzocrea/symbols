@@ -42,6 +42,10 @@ public class FieldScript : MonoBehaviour
     [SerializeField]
     private GameObject touchPoint;
 
+    //TODO: test
+    [SerializeField]
+    public GameObject ParticlesPrefab;
+
     private void OnEnable()
     {
         EventManager.OnTimerEnd += DropNewDots;
@@ -304,6 +308,8 @@ public class FieldScript : MonoBehaviour
 
     private void ClearDots()
     {
+        //List<DotScript> dotsToClear = new List<DotScript>();
+        //TODO: plz refactor me
         foreach (DotScript dot in dots)
         {
             if (dot.leftConnectedTo || dot.upConnectedTo)
@@ -311,12 +317,14 @@ public class FieldScript : MonoBehaviour
                 dot.SetType(DotScript.Type.Empty);
                 dot.highlight.gameObject.SetActive(false);
 
+                Instantiate(ParticlesPrefab, dot.transform.position, Quaternion.identity);
 
                 DotScript left = dot.leftConnectedTo;
                 if (left)
                 {
                     left.SetType(DotScript.Type.Empty);
                     left.highlight.gameObject.SetActive(false);
+                    Instantiate(ParticlesPrefab, left.transform.position, Quaternion.identity);
                 }
 
                 DotScript up = dot.upConnectedTo;
@@ -324,6 +332,7 @@ public class FieldScript : MonoBehaviour
                 {
                     up.SetType(DotScript.Type.Empty);
                     up.highlight.gameObject.SetActive(false);
+                    Instantiate(ParticlesPrefab, up.transform.position, Quaternion.identity);
                 }
 
                 dot.leftConnectedTo = dot.upConnectedTo = null;
