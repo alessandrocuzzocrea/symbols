@@ -8,11 +8,15 @@ public class TimerScript : MonoBehaviour
     public bool pauseTimer;
     public float timeLeftCurrentScanline;
     public float timeBetweenScanLines = 1.0f;
-    public Image timerImage;
     public int Turn { get; private set; }
     public float normalTimeMultiplier;
     public float slowedDownTimeMultiplier;
     public float currentTimeMultiplier;
+
+    // UI stuff
+    public Image timerImage;
+    public Image timerDotImage;
+
 
     private void OnEnable()
     {
@@ -41,6 +45,7 @@ public class TimerScript : MonoBehaviour
         Turn = 1;
         currentTimeMultiplier = normalTimeMultiplier;
         Reset();
+        UpdateUI();
     }
 
     void Update()
@@ -57,7 +62,7 @@ public class TimerScript : MonoBehaviour
             Reset();
         }
 
-        timerImage.fillAmount = timeLeftCurrentScanline;
+        UpdateUI();
     }
 
     private void Pause()
@@ -84,6 +89,15 @@ public class TimerScript : MonoBehaviour
     private void Reset()
     {
         timeLeftCurrentScanline = timeBetweenScanLines;
+    }
+
+    private void UpdateUI()
+    {
+        timerImage.fillAmount = timeLeftCurrentScanline;
+        //timerDotImage.transform.rotation = Quaternion.Euler(0, 0, 360.0f / timeLeftCurrentScanline);
+        timerDotImage.transform.rotation = Quaternion.AngleAxis(360.0f * timeLeftCurrentScanline, Vector3.forward);
+        //rot.z = ;
+        //timerDotImage.transform.rotation = rot;
     }
 
 #if DEVELOPMENT_BUILD || UNITY_EDITOR

@@ -23,10 +23,15 @@ public class GameplayScript : MonoBehaviour
         EventManager.OnIncreaseScore -= OnGameOver;
     }
 
+    private void Start()
+    {
+        UpdateUI();
+    }
+
     public void IncreaseScore()
     {
         score++;
-        scoreTextTMP.text = score.ToString();
+        UpdateUI();
     }
 
     public void OnGameOver()
@@ -37,6 +42,11 @@ public class GameplayScript : MonoBehaviour
     private void ResetGame()
     {
         SceneManager.LoadScene(0);
+    }
+
+    private void UpdateUI()
+    {
+        scoreTextTMP.text = score.ToString();
     }
 
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
