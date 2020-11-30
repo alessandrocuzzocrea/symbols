@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,9 +15,17 @@ public class TimerScript : MonoBehaviour
     public float currentTimeMultiplier;
 
     // UI stuff
+    public TextMeshProUGUI scoreTextTMP;
+    public TextMeshProUGUI scoreLabelTMP;
     public Image timerImage;
     public Image timerDotImage;
+    //public Color currentColor;
+    //public Color normalColor;
+    //public Color halfColor;
+    //public Color quarterColor;
+    //public Color lessThen10Color;
 
+    public Gradient colorGradient;
 
     private void OnEnable()
     {
@@ -44,6 +53,7 @@ public class TimerScript : MonoBehaviour
     {
         Turn = 1;
         currentTimeMultiplier = normalTimeMultiplier;
+        //currentColor = normalColor;
         Reset();
         UpdateUI();
     }
@@ -52,7 +62,7 @@ public class TimerScript : MonoBehaviour
     {
         if (!pauseTimer)
         {
-            timeLeftCurrentScanline -= Time.smoothDeltaTime * currentTimeMultiplier;
+            timeLeftCurrentScanline -= Time.smoothDeltaTime;
         }
 
         if (timeLeftCurrentScanline <= 0)
@@ -78,12 +88,12 @@ public class TimerScript : MonoBehaviour
 
     private void SlowUp()
     {
-        currentTimeMultiplier = normalTimeMultiplier;
+        Time.timeScale = normalTimeMultiplier;
     }
 
     private void SlowDown()
     {
-        currentTimeMultiplier = slowedDownTimeMultiplier;
+        Time.timeScale = slowedDownTimeMultiplier;
     }
 
     private void Reset()
@@ -94,10 +104,18 @@ public class TimerScript : MonoBehaviour
     private void UpdateUI()
     {
         timerImage.fillAmount = timeLeftCurrentScanline;
-        //timerDotImage.transform.rotation = Quaternion.Euler(0, 0, 360.0f / timeLeftCurrentScanline);
         timerDotImage.transform.rotation = Quaternion.AngleAxis(360.0f * timeLeftCurrentScanline, Vector3.forward);
-        //rot.z = ;
-        //timerDotImage.transform.rotation = rot;
+
+        Color c = colorGradient.Evaluate(timeLeftCurrentScanline);
+        SetUIColor(c);
+    }
+
+    private void SetUIColor(Color c)
+    {
+        timerImage.color    = c;
+        timerDotImage.color = c;
+        //scoreLabelTMP.color = c;
+        //scoreTextTMP.color  = c;
     }
 
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
