@@ -95,7 +95,7 @@ public class ScoreScript : MonoBehaviour
 
         if (GUI.Button(new Rect(10, 156, 100, 20), "TIMER TEST"))
         {
-            GameObject.Find("Score").GetComponent<ScoreScript>().IncreaseScore();
+            GameObject.Find("UIManager").GetComponent<ScoreScript>().IncreaseScore();
         }
 
     }
