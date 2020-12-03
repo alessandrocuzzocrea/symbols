@@ -80,18 +80,4 @@ public class ScoreScript : MonoBehaviour
         timer = lollerTimer;
         debounce = .5f;
     }
-
-    void OnGUI()
-    {
-        
-        float screenScale = Screen.width / 360.0f;
-        Matrix4x4 scaledMatrix = Matrix4x4.identity * Matrix4x4.Scale(new Vector3(screenScale, screenScale, screenScale));
-        GUI.matrix = scaledMatrix;
-
-        if (GUI.Button(new Rect(10, 156, 100, 20), "TIMER TEST"))
-        {
-            GameObject.Find("UIManager").GetComponent<ScoreScript>().IncreaseScore(1000);
-        }
-
-    }
 }
