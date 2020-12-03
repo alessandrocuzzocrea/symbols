@@ -64,7 +64,7 @@ public class FieldScript : MonoBehaviour
 
     void Start()
     {
-        Application.targetFrameRate = 60; // test
+        Application.targetFrameRate = 60; // TODO: test
 
         GetDependencies();
         SetupDots();
@@ -390,7 +390,7 @@ public class FieldScript : MonoBehaviour
 
                 dot.leftConnectedTo = dot.upConnectedTo = null;
 
-                EventManager.OnIncreaseScore();
+                EventManager.OnIncreaseScore(2000);
             }
         }
     }

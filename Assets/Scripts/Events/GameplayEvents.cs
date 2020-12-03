@@ -7,5 +7,5 @@ public class GameplayEvents
     public delegate void Pause();
     public delegate void Reset();
     public delegate void Gameover();
-    public delegate void IncreaseScore();
+    public delegate void IncreaseScore(int v);
 }

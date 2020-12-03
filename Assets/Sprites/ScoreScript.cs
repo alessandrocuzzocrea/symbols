@@ -70,9 +70,9 @@ public class ScoreScript : MonoBehaviour
         }
     }
 
-    public void IncreaseScore()
+    public void IncreaseScore(int increase)
     {
-        var loller = 1000;
+        var loller = increase;
         var lollerTimer = .25f;
 
         _futureScore += loller;
@@ -95,7 +95,7 @@ public class ScoreScript : MonoBehaviour
 
         if (GUI.Button(new Rect(10, 156, 100, 20), "TIMER TEST"))
         {
-            GameObject.Find("UIManager").GetComponent<ScoreScript>().IncreaseScore();
+            GameObject.Find("UIManager").GetComponent<ScoreScript>().IncreaseScore(1000);
         }
 
     }

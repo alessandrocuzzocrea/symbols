@@ -10,6 +10,7 @@ public class GameplayScript : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI scoreTextTMP;
+    private ScoreScript scoreScript;
 
     private void OnEnable()
     {
@@ -20,18 +21,26 @@ public class GameplayScript : MonoBehaviour
     private void OnDisable()
     {
         EventManager.OnIncreaseScore -= IncreaseScore;
-        EventManager.OnIncreaseScore -= OnGameOver;
+        EventManager.OnGameOver      -= OnGameOver;
+    }
+
+    private void GetDependencies()
+    {
+        scoreScript = GameObject.FindObjectOfType<ScoreScript>();
     }
 
     private void Start()
     {
+        GetDependencies();
         UpdateUI();
     }
 
-    public void IncreaseScore()
+    public void IncreaseScore(int v)
     {
-        score++;
-        UpdateUI();
+        score += v;
+        scoreScript.IncreaseScore(v);
+
+        //UpdateUI();
     }
 
     public void OnGameOver()
@@ -46,7 +55,7 @@ public class GameplayScript : MonoBehaviour
 
     private void UpdateUI()
     {
-        scoreTextTMP.text = score.ToString();
+        //scoreTextTMP.text = score.ToString();
     }
 
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
