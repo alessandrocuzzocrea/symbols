@@ -12,7 +12,6 @@ public class ScoreScript : MonoBehaviour
     public float timer;
     public float debounce;
 
-
     public int futureScore;
     public int currScore;
 
@@ -20,7 +19,6 @@ public class ScoreScript : MonoBehaviour
     private float _futureScore;
     private float _currScore;
 
-    // Start is called before the first frame update
     void Start()
     {
         currScore = 12300;
@@ -29,7 +27,6 @@ public class ScoreScript : MonoBehaviour
         scoreText2TMP.alpha = 0.0f;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if ( debounce > 0.0f)
@@ -48,8 +45,6 @@ public class ScoreScript : MonoBehaviour
             timer -= Time.deltaTime;
             _currScore += (stepScore * Time.deltaTime);
             _futureScore -= (stepScore * Time.deltaTime);
-            //_currScore += 1;
-            //_futureScore -= 1;
 
             if (timer <= 0.0f)
             {

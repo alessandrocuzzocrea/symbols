@@ -32,15 +32,12 @@ public class GameplayScript : MonoBehaviour
     private void Start()
     {
         GetDependencies();
-        UpdateUI();
     }
 
     public void IncreaseScore(int v)
     {
         score += v;
         scoreScript.IncreaseScore(v);
-
-        //UpdateUI();
     }
 
     public void OnGameOver()
@@ -51,11 +48,6 @@ public class GameplayScript : MonoBehaviour
     private void ResetGame()
     {
         SceneManager.LoadScene(0);
-    }
-
-    private void UpdateUI()
-    {
-        //scoreTextTMP.text = score.ToString();
     }
 
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
