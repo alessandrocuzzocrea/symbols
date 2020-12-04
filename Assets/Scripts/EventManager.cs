@@ -13,4 +13,6 @@ public class EventManager : MonoBehaviour
 
     public static GameplayEvents.Gameover      OnGameOver;
     public static GameplayEvents.IncreaseScore OnIncreaseScore;
+
+    public static UIEvents.ClearDots OnClearDots;
 }

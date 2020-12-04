@@ -21,8 +21,8 @@ public class ScoreScript : MonoBehaviour
 
     void Start()
     {
-        currScore = 12300;
-        _currScore = 12300;
+        //currScore = 12300;
+        //_currScore = 12300;
 
         scoreText2TMP.alpha = 0.0f;
     }

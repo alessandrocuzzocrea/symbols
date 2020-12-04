@@ -1121,8 +1121,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f53107a8fbb3c44b0a3def8d70b31857, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 0}
-  LabelPrefab: {fileID: 0}
+  container: {fileID: 1588556422}
+  labelPrefab: {fileID: 6068092426566031920, guid: 96788840850ec4c7a9a903c411ac26aa,
+    type: 3}
+  uiCanvas: {fileID: 1608615479}
 --- !u!1 &367279650
 GameObject:
   m_ObjectHideFlags: 0

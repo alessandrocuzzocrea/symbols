@@ -308,6 +308,7 @@ public class FieldScript : MonoBehaviour
     {
         List<List<DotScript>> dotsToClear = new List<List<DotScript>>();
 
+        //Rows
         for (int j = 0; j < columns; j++)
         {
             for (int i = 0; i < rows; i++)
@@ -337,11 +338,35 @@ public class FieldScript : MonoBehaviour
             }
         }
 
-        //if (dotsToClear.Count > 0)
-        //{
-        //    Debug.Log("LOOLLER");
+        //Columns
+        for (int j = 0; j < columns; j++)
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                List<DotScript> dots = new List<DotScript>();
 
-        //}
+                var dot = GetDotAtXY(j, i);
+                if (dot && dot.color != DotScript.Type.Empty)
+                {
+                    while (true)
+                    {
+                        dots.Add(dot);
+                        if (dot.upConnectedTo)
+                        {
+                            dot = dot.upConnectedTo;
+                        }
+                        else
+                        {
+                            if (dots.Count > 1)
+                            {
+                                dotsToClear.Add(dots);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
 
         foreach (var l in dotsToClear)
         {
@@ -351,9 +376,9 @@ public class FieldScript : MonoBehaviour
             foreach (var dot in l)
             {
                 listColor = DotScript.GetColorFromType(dot.color);
-                var ps = dot.GetComponentInChildren<ParticleSystem>();
-                var col = ps.colorOverLifetime;
-                var grad = new Gradient();
+                var ps    = dot.GetComponentInChildren<ParticleSystem>();
+                var col   = ps.colorOverLifetime;
+                var grad  = new Gradient();
 
                 grad.SetKeys(
                     new GradientColorKey[] {
@@ -373,6 +398,7 @@ public class FieldScript : MonoBehaviour
             }
 
             EventManager.OnIncreaseScore(100 * listCount);
+            EventManager.OnClearDots(l);
         }
 
     }
