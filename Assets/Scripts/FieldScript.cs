@@ -36,8 +36,9 @@ public class FieldScript : MonoBehaviour
     private bool    bCurrentPickTypeLocked;
 
     //Dependencies
-    private GameplayScript gameplayScript;
-    private TimerScript    timerScript;
+    private GameplayScript    gameplayScript;
+    private TimerScript       timerScript;
+    private FieldLabelsScript fieldLabelsScript;
 
     [SerializeField]
     private GameObject touchPoint;
@@ -72,8 +73,9 @@ public class FieldScript : MonoBehaviour
 
     private void GetDependencies()
     {
-        gameplayScript = GameObject.FindObjectOfType<GameplayScript>();
-        timerScript    = GameObject.FindObjectOfType<TimerScript>();
+        gameplayScript    = GameObject.FindObjectOfType<GameplayScript>();
+        timerScript       = GameObject.FindObjectOfType<TimerScript>();
+        fieldLabelsScript = GameObject.FindObjectOfType<FieldLabelsScript>();
     }
 
     private void SetupDots()
@@ -303,6 +305,79 @@ public class FieldScript : MonoBehaviour
     }
 
     private void ClearDots()
+    {
+        List<List<DotScript>> dotsToClear = new List<List<DotScript>>();
+
+        for (int j = 0; j < columns; j++)
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                List<DotScript> dots = new List<DotScript>();
+
+                var dot = GetDotAtXY(j, i);
+                if (dot && dot.color != DotScript.Type.Empty)
+                {
+                    while (true)
+                    {
+                        dots.Add(dot);
+                        if (dot.leftConnectedTo)
+                        {
+                            dot = dot.leftConnectedTo;
+                        }
+                        else
+                        {
+                            if (dots.Count > 1)
+                            {
+                                dotsToClear.Add(dots);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        //if (dotsToClear.Count > 0)
+        //{
+        //    Debug.Log("LOOLLER");
+
+        //}
+
+        foreach (var l in dotsToClear)
+        {
+            Color listColor;
+            int listCount = l.Count;
+
+            foreach (var dot in l)
+            {
+                listColor = DotScript.GetColorFromType(dot.color);
+                var ps = dot.GetComponentInChildren<ParticleSystem>();
+                var col = ps.colorOverLifetime;
+                var grad = new Gradient();
+
+                grad.SetKeys(
+                    new GradientColorKey[] {
+                        new GradientColorKey(listColor, 0.0f),
+                        new GradientColorKey(Color.white, 1.0f)
+                    },
+                    new GradientAlphaKey[] {
+                        new GradientAlphaKey(0.0f, 0.0f),
+                        new GradientAlphaKey(1.0f, 0.5f),
+                        new GradientAlphaKey(0.0f, 1.0f)
+                    }
+                );
+                col.color = new ParticleSystem.MinMaxGradient(grad);
+                dot.GetComponentInChildren<ParticleSystem>().Play();
+                dot.SetType(DotScript.Type.Empty);
+                dot.highlight.gameObject.SetActive(false);
+            }
+
+            EventManager.OnIncreaseScore(100 * listCount);
+        }
+
+    }
+
+    private void ClearDotsOld()
     {
         //List<DotScript> dotsToClear = new List<DotScript>();
         //TODO: plz refactor me
