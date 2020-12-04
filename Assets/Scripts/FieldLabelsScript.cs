@@ -36,7 +36,7 @@ public class FieldLabelsScript : MonoBehaviour
         
     }
 
-    void ClearDots(List<DotScript> list)
+    void ClearDots(List<DotScript> list, Color c)
     {
         var d = list[0];
 
@@ -46,9 +46,9 @@ public class FieldLabelsScript : MonoBehaviour
 
         var label = Instantiate(labelPrefab, container) as GameObject;
         label.transform.localPosition = localPoint;
-        var tmp = label.GetComponentInChildren<TextMeshProUGUI>();
-
-        tmp.text = "100";
+        var tmp   = label.GetComponentInChildren<TextMeshProUGUI>();
+        tmp.text  = "100";
+        tmp.color = c;
 
         Destroy(label, 1.0f);
     }

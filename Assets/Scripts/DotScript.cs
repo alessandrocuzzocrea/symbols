@@ -186,23 +186,23 @@ public class DotScript : MonoBehaviour
                 break;
 
             case Type.Circle:
-                res = Color.green;
+                res = new Color(46 / 255.0f, 204 / 255.0f, 113 / 255.0f);
                 break;
 
             case Type.Square:
-                res = Color.red;
+                res = new Color(231 / 255.0f, 76 / 255.0f, 60 / 255.0f);
                 break;
 
             case Type.Diamond:
-                res = Color.blue;
+                res = new Color(52 / 255.0f, 152 / 255.0f, 219 / 255.0f);
                 break;
 
             case Type.Star:
-                res = Color.yellow;
+                res = new Color(241 / 255.0f, 196 / 255.0f, 15 / 255.0f);
                 break;
 
             case Type.Queen:
-                res = Color.magenta;
+                res = new Color(155 / 255.0f, 89 / 255.0f, 182 / 255.0f);
                 break;
 
             default:

@@ -370,7 +370,7 @@ public class FieldScript : MonoBehaviour
 
         foreach (var l in dotsToClear)
         {
-            Color listColor;
+            Color listColor = Color.black;
             int listCount = l.Count;
 
             foreach (var dot in l)
@@ -398,7 +398,7 @@ public class FieldScript : MonoBehaviour
             }
 
             EventManager.OnIncreaseScore(100 * listCount);
-            EventManager.OnClearDots(l);
+            EventManager.OnClearDots(l, listColor);
         }
 
     }
