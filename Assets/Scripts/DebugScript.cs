@@ -67,7 +67,7 @@ public class DebugScript : MonoBehaviour
                 field.DebugDropNewDots();
             }
 
-            if (GUI.Button(new Rect(10, 176, 100, 20), "Pause/Resume timer"))
+            if (GUI.Button(new Rect(10, 176, 100, 20), "Toggle Timer"))
             {
                 timer.DebugPauseResume();
             }

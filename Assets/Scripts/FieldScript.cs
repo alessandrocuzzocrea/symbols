@@ -309,6 +309,7 @@ public class FieldScript : MonoBehaviour
         List<List<DotScript>> dotsToClear = new List<List<DotScript>>();
 
         //Rows
+        HashSet<DotScript> rowsSet = new HashSet<DotScript>();
         for (int j = 0; j < columns; j++)
         {
             for (int i = 0; i < rows; i++)
@@ -316,11 +317,12 @@ public class FieldScript : MonoBehaviour
                 List<DotScript> dots = new List<DotScript>();
 
                 var dot = GetDotAtXY(j, i);
-                if (dot && dot.color != DotScript.Type.Empty)
+                if (dot && dot.color != DotScript.Type.Empty && !rowsSet.Contains(dot))
                 {
                     while (true)
                     {
                         dots.Add(dot);
+                        rowsSet.Add(dot);
                         if (dot.leftConnectedTo)
                         {
                             dot = dot.leftConnectedTo;
@@ -339,6 +341,7 @@ public class FieldScript : MonoBehaviour
         }
 
         //Columns
+        HashSet<DotScript> columnsSet = new HashSet<DotScript>();
         for (int j = 0; j < columns; j++)
         {
             for (int i = 0; i < rows; i++)
@@ -346,11 +349,12 @@ public class FieldScript : MonoBehaviour
                 List<DotScript> dots = new List<DotScript>();
 
                 var dot = GetDotAtXY(j, i);
-                if (dot && dot.color != DotScript.Type.Empty)
+                if (dot && dot.color != DotScript.Type.Empty && !columnsSet.Contains(dot))
                 {
                     while (true)
                     {
                         dots.Add(dot);
+                        columnsSet.Add(dot);
                         if (dot.upConnectedTo)
                         {
                             dot = dot.upConnectedTo;
@@ -635,6 +639,8 @@ public class FieldScript : MonoBehaviour
         GetDotAtXY(0, 0).SetType(DotScript.Type.Star);
         GetDotAtXY(2, 0).SetType(DotScript.Type.Star);
         GetDotAtXY(4, 0).SetType(DotScript.Type.Star);
+        GetDotAtXY(0, 2).SetType(DotScript.Type.Star);
+        GetDotAtXY(0, 4).SetType(DotScript.Type.Star);
     }
 #endif
 }
