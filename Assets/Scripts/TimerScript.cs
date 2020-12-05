@@ -123,5 +123,10 @@ public class TimerScript : MonoBehaviour
     {
         return timeLeftCurrentScanline;
     }
+
+    public void DebugPauseResume()
+    {
+        pauseTimer = !pauseTimer;
+    }
 #endif
 }

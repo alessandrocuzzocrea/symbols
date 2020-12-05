@@ -67,7 +67,22 @@ public class DebugScript : MonoBehaviour
                 field.DebugDropNewDots();
             }
 
-            if (GUI.Button(new Rect(10, 176, 100, 20), "Reset Game"))
+            if (GUI.Button(new Rect(10, 176, 100, 20), "Pause/Resume timer"))
+            {
+                timer.DebugPauseResume();
+            }
+
+            if (GUI.Button(new Rect(10, 196, 100, 20), "Clear dots"))
+            {
+                field.DebugClearDots();
+            }
+
+            if (GUI.Button(new Rect(10, 216, 100, 20), "Set Pattern"))
+            {
+                field.DebugSetPattern();
+            }
+
+            if (GUI.Button(new Rect(10, 236, 100, 20), "Reset Game"))
             {
                 gameplay.DebugResetGame();
             }

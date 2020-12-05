@@ -38,6 +38,7 @@ public class FieldLabelsScript : MonoBehaviour
 
     void ClearDots(List<DotScript> list, Color color, int score)
     {
+        Debug.Log("Clear Dots");
         var d = list[0];
 
         var screenPoint = RectTransformUtility.WorldToScreenPoint(uiCanvas.worldCamera, d.transform.position);
