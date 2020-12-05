@@ -401,12 +401,38 @@ public class FieldScript : MonoBehaviour
                 dot.highlight.gameObject.SetActive(false);
             }
 
-            int score = 100 * listCount;
+            int score = CalcScore(listCount);
 
             EventManager.OnIncreaseScore(score);
             EventManager.OnClearDots(l, listColor, score);
         }
 
+    }
+
+    private int CalcScore(int c)    
+    {
+        int res = 0;
+
+        switch (c)
+        {
+            case 2:
+                res = 20;
+                break;
+            case 3:
+                res = 60;
+                break;
+            case 4:
+                res = 180;
+                break;
+            case 5:
+                res = 540;
+                break;
+            case 6:
+                res = 1620;
+                break;
+        }
+
+        return res;
     }
 
     void UpdateConnections()
