@@ -397,8 +397,10 @@ public class FieldScript : MonoBehaviour
                 dot.highlight.gameObject.SetActive(false);
             }
 
-            EventManager.OnIncreaseScore(100 * listCount);
-            EventManager.OnClearDots(l, listColor);
+            int score = 100 * listCount;
+
+            EventManager.OnIncreaseScore(score);
+            EventManager.OnClearDots(l, listColor, score);
         }
 
     }
