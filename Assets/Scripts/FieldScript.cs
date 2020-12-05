@@ -405,129 +405,6 @@ public class FieldScript : MonoBehaviour
 
     }
 
-    private void ClearDotsOld()
-    {
-        //List<DotScript> dotsToClear = new List<DotScript>();
-        //TODO: plz refactor me
-        foreach (DotScript dot in dots)
-        {
-            if (dot.leftConnectedTo || dot.upConnectedTo)
-            {
-                {
-                    var dotColor = DotScript.GetColorFromType(dot.color);
-                    var ps = dot.GetComponentInChildren<ParticleSystem>();
-                    var col = ps.colorOverLifetime;
-                    var grad = new Gradient();
-
-                    grad.SetKeys(
-                        new GradientColorKey[] {
-                            new GradientColorKey(dotColor, 0.0f),
-                            new GradientColorKey(Color.white, 1.0f)
-                        },
-                        new GradientAlphaKey[] {
-                            new GradientAlphaKey(0.0f, 0.0f),
-                            new GradientAlphaKey(1.0f, 0.5f),
-                            new GradientAlphaKey(0.0f, 1.0f)
-                        }
-                    );
-                    col.color = new ParticleSystem.MinMaxGradient(grad);
-                    dot.GetComponentInChildren<ParticleSystem>().Play();
-                }
-                dot.SetType(DotScript.Type.Empty);
-                dot.highlight.gameObject.SetActive(false);
-
-                DotScript left = dot.leftConnectedTo;
-                if (left)
-                {
-                    {
-                        var dotColor = DotScript.GetColorFromType(left.color);
-                        var ps = left.GetComponentInChildren<ParticleSystem>();
-                        var col = ps.colorOverLifetime;
-                        var grad = new Gradient();
-
-                        grad.SetKeys(
-                            new GradientColorKey[] {
-                                new GradientColorKey(dotColor, 0.0f),
-                                new GradientColorKey(Color.white, 1.0f)
-                            },
-                            new GradientAlphaKey[] {
-                                new GradientAlphaKey(0.0f, 0.0f),
-                                new GradientAlphaKey(1.0f, 0.5f),
-                                new GradientAlphaKey(0.0f, 1.0f)
-                            }
-                        );
-                        col.color = new ParticleSystem.MinMaxGradient(grad);
-                        left.GetComponentInChildren<ParticleSystem>().Play();
-                    }
-                    left.SetType(DotScript.Type.Empty);
-                    left.highlight.gameObject.SetActive(false);
-                }
-
-                DotScript up = dot.upConnectedTo;
-                if (up)
-                {
-                    {
-                        var dotColor = DotScript.GetColorFromType(up.color);
-                        var ps = up.GetComponentInChildren<ParticleSystem>();
-                        var col = ps.colorOverLifetime;
-                        var grad = new Gradient();
-
-                        grad.SetKeys(
-                            new GradientColorKey[] {
-                                new GradientColorKey(dotColor, 0.0f),
-                                new GradientColorKey(Color.white, 1.0f)
-                            },
-                            new GradientAlphaKey[] {
-                                new GradientAlphaKey(0.0f, 0.0f),
-                                new GradientAlphaKey(1.0f, 0.5f),
-                                new GradientAlphaKey(0.0f, 1.0f)
-                            }
-                        );
-                        col.color = new ParticleSystem.MinMaxGradient(grad);
-                        up.GetComponentInChildren<ParticleSystem>().Play();
-                    }
-
-                    up.SetType(DotScript.Type.Empty);
-                    up.highlight.gameObject.SetActive(false);
-                }
-
-                dot.leftConnectedTo = dot.upConnectedTo = null;
-
-                EventManager.OnIncreaseScore(2000);
-            }
-        }
-    }
-
-    //private void ClearDotsOld()
-    //{
-    //    foreach (DotScript dot in dots)
-    //    {
-    //        List<DotScript> connectedDots = new List<DotScript>();
-    //        if (dot.leftConnectedTo)
-    //        {
-    //            connectedDots.Add(dot);
-    //            DotScript connectedTo = dot.leftConnectedTo;
-    //            while (connectedTo)
-    //            {
-    //                connectedDots.Add(connectedTo);
-    //                connectedTo = connectedTo.leftConnectedTo;
-    //            }
-    //        }
-
-    //        if (connectedDots.Count >= noConnectionRequired)
-    //        {
-    //            foreach (DotScript d in connectedDots)
-    //            {
-    //                d.SetType(DotScript.Type.Empty);
-    //                d.highlight.gameObject.SetActive(false);
-    //                d.leftConnectedTo = null;
-
-    //                EventManager.OnIncreaseScore();
-    //            }
-    //        }
-    //    }
-    //}
-
     void UpdateConnections()
     {
         // Reset all connections
@@ -741,6 +618,23 @@ public class FieldScript : MonoBehaviour
     public void DebugDropNewDots()
     {
         DropNewDots();
+    }
+
+    public void DebugClearDots()
+    {
+        ClearDots();
+    }
+
+    public void DebugSetPattern()
+    {
+        foreach (var d in dots)
+        {
+            d.SetType(DotScript.Type.Empty);
+        }
+
+        GetDotAtXY(0, 0).SetType(DotScript.Type.Star);
+        GetDotAtXY(2, 0).SetType(DotScript.Type.Star);
+        GetDotAtXY(4, 0).SetType(DotScript.Type.Star);
     }
 #endif
 }
