@@ -1470,6 +1470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreTextTMP: {fileID: 1770138984}
+  scores: 00000000140000003c000000b40000001c02000054060000
 --- !u!4 &523530884
 Transform:
   m_ObjectHideFlags: 0
