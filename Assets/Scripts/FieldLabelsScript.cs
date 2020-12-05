@@ -24,31 +24,25 @@ public class FieldLabelsScript : MonoBehaviour
         EventManager.OnClearDots -= ClearDots;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void ClearDots(List<DotScript> list, Color color, int score)
     {
-        Debug.Log("Clear Dots");
-        var d = list[0];
+        Vector2 worldPos = Vector2.zero;
+        foreach (var d in list)
+        {
+            worldPos.x += d.transform.position.x;
+            worldPos.y += d.transform.position.y;
+        }
+        worldPos /= list.Count;
 
-        var screenPoint = RectTransformUtility.WorldToScreenPoint(uiCanvas.worldCamera, d.transform.position);
+        var screenPoint = RectTransformUtility.WorldToScreenPoint(uiCanvas.worldCamera, worldPos);
         Vector2 localPoint;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(uiCanvas.GetComponent<RectTransform>(), screenPoint, uiCanvas.worldCamera, out localPoint);
 
         var label = Instantiate(labelPrefab, container) as GameObject;
+        var tmp = label.GetComponentInChildren<TextMeshProUGUI>();
+
         label.transform.localPosition = localPoint;
 
-        var tmp  = label.GetComponentInChildren<TextMeshProUGUI>();
         tmp.text = score.ToString();
         tmp.color = color;
 
