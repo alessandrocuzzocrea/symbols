@@ -1371,7 +1371,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3be4e235bd37245398b60d7a844b42f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverUIRoot: {fileID: 0}
+  gameOverUIRoot: {fileID: 1661322399}
+  scoreText: {fileID: 1726195380}
+  bestText: {fileID: 1173525716}
 --- !u!1 &367279650
 GameObject:
   m_ObjectHideFlags: 0
@@ -4997,7 +4999,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1661322400
 RectTransform:
   m_ObjectHideFlags: 0
