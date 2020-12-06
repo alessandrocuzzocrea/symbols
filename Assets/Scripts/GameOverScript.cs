@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class GameOverScript : MonoBehaviour
@@ -24,6 +22,21 @@ public class GameOverScript : MonoBehaviour
         bestText.text  = LoadBestScore().ToString();
 
         gameOverUIRoot.SetActive(true);
+    }
+
+    public void OnResetPressed()
+    {
+
+    }
+
+    public void OnWebsitePressed()
+    {
+        Application.OpenURL("https://alessandrocuzzocrea.com");
+    }
+
+    public void OnTwitterPressed()
+    {
+        Application.OpenURL("https://twitter.com/alessacrea");
     }
 
     private void SaveBestScore(int newBest)
