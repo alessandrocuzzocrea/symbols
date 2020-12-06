@@ -15,7 +15,8 @@ public class GameplayScript : MonoBehaviour
     private int[] scores;
 
     // Dependencies
-    private ScoreScript scoreScript;
+    private ScoreScript    scoreScript;
+    private GameOverScript gameOverScript;
 
     private void OnEnable()
     {
@@ -31,7 +32,8 @@ public class GameplayScript : MonoBehaviour
 
     private void GetDependencies()
     {
-        scoreScript = GameObject.FindObjectOfType<ScoreScript>();
+        scoreScript    = GameObject.FindObjectOfType<ScoreScript>();
+        gameOverScript = GameObject.FindObjectOfType<GameOverScript>();
     }
 
     private void Start()
@@ -48,6 +50,7 @@ public class GameplayScript : MonoBehaviour
     public void OnGameOver()
     {
         IsGameOver = true;
+        gameOverScript.Show(score);
     }
 
     private void ResetGame()
@@ -74,6 +77,11 @@ public class GameplayScript : MonoBehaviour
     public void DebugResetGame()
     {
         ResetGame();
+    }
+
+    public void DebugGameOver()
+    {
+        OnGameOver();
     }
 #endif
 }

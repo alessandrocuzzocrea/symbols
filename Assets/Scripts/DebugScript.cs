@@ -86,6 +86,11 @@ public class DebugScript : MonoBehaviour
             {
                 gameplay.DebugResetGame();
             }
+
+            if (GUI.Button(new Rect(10, 256, 100, 20), "Game Over"))
+            {
+                gameplay.DebugGameOver();
+            }
         }
     }
 #endif
