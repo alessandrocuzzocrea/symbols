@@ -1212,7 +1212,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GAME OVER
+  m_text: BEST
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ec0037a9c712543378b4c13b332bb410, type: 2}
   m_sharedMaterial: {fileID: -1665790749792012457, guid: ec0037a9c712543378b4c13b332bb410,
@@ -3431,7 +3431,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GAME OVER
+  m_text: SCORE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ec0037a9c712543378b4c13b332bb410, type: 2}
   m_sharedMaterial: {fileID: -1665790749792012457, guid: ec0037a9c712543378b4c13b332bb410,
