@@ -9,21 +9,18 @@ public class ScoreScript : MonoBehaviour
     public TextMeshProUGUI scoreTextTMP;
     public TextMeshProUGUI scoreText2TMP;
 
-    public float timer;
-    public float debounce;
+    private float timer;
+    private float debounce;
 
-    public int futureScore;
-    public int currScore;
+    private int futureScore;
+    private int currScore;
 
-    public  float stepScore;
+    private float stepScore;
     private float _futureScore;
     private float _currScore;
 
     void Start()
     {
-        //currScore = 12300;
-        //_currScore = 12300;
-
         scoreText2TMP.alpha = 0.0f;
     }
 
