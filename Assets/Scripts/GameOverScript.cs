@@ -7,6 +7,9 @@ public class GameOverScript : MonoBehaviour
     GameObject gameOverUIRoot;
 
     [SerializeField]
+    GameObject postProcessing;
+
+    [SerializeField]
     TextMeshProUGUI scoreText;
 
     [SerializeField]
@@ -21,7 +24,8 @@ public class GameOverScript : MonoBehaviour
         scoreText.text = score.ToString();
         bestText.text  = LoadBestScore().ToString();
 
-        gameOverUIRoot.SetActive(true);
+        gameOverUIRoot.GetComponent<Animator>().SetBool("StartTransition", true);
+        postProcessing.GetComponent<Animator>().SetBool("StartTransition", true);
     }
 
     public void OnResetPressed()
