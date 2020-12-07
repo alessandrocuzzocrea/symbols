@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using TMPro;
 
 public class GameplayScript : MonoBehaviour
@@ -53,11 +51,6 @@ public class GameplayScript : MonoBehaviour
         gameOverScript.Show(score);
     }
 
-    private void ResetGame()
-    {
-        SceneManager.LoadScene(0);
-    }
-
     public int GetScoreForCombo(int c)
     {
         return scores[c - 1];
@@ -72,11 +65,6 @@ public class GameplayScript : MonoBehaviour
     public bool DebugIsGameOver()
     {
         return IsGameOver;
-    }
-
-    public void DebugResetGame()
-    {
-        ResetGame();
     }
 
     public void DebugGameOver()

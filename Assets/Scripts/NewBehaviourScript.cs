@@ -13,6 +13,6 @@ public class NewBehaviourScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(Vector3.forward * Time.deltaTime * 100f);
+        //transform.Rotate(Vector3.forward * Time.deltaTime * 100f);
     }
 }

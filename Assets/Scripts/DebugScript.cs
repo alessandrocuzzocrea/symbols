@@ -6,9 +6,10 @@ using UnityEngine;
 public class DebugScript : MonoBehaviour
 {
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
-    private FieldScript field;
+    private FieldScript    field;
     private GameplayScript gameplay;
-    private TimerScript timer;
+    private TimerScript    timer;
+    private AppScript      app;
 
     [SerializeField]
     private bool DisplayDebug;
@@ -34,9 +35,10 @@ public class DebugScript : MonoBehaviour
 
     private void GetDependencies()
     {
-        field = GameObject.FindObjectOfType<FieldScript>();
+        field    = GameObject.FindObjectOfType<FieldScript>();
         gameplay = GameObject.FindObjectOfType<GameplayScript>();
-        timer = GameObject.FindObjectOfType<TimerScript>();
+        timer    = GameObject.FindObjectOfType<TimerScript>();
+        app      = GameObject.FindObjectOfType<AppScript>();
     }
 
     void OnGUI()
@@ -84,7 +86,7 @@ public class DebugScript : MonoBehaviour
 
             if (GUI.Button(new Rect(10, 236, 100, 20), "Reset Game"))
             {
-                gameplay.DebugResetGame();
+                app.DebugResetGame();
             }
 
             if (GUI.Button(new Rect(10, 256, 100, 20), "Game Over"))

@@ -15,4 +15,6 @@ public class EventManager : MonoBehaviour
     public static GameplayEvents.IncreaseScore OnIncreaseScore;
 
     public static UIEvents.ClearDots OnClearDots;
+
+    public static AppEvents.Reset OnReset;
 }

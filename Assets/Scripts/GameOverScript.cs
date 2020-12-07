@@ -26,7 +26,7 @@ public class GameOverScript : MonoBehaviour
 
     public void OnResetPressed()
     {
-
+        EventManager.OnReset();
     }
 
     public void OnWebsitePressed()
