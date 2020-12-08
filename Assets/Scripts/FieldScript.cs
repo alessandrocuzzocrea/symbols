@@ -409,15 +409,21 @@ public class FieldScript : MonoBehaviour
 
     }
 
+    void ClearField()
+    {
+        foreach (var dot in dots)
+        {
+            dot.SetType(DotScript.Type.Empty);
+            dot.ResetConnections();
+        }
+    }
+
     void UpdateConnections()
     {
         // Reset all connections
         foreach (var dot in dots)
         {
-            dot.leftConnectedTo = dot.upConnectedTo = null;
-            dot.highlight.gameObject.SetActive(false);
-            if (dot.leftConnectedTo) dot.leftConnectedTo.highlight.gameObject.SetActive(false);
-            if (dot.upConnectedTo) dot.upConnectedTo.highlight.gameObject.SetActive(false);
+            dot.ResetConnections();
         }
 
         // Check for new connections
@@ -631,10 +637,7 @@ public class FieldScript : MonoBehaviour
 
     public void DebugSetPattern()
     {
-        foreach (var d in dots)
-        {
-            d.SetType(DotScript.Type.Empty);
-        }
+        ClearField();
 
         GetDotAtXY(0, 0).SetType(DotScript.Type.Star);
         GetDotAtXY(2, 0).SetType(DotScript.Type.Star);

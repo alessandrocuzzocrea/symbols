@@ -212,4 +212,10 @@ public class DotScript : MonoBehaviour
 
         return res;
     }
+
+    public void ResetConnections()
+    {
+        leftConnectedTo = upConnectedTo = null;
+        highlight.gameObject.SetActive(false);
+    }
 }
