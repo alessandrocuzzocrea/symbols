@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class FieldScript : MonoBehaviour
 {
+    public bool dropNewDots;
+
     [SerializeField]
     public GameObject DotPrefab;
 
@@ -502,6 +504,11 @@ public class FieldScript : MonoBehaviour
 
     void DropNewDots()
     {
+        if (!dropNewDots)
+        {
+            return;
+        }
+
         if (CountDots() >= columns * rows)
         {
             EventManager.OnGameOver();
