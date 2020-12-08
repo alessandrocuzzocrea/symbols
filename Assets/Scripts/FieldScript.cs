@@ -409,6 +409,14 @@ public class FieldScript : MonoBehaviour
 
     }
 
+    void SetPatterns(FieldPattern[] patterns)
+    {
+        foreach (var p in patterns)
+        {
+            GetDotAtXY(p.x, p.y).SetType(p.type);
+        }
+    }
+
     void ClearField()
     {
         foreach (var dot in dots)
@@ -639,11 +647,16 @@ public class FieldScript : MonoBehaviour
     {
         ClearField();
 
-        GetDotAtXY(0, 0).SetType(DotScript.Type.Star);
-        GetDotAtXY(2, 0).SetType(DotScript.Type.Star);
-        GetDotAtXY(4, 0).SetType(DotScript.Type.Star);
-        GetDotAtXY(0, 2).SetType(DotScript.Type.Star);
-        GetDotAtXY(0, 4).SetType(DotScript.Type.Star);
+        FieldPattern[] patterns =
+        {
+            new FieldPattern(0, 0, DotScript.Type.Star),
+            new FieldPattern(2, 0, DotScript.Type.Star),
+            new FieldPattern(4, 0, DotScript.Type.Star),
+            new FieldPattern(0, 2, DotScript.Type.Star),
+            new FieldPattern(0, 4, DotScript.Type.Star)
+        };
+
+        SetPatterns(patterns);
     }
 #endif
 }
