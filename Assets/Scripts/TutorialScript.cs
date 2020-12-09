@@ -123,7 +123,22 @@ public class TutorialScript : MonoBehaviour
     {
         if (ShouldDisplayTutorial())
         {
-            MoveCurrentPhase();
+            if (count > 0)
+            {
+                MoveCurrentPhase();
+            }
         }
     }
+
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+    public bool DebugShouldDisplayTutorial()
+    {
+        return ShouldDisplayTutorial();
+    }
+
+    public Phase DebugCurrentPhase()
+    {
+        return currentPhase;
+    }
+#endif
 }

@@ -10,6 +10,7 @@ public class DebugScript : MonoBehaviour
     private GameplayScript gameplay;
     private TimerScript    timer;
     private AppScript      app;
+    private TutorialScript tutorial;
 
     [SerializeField]
     private bool DisplayDebug;
@@ -39,6 +40,7 @@ public class DebugScript : MonoBehaviour
         gameplay = GameObject.FindObjectOfType<GameplayScript>();
         timer    = GameObject.FindObjectOfType<TimerScript>();
         app      = GameObject.FindObjectOfType<AppScript>();
+        tutorial = GameObject.FindObjectOfType<TutorialScript>();
     }
 
     void OnGUI()
@@ -62,7 +64,9 @@ public class DebugScript : MonoBehaviour
             if (field.DebugbMouseCoordsOnClick()) GUI.Label(new Rect(10, 106, 1000, 90), "Mouse onClick: " + field.DebugvMouseCoordsOnClick().ToString());
             if (field.DebugbMouseCoordsNow()) GUI.Label(new Rect(10, 116, 1000, 90), "Mouse now: " + field.DebugvMouseCoordsNow().ToString());
 
-            if (gameplay.DebugIsGameOver()) GUI.Label(new Rect(10, 126, 1000, 90), "GAME OVER");
+            if (tutorial.DebugShouldDisplayTutorial()) GUI.Label(new Rect(10, 126, 1000, 90), "Tutorial: " + tutorial.DebugCurrentPhase());
+
+            if (gameplay.DebugIsGameOver()) GUI.Label(new Rect(10, 136, 1000, 90), "GAME OVER");
 
             if (GUI.Button(new Rect(10, 156, 100, 20), "Spawn Dots"))
             {
