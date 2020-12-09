@@ -17,4 +17,8 @@ public class EventManager : MonoBehaviour
     public static UIEvents.ClearDots OnClearDots;
 
     public static AppEvents.Reset OnReset;
+
+    public static TutorialEvents.Start     OnTutorialStart;
+    public static TutorialEvents.Complete  OnTutorialComplete;
+    public static TutorialEvents.MovePhase OnTutorialMovePhase;
 }

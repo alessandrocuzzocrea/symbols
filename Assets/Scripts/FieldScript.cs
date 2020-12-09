@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class FieldScript : MonoBehaviour
 {
-    public bool dropNewDots;
-
     [SerializeField]
     public GameObject DotPrefab;
 
@@ -31,6 +29,8 @@ public class FieldScript : MonoBehaviour
     private int  possibleDropId;
     private Lane currentDrop;
 
+    private bool dropNewDots;
+
     private bool    bMouseCoordsOnClick;
     private Vector2 vMouseCoordsOnClick;
     private bool    bMouseCoordsNow;
@@ -53,6 +53,9 @@ public class FieldScript : MonoBehaviour
         EventManager.OnTouchStart += OnTouchStart;
         EventManager.OnTouchMove  += OnTouchMove;
         EventManager.OnTouchEnd   += OnTouchEnd;
+
+        EventManager.OnTutorialStart    += DisableSpawnNewDots;
+        EventManager.OnTutorialComplete += EnableSpawnNewDots;
     }
 
     private void OnDisable()
@@ -63,6 +66,9 @@ public class FieldScript : MonoBehaviour
         EventManager.OnTouchStart -= OnTouchStart;
         EventManager.OnTouchMove  -= OnTouchMove;
         EventManager.OnTouchEnd   -= OnTouchEnd;
+
+        EventManager.OnTutorialStart    -= DisableSpawnNewDots;
+        EventManager.OnTutorialComplete -= EnableSpawnNewDots;
     }
 
     void Start()
@@ -411,8 +417,10 @@ public class FieldScript : MonoBehaviour
 
     }
 
-    void SetPatterns(FieldPattern[] patterns)
+    public void SetPatterns(FieldPattern[] patterns)
     {
+        ClearField();
+
         foreach (var p in patterns)
         {
             GetDotAtXY(p.x, p.y).SetType(p.type);
@@ -594,6 +602,16 @@ public class FieldScript : MonoBehaviour
         return res;
     }
 
+    private void EnableSpawnNewDots()
+    {
+        dropNewDots = true;
+    }
+
+    private void DisableSpawnNewDots()
+    {
+        dropNewDots = false;
+    }
+
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
     public Lane DebugCurrentPick()
     {
@@ -652,8 +670,6 @@ public class FieldScript : MonoBehaviour
 
     public void DebugSetPattern()
     {
-        ClearField();
-
         FieldPattern[] patterns =
         {
             new FieldPattern(0, 0, DotScript.Type.Star),
