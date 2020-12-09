@@ -314,6 +314,7 @@ public class FieldScript : MonoBehaviour
 
     private void ClearDots()
     {
+        int dotsCountBeforeClearing = CountDots();
         List<List<DotScript>> dotsToClear = new List<List<DotScript>>();
 
         //Rows
@@ -412,9 +413,13 @@ public class FieldScript : MonoBehaviour
             int score = gameplayScript.GetScoreForCombo(listCount);
 
             EventManager.OnIncreaseScore(score);
-            EventManager.OnClearDots(l, listColor, score);
+            EventManager.OnClearLine(l, listColor, score);
         }
 
+        int dotsCountAfterClearning = CountDots();
+        int dotsClearedCount = Mathf.Abs(dotsCountAfterClearning - dotsCountBeforeClearing);
+
+        EventManager.OnClearDots(dotsClearedCount);
     }
 
     public void SetPatterns(FieldPattern[] patterns)

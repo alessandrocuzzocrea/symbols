@@ -16,12 +16,12 @@ public class FieldLabelsScript : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.OnClearDots += ClearDots;
+        EventManager.OnClearLine += ClearDots;
     }
 
     private void OnDisable()
     {
-        EventManager.OnClearDots -= ClearDots;
+        EventManager.OnClearLine -= ClearDots;
     }
 
     void ClearDots(List<DotScript> list, Color color, int score)

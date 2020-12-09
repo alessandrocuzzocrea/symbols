@@ -8,6 +8,7 @@ public class TutorialScript : MonoBehaviour
 
     public enum Phase
     {
+        NotStarted,
         One,
         Two,
         Three,
@@ -23,16 +24,16 @@ public class TutorialScript : MonoBehaviour
 
     private Phase currentPhase;
 
-    
-
     private void OnEnable()
     {
         EventManager.OnTutorialMovePhase += MoveCurrentPhase; 
+        EventManager.OnClearDots         += OnClearDots;
     }
 
     private void OnDisable()
     {
         EventManager.OnTutorialMovePhase -= MoveCurrentPhase;
+        EventManager.OnClearDots         -= OnClearDots;
     }
 
     private void Start()
@@ -41,19 +42,12 @@ public class TutorialScript : MonoBehaviour
 
         if (ShouldDisplayTutorial())
         {
-
             currentPhase = Phase.One;
             PreparePhase(currentPhase);
 
-            Debug.Log("Start TUT");
             EventManager.OnTutorialStart();
         }
     }
-
-    //private void Update()
-    //{
-    //    MoveCurrentPhase();
-    //}
 
     private void GetDependencies()
     {
@@ -91,14 +85,45 @@ public class TutorialScript : MonoBehaviour
         switch (phase)
         {
             case Phase.One:
-                FieldPattern[] patterns =
-                {
-                    new FieldPattern(4, 0, DotScript.Type.Star),
+                PreparePhaseOne();
+                break;
+            case Phase.Two:
+                PreparePhaseOne();
+                break;
+            case Phase.Three:
+                PreparePhaseOne();
+                break;
+            case Phase.Four:
+                PreparePhaseOne();
+                break;
+            case Phase.Five:
+                PreparePhaseOne();
+                break;
+            case Phase.Six:
+                PreparePhaseOne();
+                break;
+            case Phase.Seven:
+                PreparePhaseOne();
+                break;
+        }
+    }
+
+    private void PreparePhaseOne()
+    {
+        FieldPattern[] patterns =
+                        {
+                    new FieldPattern(1, 2, DotScript.Type.Star),
                     new FieldPattern(4, 2, DotScript.Type.Star),
                 };
 
-                fieldScript.SetPatterns(patterns);
-                break;
+        fieldScript.SetPatterns(patterns);
+    }
+
+    private void OnClearDots(int count)
+    {
+        if (ShouldDisplayTutorial())
+        {
+            MoveCurrentPhase();
         }
     }
 }
