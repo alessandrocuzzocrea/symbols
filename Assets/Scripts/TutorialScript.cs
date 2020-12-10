@@ -18,6 +18,9 @@ public class TutorialScript : MonoBehaviour
         End
     }
 
+    [SerializeField]
+    GameObject hand;
+
     //Dependencies
     FieldScript fieldScript;
 
@@ -42,6 +45,7 @@ public class TutorialScript : MonoBehaviour
         if (ShouldDisplayTutorial())
         {
             currentPhase = Phase.One;
+            hand.SetActive(true);
             PreparePhase(currentPhase);
 
             EventManager.OnTutorialStart();
@@ -70,6 +74,7 @@ public class TutorialScript : MonoBehaviour
         currentPhase += 1;
         if (currentPhase == Phase.End)
         {
+            hand.SetActive(false);
             EventManager.OnTutorialComplete();
         }
         else
@@ -111,6 +116,8 @@ public class TutorialScript : MonoBehaviour
                     new FieldPattern(4, 2, DotScript.Type.Circle),
                 }
         );
+
+        hand.GetComponent<Animator>().SetBool("StartPhaseOne", true);
     }
 
     private void PreparePhaseTwo()
@@ -120,6 +127,8 @@ public class TutorialScript : MonoBehaviour
                     new FieldPattern(5, 4, DotScript.Type.Square),
                 }
         );
+
+        hand.GetComponent<Animator>().SetBool("StartPhaseTwo", true);
     }
 
     private void PreparePhaseThree()
@@ -131,6 +140,8 @@ public class TutorialScript : MonoBehaviour
                     new FieldPattern(4, 4, DotScript.Type.Diamond),
                 }
         );
+
+        hand.GetComponent<Animator>().SetBool("StartPhaseThree", true);
     }
 
     private void PreparePhaseFour()
@@ -140,6 +151,8 @@ public class TutorialScript : MonoBehaviour
                     new FieldPattern(2, 4, DotScript.Type.Circle),
                 }
         );
+
+        hand.GetComponent<Animator>().SetBool("StartPhaseFour", true);
     }
 
     private void PreparePhaseFive()
@@ -149,6 +162,8 @@ public class TutorialScript : MonoBehaviour
                     new FieldPattern(4, 5, DotScript.Type.Square),
                 }
         );
+
+        hand.GetComponent<Animator>().SetBool("StartPhaseFive", true);
     }
 
     private void PreparePhaseSix()
@@ -160,6 +175,8 @@ public class TutorialScript : MonoBehaviour
                     new FieldPattern(4, 4, DotScript.Type.Diamond),
                 }
         );
+
+        hand.GetComponent<Animator>().SetBool("StartPhaseSix", true);
     }
 
     private void OnClearDots(int count)
