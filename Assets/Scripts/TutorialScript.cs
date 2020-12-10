@@ -15,7 +15,6 @@ public class TutorialScript : MonoBehaviour
         Four,
         Five,
         Six,
-        Seven,
         End
     }
 
@@ -88,35 +87,79 @@ public class TutorialScript : MonoBehaviour
                 PreparePhaseOne();
                 break;
             case Phase.Two:
-                PreparePhaseOne();
+                PreparePhaseTwo();
                 break;
             case Phase.Three:
-                PreparePhaseOne();
+                PreparePhaseThree();
                 break;
             case Phase.Four:
-                PreparePhaseOne();
+                PreparePhaseFour();
                 break;
             case Phase.Five:
-                PreparePhaseOne();
+                PreparePhaseFive();
                 break;
             case Phase.Six:
-                PreparePhaseOne();
-                break;
-            case Phase.Seven:
-                PreparePhaseOne();
+                PreparePhaseSix();
                 break;
         }
     }
 
     private void PreparePhaseOne()
     {
-        FieldPattern[] patterns =
-                        {
-                    new FieldPattern(1, 2, DotScript.Type.Star),
-                    new FieldPattern(4, 2, DotScript.Type.Star),
-                };
+        fieldScript.SetPatterns(new FieldPattern[] {
+                    new FieldPattern(1, 2, DotScript.Type.Circle),
+                    new FieldPattern(4, 2, DotScript.Type.Circle),
+                }
+        );
+    }
 
-        fieldScript.SetPatterns(patterns);
+    private void PreparePhaseTwo()
+    {
+        fieldScript.SetPatterns(new FieldPattern[] {
+                    new FieldPattern(0, 4, DotScript.Type.Square),
+                    new FieldPattern(5, 4, DotScript.Type.Square),
+                }
+        );
+    }
+
+    private void PreparePhaseThree()
+    {
+        fieldScript.SetPatterns(new FieldPattern[] {
+                    new FieldPattern(1, 2, DotScript.Type.Diamond),
+                    new FieldPattern(4, 2, DotScript.Type.Diamond),
+                    new FieldPattern(1, 4, DotScript.Type.Diamond),
+                    new FieldPattern(4, 4, DotScript.Type.Diamond),
+                }
+        );
+    }
+
+    private void PreparePhaseFour()
+    {
+        fieldScript.SetPatterns(new FieldPattern[] {
+                    new FieldPattern(2, 1, DotScript.Type.Circle),
+                    new FieldPattern(2, 4, DotScript.Type.Circle),
+                }
+        );
+    }
+
+    private void PreparePhaseFive()
+    {
+        fieldScript.SetPatterns(new FieldPattern[] {
+                    new FieldPattern(4, 0, DotScript.Type.Square),
+                    new FieldPattern(4, 5, DotScript.Type.Square),
+                }
+        );
+    }
+
+    private void PreparePhaseSix()
+    {
+        fieldScript.SetPatterns(new FieldPattern[] {
+                    new FieldPattern(2, 1, DotScript.Type.Diamond),
+                    new FieldPattern(2, 4, DotScript.Type.Diamond),
+                    new FieldPattern(4, 1, DotScript.Type.Diamond),
+                    new FieldPattern(4, 4, DotScript.Type.Diamond),
+                }
+        );
     }
 
     private void OnClearDots(int count)
