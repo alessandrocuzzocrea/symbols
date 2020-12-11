@@ -135,6 +135,11 @@ public class FieldScript : MonoBehaviour
 
     void OnTouchMove()
     {
+        if (NoPossibleCurrentPickSelected())
+        {
+            return;
+        }
+
         if (gameplayScript.IsGameOver)
         {
             return;
@@ -605,6 +610,18 @@ public class FieldScript : MonoBehaviour
         }
 
         return res;
+    }
+
+    private bool NoPossibleCurrentPickSelected()
+    {
+        bool res = false;
+
+        foreach (var t in possibleCurrentPick)
+        {
+            res = res || t;
+        }
+
+        return !res;
     }
 
     private void EnableSpawnNewDots()
