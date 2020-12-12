@@ -32,6 +32,16 @@ public class DebugScript : MonoBehaviour
             ScreenCapture.CaptureScreenshot(path, 2);
             Debug.Log($"Screenshot captured: {path}");
         }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            EventManager.OnGameOver();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            EventManager.OnPrepareForReset();
+        }
     }
 
     private void GetDependencies()
