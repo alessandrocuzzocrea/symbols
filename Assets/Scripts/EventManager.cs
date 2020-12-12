@@ -15,6 +15,7 @@ public class EventManager : MonoBehaviour
     public static GameplayEvents.DotsCleared   OnClearDots;
 
     public static AppEvents.SplashScreenAlmostDone OnSplashScreenAlmostDone;
+    public static AppEvents.PrepareForReset        OnPrepareForReset;
     public static AppEvents.Reset                  OnReset;
 
     public static TutorialEvents.Start     OnTutorialStart;

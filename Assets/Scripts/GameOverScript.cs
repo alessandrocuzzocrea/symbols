@@ -30,7 +30,8 @@ public class GameOverScript : MonoBehaviour
 
     public void OnResetPressed()
     {
-        EventManager.OnReset();
+        //EventManager.OnReset();
+        EventManager.OnPrepareForReset();
     }
 
     public void OnWebsitePressed()

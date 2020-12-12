@@ -8,4 +8,9 @@ public class SplashScreenAnimationEventScript : MonoBehaviour
     {
         EventManager.OnSplashScreenAlmostDone();
     }
+
+    private void SplashScreenFadeInDone()
+    {
+        EventManager.OnReset();
+    }
 }
