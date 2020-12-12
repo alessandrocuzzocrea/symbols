@@ -35,7 +35,8 @@ public class TimerScript : MonoBehaviour
         EventManager.OnTouchStart += SlowDown;
         EventManager.OnTouchEnd   += SlowUp;
 
-        EventManager.OnGameOver += Pause;
+        EventManager.OnSplashScreenAlmostDone += Resume;
+        EventManager.OnGameOver               += Pause;
     }
 
     private void OnDisable()
@@ -46,7 +47,8 @@ public class TimerScript : MonoBehaviour
         EventManager.OnTouchStart -= SlowDown;
         EventManager.OnTouchEnd   -= SlowUp;
 
-        EventManager.OnGameOver -= Pause;
+        EventManager.OnSplashScreenAlmostDone -= Resume;
+        EventManager.OnGameOver               -= Pause;
     }
 
     void Start()
@@ -55,6 +57,7 @@ public class TimerScript : MonoBehaviour
         currentTimeMultiplier = normalTimeMultiplier;
         //currentColor = normalColor;
         Reset();
+        Pause();
         UpdateUI();
     }
 
@@ -81,10 +84,10 @@ public class TimerScript : MonoBehaviour
         pauseTimer = true;
     }
 
-    //private void Resume()
-    //{
-    //    pauseTimer = false;
-    //}
+    private void Resume()
+    {
+        pauseTimer = false;
+    }
 
     private void SlowUp()
     {

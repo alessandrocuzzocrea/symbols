@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EventManager : MonoBehaviour
 {
@@ -16,7 +14,8 @@ public class EventManager : MonoBehaviour
     public static GameplayEvents.LineCleared   OnClearLine;
     public static GameplayEvents.DotsCleared   OnClearDots;
 
-    public static AppEvents.Reset OnReset;
+    public static AppEvents.SplashScreenAlmostDone OnSplashScreenAlmostDone;
+    public static AppEvents.Reset                  OnReset;
 
     public static TutorialEvents.Start     OnTutorialStart;
     public static TutorialEvents.Complete  OnTutorialComplete;
