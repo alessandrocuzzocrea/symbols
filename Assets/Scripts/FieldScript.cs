@@ -129,8 +129,7 @@ public class FieldScript : MonoBehaviour
 
         currentPick = null;
 
-        Vector3 lollo = Camera.main.ScreenToWorldPoint(pos);
-        touchPoint.transform.position = new Vector3(lollo.x, lollo.y, 0.0f);
+        touchPoint.transform.position = new Vector3(pos.x, pos.y, 0.0f);
         touchPoint.SetActive(true);
     }
 
@@ -271,8 +270,7 @@ public class FieldScript : MonoBehaviour
             }
         }
 
-        Vector3 lollo = Camera.main.ScreenToWorldPoint(pos);
-        touchPoint.transform.position = new Vector3(lollo.x, lollo.y, 0.0f);
+        touchPoint.transform.position = new Vector3(pos.x, pos.y, 0.0f);
     }
 
     void OnTouchEnd()
