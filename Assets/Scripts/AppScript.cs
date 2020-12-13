@@ -5,8 +5,7 @@ public class AppScript : MonoBehaviour
 {
     private void Awake()
     {
-        //Initial Setup
-        Application.targetFrameRate = 60;
+        SetTargetFrameRate();
     }
 
     private void OnEnable()
@@ -22,6 +21,11 @@ public class AppScript : MonoBehaviour
     private void ResetGame()
     {
         SceneManager.LoadScene(0);
+    }
+
+    private void SetTargetFrameRate()
+    {
+        Application.targetFrameRate = 60;
     }
 
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
