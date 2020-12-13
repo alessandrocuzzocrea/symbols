@@ -5667,7 +5667,7 @@ MonoBehaviour:
   columns: 6
   maxDrop: 3
   noConnectionRequired: 2
-  deadzone: 0.5
+  deadzone: 0.8
   touchPoint: {fileID: 1880407133}
 --- !u!4 &1575346529
 Transform:
