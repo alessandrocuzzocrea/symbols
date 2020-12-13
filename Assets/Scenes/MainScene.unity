@@ -5667,6 +5667,7 @@ MonoBehaviour:
   columns: 6
   maxDrop: 3
   noConnectionRequired: 2
+  deadzone: 0.5
   touchPoint: {fileID: 1880407133}
 --- !u!4 &1575346529
 Transform:
@@ -5699,7 +5700,7 @@ GameObject:
   - component: {fileID: 1576535862}
   m_Layer: 0
   m_Name: Camera_UI
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

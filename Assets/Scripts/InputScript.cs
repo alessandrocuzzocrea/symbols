@@ -33,6 +33,11 @@ public class InputScript : MonoBehaviour
         return Input.mousePosition;
     }
 
+    public static Vector2 GetTouchPositionWorldSpace()
+    {
+        return Camera.main.ScreenToWorldPoint(GetTouchPosition());
+    }
+
 
     private bool GetMouseButtonDown()
     {

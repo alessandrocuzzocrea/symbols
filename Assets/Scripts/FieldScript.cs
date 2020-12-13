@@ -37,13 +37,16 @@ public class FieldScript : MonoBehaviour
     private Vector2 vMouseCoordsNow;
     private bool    bCurrentPickTypeLocked;
 
-    //Dependencies
-    private GameplayScript    gameplayScript;
-    private TimerScript       timerScript;
-    private FieldLabelsScript fieldLabelsScript;
+    [SerializeField]
+    private float deadzone;
 
     [SerializeField]
     private GameObject touchPoint;
+
+    //Dependencies
+    private GameplayScript gameplayScript;
+    private TimerScript timerScript;
+    private FieldLabelsScript fieldLabelsScript;
 
     private void OnEnable()
     {
@@ -110,8 +113,8 @@ public class FieldScript : MonoBehaviour
             return;
         }
 
-        Vector2 pos = InputScript.GetTouchPosition();
-        RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
+        Vector2 pos = InputScript.GetTouchPositionWorldSpace();
+        RaycastHit2D[] hits = Physics2D.RaycastAll(pos, Vector2.zero);
 
         for (int i = 0; i < hits.Length; i++)
         {
@@ -143,8 +146,8 @@ public class FieldScript : MonoBehaviour
             return;
         }
 
-        Vector2 pos = InputScript.GetTouchPosition();
-        RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
+        Vector2 pos = InputScript.GetTouchPositionWorldSpace();
+        RaycastHit2D[] hits = Physics2D.RaycastAll(pos, Vector2.zero);
 
         bMouseCoordsNow = true;
         vMouseCoordsNow = pos;
@@ -152,9 +155,10 @@ public class FieldScript : MonoBehaviour
         float dist = Vector3.Distance(vMouseCoordsNow, vMouseCoordsOnClick);
         float dotProduct = Vector3.Dot(Vector3.right, (vMouseCoordsNow - vMouseCoordsOnClick).normalized);
 
-        if (!bCurrentPickTypeLocked && dist >= 5.0f)
+        if (!bCurrentPickTypeLocked && dist >= deadzone)
         {
             float absDotProduct = Mathf.Abs(dotProduct);
+
             if (absDotProduct >= 0.5)
             {
                 currentPickType = Lane.LaneType.Columns;
