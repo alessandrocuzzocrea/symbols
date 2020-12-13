@@ -42,6 +42,12 @@ public class DebugScript : MonoBehaviour
         {
             EventManager.OnPrepareForReset();
         }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            PlayerPrefs.DeleteAll();
+            PlayerPrefs.Save();
+        }
     }
 
     private void GetDependencies()

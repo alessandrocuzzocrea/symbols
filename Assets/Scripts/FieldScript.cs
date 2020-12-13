@@ -29,7 +29,7 @@ public class FieldScript : MonoBehaviour
     private int  possibleDropId;
     private Lane currentDrop;
 
-    private bool dropNewDots;
+    private bool dropNewDots = true;
 
     private bool    bMouseCoordsOnClick;
     private Vector2 vMouseCoordsOnClick;

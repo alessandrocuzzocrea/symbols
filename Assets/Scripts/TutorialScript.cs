@@ -30,12 +30,14 @@ public class TutorialScript : MonoBehaviour
     {
         EventManager.OnTutorialMovePhase += MoveCurrentPhase; 
         EventManager.OnClearDots         += OnClearDots;
+        EventManager.OnTutorialComplete  += SetTutorialCompleted;
     }
 
     private void OnDisable()
     {
         EventManager.OnTutorialMovePhase -= MoveCurrentPhase;
         EventManager.OnClearDots         -= OnClearDots;
+        EventManager.OnTutorialComplete  -= SetTutorialCompleted;
     }
 
     private void Start()
@@ -59,8 +61,7 @@ public class TutorialScript : MonoBehaviour
 
     private bool ShouldDisplayTutorial()
     {
-        //return PlayerPrefs.GetInt(TutorialCompletedKey, 0) == 1;
-        return true; // TODO: for dev
+        return PlayerPrefs.GetInt(TutorialCompletedKey, 0) == 0;
     }
 
     private void SetTutorialCompleted()
