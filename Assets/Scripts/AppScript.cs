@@ -3,6 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class AppScript : MonoBehaviour
 {
+    private void Awake()
+    {
+        //Initial Setup
+        Application.targetFrameRate = 60;
+    }
+
     private void OnEnable()
     {
         EventManager.OnReset += ResetGame;
