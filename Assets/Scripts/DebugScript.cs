@@ -24,12 +24,14 @@ public class DebugScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
+            int superSize = Input.GetKeyDown(KeyCode.LeftShift) ? 2 : 1;
+
             string folderPath = Directory.GetCurrentDirectory() + "/Screenshots/";
 
-            string fileName = $"Screenshot_{System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss")}.png";
+            string fileName = $"Screenshot_{System.DateTime.Now:dd-MM-yyyy-HH-mm-ss}.png";
             string path = System.IO.Path.Combine(folderPath, fileName);
 
-            ScreenCapture.CaptureScreenshot(path, 2);
+            ScreenCapture.CaptureScreenshot(path, superSize);
             Debug.Log($"Screenshot captured: {path}");
         }
 
