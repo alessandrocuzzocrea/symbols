@@ -1,1 +1,1 @@
-# game-2020
+# symbols
