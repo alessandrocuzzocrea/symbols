@@ -5,7 +5,6 @@ public class MusicScript : MonoBehaviour
     private static bool initialized = false;
     private string animatorKey = "ShiftPitch";
 
-    //private AudioSource music;
     private Animator animator;
 
     private void OnEnable()
@@ -16,7 +15,6 @@ public class MusicScript : MonoBehaviour
         }
         else
         {
-            //music = GetComponent<AudioSource>();
             animator = GetComponent<Animator>();
             DontDestroyOnLoad(this.gameObject);
             initialized = true;
@@ -37,12 +35,4 @@ public class MusicScript : MonoBehaviour
     {
         animator.SetBool(animatorKey, false);
     }
-
-    //void PlayMusic()
-    //{
-    //    if (!music.isPlaying)
-    //    {
-    //        music.Play();
-    //    }
-    //}
 }
