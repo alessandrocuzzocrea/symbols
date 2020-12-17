@@ -2,9 +2,11 @@
 
 public class MusicScript : MonoBehaviour
 {
-    static bool initialized = false;
+    private static bool initialized = false;
+    private string animatorKey = "ShiftPitch";
 
-    AudioSource music;
+    //private AudioSource music;
+    private Animator animator;
 
     private void OnEnable()
     {
@@ -14,19 +16,33 @@ public class MusicScript : MonoBehaviour
         }
         else
         {
-            music = GetComponent<AudioSource>();
+            //music = GetComponent<AudioSource>();
+            animator = GetComponent<Animator>();
             DontDestroyOnLoad(this.gameObject);
             initialized = true;
         }
 
+        EventManager.OnGameOver += ShiftPitchUp;
+        EventManager.OnReset    += ShiftPitchDown;
+
         //PlayMusic();
     }
 
-    void PlayMusic()
+    private void ShiftPitchUp()
     {
-        if (!music.isPlaying)
-        {
-            music.Play();
-        }
+        animator.SetBool(animatorKey, true);
     }
+
+    private void ShiftPitchDown()
+    {
+        animator.SetBool(animatorKey, false);
+    }
+
+    //void PlayMusic()
+    //{
+    //    if (!music.isPlaying)
+    //    {
+    //        music.Play();
+    //    }
+    //}
 }
