@@ -60,6 +60,7 @@ crashlytics-build.properties
 
 # Assets
 *.png
+*.wav
 
 # MeshTextPro
 [Aa]ssets/TextMesh Pro/
