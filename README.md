@@ -1,8 +1,10 @@
 # Symbols - A Game by Alessandro Cuzzocrea
 
-## Downloads
+## Links
 
 [App Store - iPhone/iPad](https://apps.apple.com/us/app/symbols-alessandro-cuzzocrea/id1544707111)
+
+[Symbols iOS: A Retrospective](https://alessandrocuzzocrea.com/symbols-retrospective/)
 
 ## Screenshots
 <!-- ![Screenshots](https://github.com/alessandrocuzzocrea/symbols/wiki/Screenshot_000.jpg) -->
